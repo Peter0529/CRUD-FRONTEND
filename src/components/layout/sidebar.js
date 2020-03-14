@@ -53,7 +53,7 @@ class SideBar extends Component{
 						<a href="#ui"  className="sidebar-link">
               				<i className="align-middle" data-feather="grid"></i> 
 							  <span className="align-middle">Campaigns S1</span>
-							  <span class="sidebar-badge badge badge-info">AUDIOMACK</span>
+							  <span className="sidebar-badge badge badge-info">AUDIOMACK</span>
             			</a>
 					</li>
 					<li className="sidebar-item">
