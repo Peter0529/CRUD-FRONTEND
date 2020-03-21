@@ -11,11 +11,12 @@ class EditEmailComponent extends Component {
             password: '',
             pop: '',
             port: '',
+            ssl:'',
             status: '',
-            campaign_s1: '',
-            campaign_s2: '',
-            campaign_s3: '',
-            last_access: '',
+            campaignS1: '',
+            campaignS2: '',
+            campaignS3: '',
+            lastAccess: '',
         }
         this.saveEmail = this.saveEmail.bind(this);
         this.loadEmail = this.loadEmail.bind(this);
@@ -28,19 +29,8 @@ class EditEmailComponent extends Component {
     loadEmail() {
         ApiService.fetchEmailById(window.localStorage.getItem("emailId"))
             .then((res) => {
-                let email = res.data.result;
-                this.setState({
-                id: email.id,
-                email: email.email,
-                password: email.password,
-                pop: email.pop,
-                port: email.port,
-                status: email.status,
-                campaign_s1:email.campaign_s1,
-                campaign_s2:email.campaign_s2,
-                campaign_s3:email.campaign_s3,
-                last_access:email.last_access,
-                })
+                let email = res.data[0];
+                this.setState(email);
             });
     }
 
@@ -49,11 +39,12 @@ class EditEmailComponent extends Component {
 
     saveEmail = (e) => {
         e.preventDefault();
-        let email = {id: this.state.id, email: this.state.email, password: this.state.password, pop: this.state.pop, port: this.state.port, status: this.state.status
-            , campaign_s1: this.state.campaign_s1, campaign_s2: this.state.campaign_s2, campaign_s3: this.state.campaign_s3};
+        let email = this.state;
+        email.lastAccess = new Date().toISOString();
+        
         ApiService.editEmail(email)
             .then(res => {
-                this.setState({message : 'Email added successfully.'});
+                this.setState({message : 'Email updated successfully.'});
                 this.props.history.push('/emails');
             });
     }
@@ -66,27 +57,47 @@ class EditEmailComponent extends Component {
 
                     <div className="form-group">
                         <label>Email:</label>
-                        <input type="text" placeholder="email" name="email" className="form-control" readonly="true" defaultValue={this.state.email}/>
+                        <input type="text" placeholder="" name="email" className="form-control" value={this.state.email} onChange={this.onChange}/>
                     </div>
 
                     <div className="form-group">
                         <label>Password:</label>
-                        <input placeholder="Password" name="password" className="form-control" value={this.state.password} onChange={this.onChange}/>
+                        <input placeholder="" name="password" className="form-control" value={this.state.password} onChange={this.onChange}/>
                     </div>
 
                     <div className="form-group">
                         <label>POP Server:</label>
-                        <input placeholder="Pop Server" name="pop" className="form-control" value={this.state.pop} onChange={this.onChange}/>
+                        <input placeholder="" name="pop" className="form-control" value={this.state.pop} onChange={this.onChange}/>
                     </div>
 
                     <div className="form-group">
                         <label>POP Port:</label>
-                        <input  placeholder="Port" name="pop_port" className="form-control" value={this.state.port} onChange={this.onChange}/>
+                        <input  placeholder="" name="port" className="form-control" value={this.state.port} onChange={this.onChange}/>
+                    </div>
+
+                    <div className="form-group">
+                        <label>SSL:</label>
+                        <input placeholder="" name="ssl" className="form-control" value={this.state.ssl} onChange={this.onChange}/>
                     </div>
 
                     <div className="form-group">
                         <label>Status:</label>
-                        <input placeholder="status" name="status" className="form-control" value={this.state.status} onChange={this.onChange}/>
+                        <input placeholder="" name="status" className="form-control" value={this.state.status} onChange={this.onChange}/>
+                    </div>
+
+                    <div className="form-group">
+                        <label>Campaign S1:</label>
+                        <input placeholder="" name="campaignS1" className="form-control" value={this.state.campaignS1} onChange={this.onChange}/>
+                    </div>
+
+                    <div className="form-group">
+                        <label>Campaign S2:</label>
+                        <input placeholder="" name="campaignS2" className="form-control" value={this.state.campaignS2} onChange={this.onChange}/>
+                    </div>
+
+                    <div className="form-group">
+                        <label>Campaign S3:</label>
+                        <input placeholder="" name="campaignS3" className="form-control" value={this.state.campaignS3} onChange={this.onChange}/>
                     </div>
 
                     <button className="btn btn-success" onClick={this.saveEmail}>Save</button>
@@ -95,5 +106,4 @@ class EditEmailComponent extends Component {
         );
     }
 }
-
 export default EditEmailComponent;

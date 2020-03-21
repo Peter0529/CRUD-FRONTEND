@@ -1,25 +1,21 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import ListEmailComponent from "./ListEmailComponent.jsx";
-import AddEmailComponent from "./AddEmailComponent.jsx";
-import EditEmailComponent from "./EditEmailComponent.jsx";
+import ListCompletedS1Component from "./ListCompletedS1Component.jsx";
 import React from "react";
 import SideBar from '../layout/sidebar';
 import Footer from '../layout/footer';
 import NavBar from '../layout/navbar';
-const EmailRouter = () => {
+
+const CompletedS1Router = () => {
     return(
         <div  className="wrapper">
-            <SideBar active='email'/>
+            <SideBar active='completed_s1'/>
             <div className="main">
                 <NavBar/>
                     <main className="content">
                         <div className="container-fluid p-0">
                         <Router>
                             <Switch>
-                                {/* <Route path="/" exact component={ListEmailComponent} /> */}
-                                <Route path="/emails" component={ListEmailComponent} />
-                                <Route path="/add-email" component={AddEmailComponent} />
-                                <Route path="/edit-email" component={EditEmailComponent} />
+                                <Route path="/completed_s1" component={ListCompletedS1Component} />
                             </Switch>
                         </Router>
                         </div>
@@ -30,4 +26,4 @@ const EmailRouter = () => {
     )
 }
 
-export default EmailRouter;
+export default CompletedS1Router;

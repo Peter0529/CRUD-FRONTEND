@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import ApiService from "../../service/EmailApiService";
-import DataTable from "../Tables/Datatable";
+import ApiService from "../../service/CompletedS1ApiService";
+import DataTable from "../../components/Tables/Datatable";
 
-class ListEmailComponent extends Component {
+class ListCompletedS1Component extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -13,6 +13,7 @@ class ListEmailComponent extends Component {
                     responsive: {details: {
                         type: 'column'
                     }},
+
                     columnDefs: [ 
                         {
                             className: 'control',
@@ -123,57 +124,58 @@ class ListEmailComponent extends Component {
                     // Datatable key setup
                     keys: true
                 },
-            emails: [],
+            campaigns: [],
             message: null,
             loaded_data:false
         }
-        this.deleteEmail = this.deleteEmail.bind(this);
-        this.editEmail = this.editEmail.bind(this);
-        this.addEmail = this.addEmail.bind(this);
-        this.reloadEmailList = this.reloadEmailList.bind(this);
+        this.deleteCampaign = this.deleteCampaign.bind(this);
+        this.editCampaign = this.editCampaign.bind(this);
+        this.addCampaign = this.addCampaign.bind(this);
+        this.reloadCampaignList = this.reloadCampaignList.bind(this);
     }
     componentDidMount() {
-        this.reloadEmailList();
+        this.reloadCampaignList();
     }
 
-    reloadEmailList = async() => {
-        ApiService.fetchEmails().then(
-            res =>{this.setState({emails: res.data, loaded_data: true});}
+    reloadCampaignList = async() => {
+        ApiService.fetchCampaigns().then(
+            res =>{this.setState({campaigns: res.data, loaded_data: true});}
         )
     }
 
-    deleteEmail(emailId) {
-        ApiService.deleteEmail(emailId)
+    deleteCampaign(campId) {
+        ApiService.deleteCampaign(campId)
             .then(res => {
-                this.setState({message : 'Email deleted successfully.'});
+                this.setState({message : 'Campaign deleted successfully.'});
                 // this.setState({emails: this.state.emails.filter(email => email.id !== emailId)});
                 window.location.reload(false);
             })
 
     }
 
-    editEmail(id) {
-        window.localStorage.setItem("emailId", id);
-        this.props.history.push('/edit-email');
+    editCampaign(id) {
+        window.localStorage.setItem("campS1Id", id);
+        this.props.history.push('/edit-camps1');
     }
 
-    addEmail() {
-        window.localStorage.removeItem("emailId");
-        this.props.history.push('/add-email');
+    addCampaign() {
+        window.localStorage.removeItem("campId");
+        this.props.history.push('/add-camps1');
     }
 
-    deleteEmails() {
+    deleteCampaigns() {
         var selected_ids = JSON.parse(window.localStorage.getItem("selected_ids"));
         
         
         for(var i =0;i<selected_ids.length;i++){
-            this.deleteEmail(parseInt(selected_ids[i]));
+            this.deleteCampaign(parseInt(selected_ids[i]));
             
         }
 
         window.localStorage.removeItem("selected_ids");
         window.location.reload(false);
     }
+
     render() {
         //const isLoaded = this.state.is_loaded;
         return (
@@ -182,50 +184,87 @@ class ListEmailComponent extends Component {
                     <div>Loading...</div>
                 ) : (
                     <div >
-                <h2 className="text-center">Email List</h2>
-                <button className="btn btn-primary" onClick={() => this.addEmail()} style={{marginBottom:"20px"}}> Add Email</button>
-                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteEmails()} style={{marginBottom:"20px",marginLeft:"20px"}}> Delete Selected Emails</button>
+                <h2 className="text-center">Completed Campaign S1 List</h2>
+                {/* <button className="btn btn-primary" onClick={() => this.addCampaign()} style={{marginBottom:"20px"}}> Add Campaign</button> */}
+                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteCampaigns()} style={{marginBottom:"20px",marginLeft:"20px"}}> Delete Selected Campaigns</button>
                 <DataTable options={this.state.dtOptions1}>
                     <table className="table table-striped" id="datatables-reponsive" width="100%" >
                         <thead>
                             <tr>
                                 <th></th>
                                 <th><input type="checkbox" id="select_all" name="select_all" /></th>
-                                <th>Id</th>
-                                <th>Email</th>
-                                <th>Password</th>
-                                <th>POP</th>
-                                <th>POP Port</th>
-                                <th>SSL</th>
+                                <th className="hidden">Id</th>
+                                <th>Note</th>
+                                <th>Note2</th>
+                                <th>URL</th>
+                                <th>Name</th>
+                                <th>Tracks</th>
+                                <th>Country</th>
+                                <th>Type</th>
+                                <th>TP</th>
+                                <th>TFo</th>
+                                <th>TR</th>
+                                <th>TH</th>
+                                <th>TFa</th>
+                                <th>PHP</th>
+                                <th>PDP</th>
+                                <th>PHM</th>
+                                <th>PDM</th>
+                                <th>LH</th>
+                                <th>LD</th>
+                                <th>Pl</th>
+                                <th>Fo</th>
+                                <th>Re</th>
+                                <th>Hi</th>
+                                <th>Fa</th>
+                                <th>Fails</th>
+                                <th>SDate</th>
+                                <th>EDate</th>
                                 <th>Status</th>
-                                <th>S1</th>
-                                <th>S2</th>
-                                <th>S3</th>
-                                <th>Last Access</th>
+                                <th>lastAccess</th>
                                 {/* <th>Actions</th> */}
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                this.state.emails.map(
-                                email =>
-                                        <tr key={email.id}>
+                                this.state.campaigns.map(
+                                camp =>
+                                        <tr key={camp.id}>
                                             <td></td>
                                             <td>
-                                                <button className="btn btn-success"  onClick={() => this.editEmail(email.id)}><i className="fas fa-edit"></i> </button>
-                                                <button className="btn btn-danger" onClick={() => this.deleteEmail(email.id)}><i className="fas fa-eraser"></i> </button>
+                                                {/* <button className="btn btn-success" onClick={() => this.editCampaign(camp.id)}><i className="fas fa-edit"></i> </button> */}
+                                                <button className="btn btn-danger" onClick={() => this.deleteCampaign(camp.id)}><i className="fas fa-eraser"></i> </button>
                                             </td>
-                                            <td>{email.id}</td>
-                                            <td>{email.email}</td>
-                                            <td>{email.password}</td>
-                                            <td>{email.pop}</td>
-                                            <td>{email.port}</td>
-                                            <td>{email.ssl}</td>
-                                            <td>{email.status}</td>
-                                            <td>{email.campaignS1}</td> 
-                                            <td>{email.campaignS2}</td>
-                                            <td>{email.campaignS3}</td>
-                                            <td>{email.lastAccess}</td>
+                                            <td>{camp.id}</td>
+                                            <td>{camp.note}</td>
+                                            <td>{camp.note2}</td>
+                                            <td>{camp.url}</td>
+                                            <td>{camp.name}</td>
+                                            <td>{camp.tracks}</td>
+                                            <td>{camp.campaignType}</td>
+                                            <td>{camp.country}</td>
+                                            <td>{camp.totalPlays}</td>
+                                            <td>{camp.totalFollows}</td>
+                                            <td>{camp.totalReups}</td>
+                                            <td>{camp.totalHighlights}</td>
+                                            <td>{camp.totalFavorites}</td>
+                                            <td>{camp.perHourPlays}</td>
+                                            <td>{camp.perDayPlays}</td>
+                                            <td>{camp.perHourMixed}</td>
+                                            <td>{camp.perDayMixed}</td>
+                                            <td>{camp.lastHour}</td>
+                                            <td>{camp.lastDay}</td>
+                                            <td>{camp.played}</td>
+                                            <td>{camp.followed}</td>
+                                            <td>{camp.reuped}</td>
+                                            <td>{camp.highlighted}</td>
+                                            <td>{camp.favorited}</td>
+                                            <td>{camp.fails}</td>
+                                            <td>{camp.startDate}</td>
+                                            <td>{camp.endDate}</td>
+                                            <td>{camp.status}</td>
+                                            <td>{camp.lastAccess}</td>
+                                            
                                         </tr>
                                 )
                             }
@@ -236,7 +275,6 @@ class ListEmailComponent extends Component {
             </div>
         );
     }
-
 }
 
-export default ListEmailComponent;
+export default ListCompletedS1Component;

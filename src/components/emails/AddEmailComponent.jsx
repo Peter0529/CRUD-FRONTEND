@@ -12,10 +12,10 @@ class AddEmailComponent extends Component{
             port: '',
             ssl: '',
             status: '',
-            campaign_s1: '',
-            campaign_s2: '',
-            campaign_s3: '',
-            last_access:'',
+            campaignS1: '',
+            campaignS2: '',
+            campaignS3: '',
+            lastAccess:'',
             message:null,
         }
         this.saveEmail = this.saveEmail.bind(this);
@@ -23,7 +23,8 @@ class AddEmailComponent extends Component{
 
     saveEmail = (e) => {
         e.preventDefault();
-        let email = {email: this.state.email, password: this.state.password, pop: this.state.pop, port: this.state.port, ssl: this.state.ssl, status: this.state.status,campaign_s1:this.state.campaign_s1,campaign_s2:this.state.campaign_s2,campaign_s3:this.state.campaign_s3};
+        let email = this.state;
+        email.lastAccess = new Date().toISOString();
         ApiService.addEmail(email)
             .then(res => {
                 this.setState({message : 'Email added successfully.'});
@@ -41,53 +42,53 @@ class AddEmailComponent extends Component{
                 <form>
                 <div className="form-group">
                     <label>Email:</label>
-                    <input type="text" placeholder="email" name="email" className="form-control" value={this.state.email} onChange={this.onChange}/>
+                    <input type="text" placeholder="" name="email" className="form-control" value={this.state.email} onChange={this.onChange}/>
                 </div>
 
                 <div className="form-group">
                     <label>Password:</label>
-                    <input type="password" placeholder="password" name="password" className="form-control" value={this.state.password} onChange={this.onChange}/>
+                    <input type="" placeholder="" name="password" className="form-control" value={this.state.password} onChange={this.onChange}/>
                 </div>
 
                 <div className="form-group">
                     <label>POP Server:</label>
-                    <input placeholder="POP Server" name="pop" className="form-control" value={this.state.pop} onChange={this.onChange}/>
+                    <input placeholder="" name="pop" className="form-control" value={this.state.pop} onChange={this.onChange}/>
                 </div>
 
                 <div className="form-group">
                     <label>POP Port:</label>
-                    <input placeholder="Port" name="port" className="form-control" value={this.state.port} onChange={this.onChange}/>
+                    <input placeholder="" name="port" className="form-control" value={this.state.port} onChange={this.onChange}/>
                 </div>
 
                 <div className="form-group">
                     <label>SSL:</label>
-                    <input placeholder="ssl" name="ssl" className="form-control" value={this.state.ssl} onChange={this.onChange}/>
+                    <input type="number" min="0" step="1" placeholder="integer" name="ssl" className="form-control" value={this.state.ssl} onChange={this.onChange}/>
                 </div>
 
                 <div className="form-group">
                     <label>Status:</label>
-                    <input placeholder="status" name="status" className="form-control" value={this.state.status} onChange={this.onChange}/>
+                    <input type="number" min="0" step="1" placeholder="integer" name="status" className="form-control" value={this.state.status} onChange={this.onChange}/>
                 </div>
 
                 <div className="form-group">
                     <label>Campaign S1:</label>
-                    <input  placeholder="campaign s1" name="campaign_s1" className="form-control" value={this.state.campaign_s1} onChange={this.onChange}/>
+                    <input  type="number" min="0" step="1" placeholder="integer" name="campaignS1" className="form-control" value={this.state.campaignS1} onChange={this.onChange}/>
                 </div>
 
                 <div className="form-group">
                     <label>Campaign S2:</label>
-                    <input placeholder="campaign s2" name="campaign_s2" className="form-control" value={this.state.campaign_s2} onChange={this.onChange}/>
+                    <input type="number" min="0" step="1" placeholder="integer" name="campaignS2" className="form-control" value={this.state.campaignS2} onChange={this.onChange}/>
                 </div>
 
                 <div className="form-group">
                     <label>Campaign S3:</label>
-                    <input  placeholder="campaign s3" name="campaign_s3" className="form-control" value={this.state.campaign_s3} onChange={this.onChange}/>
+                    <input  type="number" min="0" step="1" placeholder="integer" name="campaignS3" className="form-control" value={this.state.campaignS3} onChange={this.onChange}/>
                 </div>
 
-                <div className="form-group">
+                {/* <div className="form-group">
                     <label>Last Access:</label>
-                    <input  placeholder="datetime" name="last_access" className="form-control" value={this.state.last_access} onChange={this.onChange}/>
-                </div>
+                    <input  placeholder="" name="last_access" className="form-control" value={this.state.lastAccess} onChange={this.onChange}/>
+                </div> */}
 
                 <button className="btn btn-success" onClick={this.saveEmail}>Save</button>
             </form>

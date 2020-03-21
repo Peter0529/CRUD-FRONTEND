@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import ApiService from "../../service/EmailApiService";
-import DataTable from "../Tables/Datatable";
+import ApiService from "../../service/LogApiService";
+import DataTable from "../../components/Tables/Datatable";
 
-class ListEmailComponent extends Component {
+class ListLogComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -123,57 +123,58 @@ class ListEmailComponent extends Component {
                     // Datatable key setup
                     keys: true
                 },
-            emails: [],
+            logs: [],
             message: null,
             loaded_data:false
         }
-        this.deleteEmail = this.deleteEmail.bind(this);
-        this.editEmail = this.editEmail.bind(this);
-        this.addEmail = this.addEmail.bind(this);
-        this.reloadEmailList = this.reloadEmailList.bind(this);
+        this.deleteLog = this.deleteLog.bind(this);
+        this.editLog = this.editLog.bind(this);
+        this.addLog = this.addLog.bind(this);
+        this.reloadLogList = this.reloadLogList.bind(this);
     }
     componentDidMount() {
-        this.reloadEmailList();
+        this.reloadLogList();
     }
 
-    reloadEmailList = async() => {
-        ApiService.fetchEmails().then(
-            res =>{this.setState({emails: res.data, loaded_data: true});}
+    reloadLogList = async() => {
+        ApiService.fetchLogs().then(
+            res =>{this.setState({logs: res.data, loaded_data: true});}
         )
     }
 
-    deleteEmail(emailId) {
-        ApiService.deleteEmail(emailId)
+    deleteLog(logId) {
+        ApiService.deleteLog(logId)
             .then(res => {
-                this.setState({message : 'Email deleted successfully.'});
-                // this.setState({emails: this.state.emails.filter(email => email.id !== emailId)});
+                this.setState({message : 'Log deleted successfully.'});
+                // this.setState({logs: this.state.logs.filter(log => log.id !== logId)});
                 window.location.reload(false);
             })
 
     }
 
-    editEmail(id) {
-        window.localStorage.setItem("emailId", id);
-        this.props.history.push('/edit-email');
+    editLog(id) {
+        window.localStorage.setItem("logId", id);
+        this.props.history.push('/edit-log');
     }
 
-    addEmail() {
-        window.localStorage.removeItem("emailId");
-        this.props.history.push('/add-email');
+    addLog() {
+        window.localStorage.removeItem("logId");
+        this.props.history.push('/add-log');
     }
 
-    deleteEmails() {
+    deleteLogs() {
         var selected_ids = JSON.parse(window.localStorage.getItem("selected_ids"));
         
         
         for(var i =0;i<selected_ids.length;i++){
-            this.deleteEmail(parseInt(selected_ids[i]));
+            this.deleteLog(parseInt(selected_ids[i]));
             
         }
 
         window.localStorage.removeItem("selected_ids");
         window.location.reload(false);
     }
+
     render() {
         //const isLoaded = this.state.is_loaded;
         return (
@@ -182,9 +183,9 @@ class ListEmailComponent extends Component {
                     <div>Loading...</div>
                 ) : (
                     <div >
-                <h2 className="text-center">Email List</h2>
-                <button className="btn btn-primary" onClick={() => this.addEmail()} style={{marginBottom:"20px"}}> Add Email</button>
-                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteEmails()} style={{marginBottom:"20px",marginLeft:"20px"}}> Delete Selected Emails</button>
+                <h2 className="text-center">Log List</h2>
+                <button className="btn btn-primary" onClick={() => this.addLog()} style={{marginBottom:"20px"}}> Add Log</button>
+                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteLogs()} style={{marginBottom:"20px",marginLeft:"20px"}}> Delete Selected Logs</button>
                 <DataTable options={this.state.dtOptions1}>
                     <table className="table table-striped" id="datatables-reponsive" width="100%" >
                         <thead>
@@ -192,40 +193,35 @@ class ListEmailComponent extends Component {
                                 <th></th>
                                 <th><input type="checkbox" id="select_all" name="select_all" /></th>
                                 <th>Id</th>
-                                <th>Email</th>
-                                <th>Password</th>
-                                <th>POP</th>
-                                <th>POP Port</th>
-                                <th>SSL</th>
-                                <th>Status</th>
-                                <th>S1</th>
-                                <th>S2</th>
-                                <th>S3</th>
+                                <th>HWID</th>
+                                <th>IP</th>
+                                <th>Campaign</th>
+                                <th>XPath</th>
+                                <th>Error</th>
+                                <th>Proxy</th>
+                                <th>Link</th>
                                 <th>Last Access</th>
-                                {/* <th>Actions</th> */}
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                this.state.emails.map(
-                                email =>
-                                        <tr key={email.id}>
+                                this.state.logs.map(
+                                log =>
+                                        <tr key={log.id}>
                                             <td></td>
                                             <td>
-                                                <button className="btn btn-success"  onClick={() => this.editEmail(email.id)}><i className="fas fa-edit"></i> </button>
-                                                <button className="btn btn-danger" onClick={() => this.deleteEmail(email.id)}><i className="fas fa-eraser"></i> </button>
+                                                <button className="btn btn-success" onClick={() => this.editLog(log.id)}><i className="fas fa-edit"></i> </button>
+                                                <button className="btn btn-danger" onClick={() => this.deleteLog(log.id)}><i className="fas fa-eraser"></i> </button>
                                             </td>
-                                            <td>{email.id}</td>
-                                            <td>{email.email}</td>
-                                            <td>{email.password}</td>
-                                            <td>{email.pop}</td>
-                                            <td>{email.port}</td>
-                                            <td>{email.ssl}</td>
-                                            <td>{email.status}</td>
-                                            <td>{email.campaignS1}</td> 
-                                            <td>{email.campaignS2}</td>
-                                            <td>{email.campaignS3}</td>
-                                            <td>{email.lastAccess}</td>
+                                            <td>{log.id}</td>
+                                            <td>{log.hwid}</td>
+                                            <td>{log.ip}</td>
+                                            <td>{log.campaign}</td>
+                                            <td>{log.xpath}</td>
+                                            <td>{log.error}</td>
+                                            <td>{log.proxy}</td>
+                                            <td>{log.link}</td>
+                                            <td>{log.lastAccess}</td>
                                         </tr>
                                 )
                             }
@@ -236,7 +232,6 @@ class ListEmailComponent extends Component {
             </div>
         );
     }
-
 }
 
-export default ListEmailComponent;
+export default ListLogComponent;

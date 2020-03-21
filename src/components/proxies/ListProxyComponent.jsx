@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import ApiService from "../../service/EmailApiService";
+import ApiService from "../../service/ProxyApiService";
 import DataTable from "../Tables/Datatable";
 
-class ListEmailComponent extends Component {
+class ListProxyComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
                 dtOptions1: {
+                    
                     'paging': true, // Table pagination
                     'ordering': true, // Column ordering
                     'info': true, // Bottom left status text
@@ -38,7 +39,7 @@ class ListEmailComponent extends Component {
                         "regex": true
                       },
                     order: [[ 2, 'asc' ]],
-                    
+
                     // Text translation options
                     // Note the required keywords between underscores (e.g _MENU_)
                     "pageLength": 100,
@@ -123,68 +124,69 @@ class ListEmailComponent extends Component {
                     // Datatable key setup
                     keys: true
                 },
-            emails: [],
+            proxies: [],
             message: null,
             loaded_data:false
         }
-        this.deleteEmail = this.deleteEmail.bind(this);
-        this.editEmail = this.editEmail.bind(this);
-        this.addEmail = this.addEmail.bind(this);
-        this.reloadEmailList = this.reloadEmailList.bind(this);
+        this.deleteProxy = this.deleteProxy.bind(this);
+        this.editProxy = this.editProxy.bind(this);
+        this.addProxy = this.addProxy.bind(this);
+        this.reloadProxyList = this.reloadProxyList.bind(this);
     }
     componentDidMount() {
-        this.reloadEmailList();
+        this.reloadProxyList();
     }
 
-    reloadEmailList = async() => {
-        ApiService.fetchEmails().then(
-            res =>{this.setState({emails: res.data, loaded_data: true});}
+    reloadProxyList = async() => {
+        ApiService.fetchProxies().then(
+            res =>{this.setState({proxies: res.data, loaded_data: true})}
         )
     }
 
-    deleteEmail(emailId) {
-        ApiService.deleteEmail(emailId)
+    deleteProxy(proxyId) {
+        ApiService.deleteProxy(proxyId)
             .then(res => {
-                this.setState({message : 'Email deleted successfully.'});
-                // this.setState({emails: this.state.emails.filter(email => email.id !== emailId)});
+                this.setState({message : 'Proxy deleted successfully.'});
+                // this.setState({proxies: this.state.proxies.filter(proxy => proxy.id !== proxyId)});
                 window.location.reload(false);
             })
 
     }
 
-    editEmail(id) {
-        window.localStorage.setItem("emailId", id);
-        this.props.history.push('/edit-email');
+    editProxy(id) {
+        window.localStorage.setItem("proxyId", id);
+        this.props.history.push('/edit-proxy');
     }
 
-    addEmail() {
-        window.localStorage.removeItem("emailId");
-        this.props.history.push('/add-email');
+    addProxy() {
+        window.localStorage.removeItem("proxyId");
+        this.props.history.push('/add-proxy');
     }
 
-    deleteEmails() {
+    deleteProxies(){
         var selected_ids = JSON.parse(window.localStorage.getItem("selected_ids"));
         
         
         for(var i =0;i<selected_ids.length;i++){
-            this.deleteEmail(parseInt(selected_ids[i]));
+            this.deleteProxy(parseInt(selected_ids[i]));
             
         }
-
+        
         window.localStorage.removeItem("selected_ids");
         window.location.reload(false);
+        
+        
     }
     render() {
-        //const isLoaded = this.state.is_loaded;
         return (
             <div >
                 {this.state.loaded_data === false ? (
                     <div>Loading...</div>
                 ) : (
                     <div >
-                <h2 className="text-center">Email List</h2>
-                <button className="btn btn-primary" onClick={() => this.addEmail()} style={{marginBottom:"20px"}}> Add Email</button>
-                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteEmails()} style={{marginBottom:"20px",marginLeft:"20px"}}> Delete Selected Emails</button>
+                <h2 className="text-center">Proxy List</h2>
+                <button className="btn btn-primary" onClick={() => this.addProxy()} style={{marginBottom:"20px"}}> Add Proxy</button>
+                <button className="btn btn-secondary" id = "delete_selected" onClick={() => this.deleteProxies()} style={{marginBottom:"20px",marginLeft:"20px"}}> Delete Selected Proxies</button>
                 <DataTable options={this.state.dtOptions1}>
                     <table className="table table-striped" id="datatables-reponsive" width="100%" >
                         <thead>
@@ -192,40 +194,42 @@ class ListEmailComponent extends Component {
                                 <th></th>
                                 <th><input type="checkbox" id="select_all" name="select_all" /></th>
                                 <th>Id</th>
-                                <th>Email</th>
-                                <th>Password</th>
-                                <th>POP</th>
-                                <th>POP Port</th>
-                                <th>SSL</th>
-                                <th>Status</th>
-                                <th>S1</th>
-                                <th>S2</th>
-                                <th>S3</th>
+                                <th>Proxy</th>
+                                <th>Note</th>
+                                <th>Connection</th>
+                                <th>Type</th>
+                                <th>Country</th>
+                                <th>Campaign Type</th>
+                                <th>Usage Last Hour</th>
+                                <th>Usage Total</th>
+                                <th>Fails</th>
+                                <th>Stand By</th>
                                 <th>Last Access</th>
                                 {/* <th>Actions</th> */}
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                this.state.emails.map(
-                                email =>
-                                        <tr key={email.id}>
+                                this.state.proxies.map(
+                                proxy =>
+                                        <tr key={proxy.id}>
                                             <td></td>
                                             <td>
-                                                <button className="btn btn-success"  onClick={() => this.editEmail(email.id)}><i className="fas fa-edit"></i> </button>
-                                                <button className="btn btn-danger" onClick={() => this.deleteEmail(email.id)}><i className="fas fa-eraser"></i> </button>
+                                                <button className="btn btn-success" onClick={() => this.editProxy(proxy.id)}><i className="fas fa-edit"></i> </button>
+                                                <button className="btn btn-danger" onClick={() => this.deleteProxy(proxy.id)}><i className="fas fa-eraser"></i> </button>
                                             </td>
-                                            <td>{email.id}</td>
-                                            <td>{email.email}</td>
-                                            <td>{email.password}</td>
-                                            <td>{email.pop}</td>
-                                            <td>{email.port}</td>
-                                            <td>{email.ssl}</td>
-                                            <td>{email.status}</td>
-                                            <td>{email.campaignS1}</td> 
-                                            <td>{email.campaignS2}</td>
-                                            <td>{email.campaignS3}</td>
-                                            <td>{email.lastAccess}</td>
+                                            <td>{proxy.id}</td>
+                                            <td>{proxy.proxy}</td>
+                                            <td>{proxy.note}</td>
+                                            <td>{proxy.connection}</td>
+                                            <td>{proxy.type}</td>
+                                            <td>{proxy.country}</td>
+                                            <td>{proxy.campaignType}</td>
+                                            <td>{proxy.usageLastHour}</td>
+                                            <td>{proxy.usageTotal}</td>
+                                            <td>{proxy.fails}</td>
+                                            <td>{proxy.standby}</td>
+                                            <td>{proxy.lastAccess}</td>
                                         </tr>
                                 )
                             }
@@ -239,4 +243,4 @@ class ListEmailComponent extends Component {
 
 }
 
-export default ListEmailComponent;
+export default ListProxyComponent;

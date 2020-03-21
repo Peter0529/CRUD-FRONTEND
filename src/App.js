@@ -1,30 +1,35 @@
 import React from 'react';
 
 import { BrowserRouter as Router,Route,Switch} from 'react-router-dom';
-import emails from './pages/emails';
 import EmailRouter from './components/emails/EmailRouterComponent.jsx';
-import SideBar from './components/layout/sidebar';
-import Footer from './components/layout/footer';
-import NavBar from './components/layout/navbar';
+import ProxyRouter from './components/proxies/ProxyRouterComponent.jsx';
+import DashboardRouter from './components/dashboard/DashboardRouterComponent.jsx';
+import CampaignS1Router from './components/campaign_s1/CampaignS1RouterComponent.jsx';
+import LogRouter from './components/logs/LogRouterComponent.jsx';
+import SettingRouter from './components/settings/SettingRouterComponent.jsx';
+import VPNRouter from './components/vpn/VPNRouterComponent.jsx';
+import UserAgentRouter from './components/useragents/UserAgentRouterComponent.jsx';
+import CompletedS1Router from './components/completed_s1/CompletedS1RouterComponent.jsx';
+
+import $ from 'jquery';
 
 function App() {
   return (
-    <div className="wrapper">
-                <SideBar/>
-                <div className="main">
-                    <NavBar/>
-                    <main className="content">
-                      <div className="container-fluid p-0">
-                        <Router>
-                          <Switch>
-                              <EmailRouter/>
-                          </Switch>
-                        </Router>
-                      </div>
-                    </main>
-                    <Footer />
-                </div>
-          {/* <Route exact path="/" component={emails}/> */}
+    <div>
+        <Router>
+            <Switch>
+                <Route path="/" exact component={DashboardRouter} />
+                <Route path="/dashboard" exact component={DashboardRouter} />
+                <Route path="/emails" exact component={EmailRouter} />
+                <Route path="/campaign_s1" exact component={CampaignS1Router} />
+                <Route path="/logs" exact component={LogRouter} />
+                <Route path="/proxies" exact component={ProxyRouter} />
+                <Route path="/setting" exact component={SettingRouter} />
+                <Route path="/vpns" exact component={VPNRouter} />
+                <Route path="/useragents" exact component={UserAgentRouter}/>
+                <Route path="/completed_s1" exact component={CompletedS1Router}/>
+            </Switch>
+        </Router>
     </div>
   );
 }

@@ -1,25 +1,25 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import ListEmailComponent from "./ListEmailComponent.jsx";
-import AddEmailComponent from "./AddEmailComponent.jsx";
-import EditEmailComponent from "./EditEmailComponent.jsx";
+import ListLogComponent from "./ListLogComponent.jsx";
+import AddLogComponent from "./AddLogComponent.jsx";
+import EditLogComponent from "./EditLogComponent.jsx";
 import React from "react";
 import SideBar from '../layout/sidebar';
 import Footer from '../layout/footer';
 import NavBar from '../layout/navbar';
-const EmailRouter = () => {
+const LogRouter = () => {
     return(
         <div  className="wrapper">
-            <SideBar active='email'/>
+            <SideBar active='log'/>
             <div className="main">
                 <NavBar/>
                     <main className="content">
                         <div className="container-fluid p-0">
                         <Router>
                             <Switch>
-                                {/* <Route path="/" exact component={ListEmailComponent} /> */}
-                                <Route path="/emails" component={ListEmailComponent} />
-                                <Route path="/add-email" component={AddEmailComponent} />
-                                <Route path="/edit-email" component={EditEmailComponent} />
+                                {/* <Route path="/" exact component={ListLogComponent} /> */}
+                                <Route path="/logs" component={ListLogComponent} />
+                                <Route path="/add-log" component={AddLogComponent} />
+                                <Route path="/edit-log" component={EditLogComponent} />
                             </Switch>
                         </Router>
                         </div>
@@ -30,4 +30,4 @@ const EmailRouter = () => {
     )
 }
 
-export default EmailRouter;
+export default LogRouter;

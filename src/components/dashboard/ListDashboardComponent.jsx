@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import ApiService from "../../service/EmailApiService";
-import DataTable from "../Tables/Datatable";
+import ApiService from "../../service/DashboardApiService";
+import DataTable from "../../components/Tables/Datatable";
 
-class ListEmailComponent extends Component {
+class ListDashboardComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -123,68 +123,68 @@ class ListEmailComponent extends Component {
                     // Datatable key setup
                     keys: true
                 },
-            emails: [],
+            dashboards: [],
             message: null,
             loaded_data:false
         }
-        this.deleteEmail = this.deleteEmail.bind(this);
-        this.editEmail = this.editEmail.bind(this);
-        this.addEmail = this.addEmail.bind(this);
-        this.reloadEmailList = this.reloadEmailList.bind(this);
-    }
-    componentDidMount() {
-        this.reloadEmailList();
+        this.deleteDashboard = this.deleteDashboard.bind(this);
+        this.editDashboard = this.editDashboard.bind(this);
+        this.addDashboard = this.addDashboard.bind(this);
+        this.reloadDashboardList = this.reloadDashboardList.bind(this);
     }
 
-    reloadEmailList = async() => {
-        ApiService.fetchEmails().then(
-            res =>{this.setState({emails: res.data, loaded_data: true});}
+    componentDidMount() {
+        this.reloadDashboardList();
+    }
+
+    reloadDashboardList = async() => {
+        ApiService.fetchDashboards().then(
+            res =>{this.setState({dashboards: res.data, loaded_data: true});}
         )
     }
 
-    deleteEmail(emailId) {
-        ApiService.deleteEmail(emailId)
+    deleteDashboard(dashId) {
+        ApiService.deleteDashboard(dashId)
             .then(res => {
-                this.setState({message : 'Email deleted successfully.'});
-                // this.setState({emails: this.state.emails.filter(email => email.id !== emailId)});
+                this.setState({message : 'Dashboard deleted successfully.'});
+                // this.setState({dashboards: this.state.dashboards.filter(dash => dash.id !== dashId)});
                 window.location.reload(false);
             })
-
     }
 
-    editEmail(id) {
-        window.localStorage.setItem("emailId", id);
-        this.props.history.push('/edit-email');
+    editDashboard(id) {
+        window.localStorage.setItem("dashId", id);
+        this.props.history.push('/edit-dashboard');
     }
 
-    addEmail() {
-        window.localStorage.removeItem("emailId");
-        this.props.history.push('/add-email');
+    addDashboard() {
+        window.localStorage.removeItem("dashId");
+        this.props.history.push('/add-dashboard');
     }
 
-    deleteEmails() {
+    deleteDashboards() {
         var selected_ids = JSON.parse(window.localStorage.getItem("selected_ids"));
         
         
         for(var i =0;i<selected_ids.length;i++){
-            this.deleteEmail(parseInt(selected_ids[i]));
+            this.deleteDashboard(parseInt(selected_ids[i]));
             
         }
 
         window.localStorage.removeItem("selected_ids");
         window.location.reload(false);
     }
+
     render() {
-        //const isLoaded = this.state.is_loaded;
         return (
             <div >
                 {this.state.loaded_data === false ? (
                     <div>Loading...</div>
                 ) : (
                     <div >
-                <h2 className="text-center">Email List</h2>
-                <button className="btn btn-primary" onClick={() => this.addEmail()} style={{marginBottom:"20px"}}> Add Email</button>
-                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteEmails()} style={{marginBottom:"20px",marginLeft:"20px"}}> Delete Selected Emails</button>
+                <h2 className="text-center">Dashboard List</h2>
+                <button className="btn btn-primary" onClick={() => this.addDashboard()} style={{marginBottom:"20px"}}> Add Dashboard</button>
+                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteDashboards()} style={{marginBottom:"20px",marginLeft:"20px"}}> Delete Selected Dashboards</button>
                 <DataTable options={this.state.dtOptions1}>
                     <table className="table table-striped" id="datatables-reponsive" width="100%" >
                         <thead>
@@ -192,40 +192,39 @@ class ListEmailComponent extends Component {
                                 <th></th>
                                 <th><input type="checkbox" id="select_all" name="select_all" /></th>
                                 <th>Id</th>
-                                <th>Email</th>
-                                <th>Password</th>
-                                <th>POP</th>
-                                <th>POP Port</th>
-                                <th>SSL</th>
+                                <th>HWID</th>
+                                <th>Note</th>
+                                <th>IP</th>
+                                <th>Campaign Type</th>
+                                <th>Lifetime Activity</th>
+                                <th>Daily Activity</th>
+                                <th>Last Hour Activity</th>
                                 <th>Status</th>
-                                <th>S1</th>
-                                <th>S2</th>
-                                <th>S3</th>
+                                <th>Owner</th>
                                 <th>Last Access</th>
-                                {/* <th>Actions</th> */}
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                this.state.emails.map(
-                                email =>
-                                        <tr key={email.id}>
+                                this.state.dashboards.map(
+                                dash =>
+                                        <tr key={dash.id}>
                                             <td></td>
                                             <td>
-                                                <button className="btn btn-success"  onClick={() => this.editEmail(email.id)}><i className="fas fa-edit"></i> </button>
-                                                <button className="btn btn-danger" onClick={() => this.deleteEmail(email.id)}><i className="fas fa-eraser"></i> </button>
+                                                <button className="btn btn-success" onClick={() => this.editDashboard(dash.id)}><i className="fas fa-edit"></i> </button>
+                                                <button className="btn btn-danger" onClick={() => this.deleteDashboard(dash.id)}><i className="fas fa-eraser"></i> </button>
                                             </td>
-                                            <td>{email.id}</td>
-                                            <td>{email.email}</td>
-                                            <td>{email.password}</td>
-                                            <td>{email.pop}</td>
-                                            <td>{email.port}</td>
-                                            <td>{email.ssl}</td>
-                                            <td>{email.status}</td>
-                                            <td>{email.campaignS1}</td> 
-                                            <td>{email.campaignS2}</td>
-                                            <td>{email.campaignS3}</td>
-                                            <td>{email.lastAccess}</td>
+                                            <td>{dash.id}</td>
+                                            <td>{dash.hwid}</td>
+                                            <td>{dash.note}</td>
+                                            <td>{dash.ip}</td>
+                                            <td>{dash.campaignType}</td>
+                                            <td>{dash.lifetimeActivity}</td>
+                                            <td>{dash.dailyActivity}</td>
+                                            <td>{dash.lastHourActivity}</td>
+                                            <td>{dash.status}</td>
+                                            <td>{dash.owner}</td>
+                                            <td>{dash.lastAccess}</td>
                                         </tr>
                                 )
                             }
@@ -236,7 +235,6 @@ class ListEmailComponent extends Component {
             </div>
         );
     }
-
 }
 
-export default ListEmailComponent;
+export default ListDashboardComponent;

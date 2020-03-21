@@ -1,15 +1,16 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import ListEmailComponent from "./ListEmailComponent.jsx";
-import AddEmailComponent from "./AddEmailComponent.jsx";
-import EditEmailComponent from "./EditEmailComponent.jsx";
+import ListUserAgentComponent from "./ListUserAgentComponent.jsx";
+import AddUserAgentComponent from "./AddUserAgentComponent.jsx";
+import EditUserAgentComponent from "./EditUserAgentComponent.jsx";
 import React from "react";
 import SideBar from '../layout/sidebar';
 import Footer from '../layout/footer';
 import NavBar from '../layout/navbar';
-const EmailRouter = () => {
+
+const UserAgentRouter = () => {
     return(
         <div  className="wrapper">
-            <SideBar active='email'/>
+            <SideBar active='agent'/>
             <div className="main">
                 <NavBar/>
                     <main className="content">
@@ -17,9 +18,9 @@ const EmailRouter = () => {
                         <Router>
                             <Switch>
                                 {/* <Route path="/" exact component={ListEmailComponent} /> */}
-                                <Route path="/emails" component={ListEmailComponent} />
-                                <Route path="/add-email" component={AddEmailComponent} />
-                                <Route path="/edit-email" component={EditEmailComponent} />
+                                <Route path="/useragents" component={ListUserAgentComponent} />
+                                <Route path="/add-agent" component={AddUserAgentComponent} />
+                                <Route path="/edit-agent" component={EditUserAgentComponent} />
                             </Switch>
                         </Router>
                         </div>
@@ -30,4 +31,4 @@ const EmailRouter = () => {
     )
 }
 
-export default EmailRouter;
+export default UserAgentRouter;
