@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/EmailApiService";
 import DataTable from "../Tables/Datatable";
+import $ from 'jquery';
+
 
 class ListEmailComponent extends Component {
     constructor(props) {
@@ -42,26 +44,26 @@ class ListEmailComponent extends Component {
                     // Text translation options
                     // Note the required keywords between underscores (e.g _MENU_)
                     "pageLength": 100,
-
-                    oLanguage: {
-                        sSearch: '<em class="fa fa-search"></em>',
+                    "lengthMenu": [[100, 200, 500, -1], [100, 200, 500, "All"]]
+                    // oLanguage: {
+                    //     sSearch: '<em class="fa fa-search"></em>',
                         
                         
-                        info: 'Showing page _PAGE_ of _PAGES_',
-                        zeroRecords: 'Nothing found',
-                        infoEmpty: 'No records available',
-                        infoFiltered: '(filtered from _MAX_ total records)',
-                        oPaginate: {
-                            sNext: '<em class="fa fa-caret-right"></em>',
-                            sPrevious: '<em class="fa fa-caret-left"></em>'
-                        },
-                        sLengthMenu: 'Show <select>'+
-                        '<option value="100">100</option>'+
-                        '<option value="200">200</option>'+
-                        '<option value="500">500</option>'+
-                        '<option value="-1">All</option>'+
-                        '</select> records per page',
-                    },
+                    //     info: 'Showing page _PAGE_ of _PAGES_',
+                    //     zeroRecords: 'Nothing found',
+                    //     infoEmpty: 'No records available',
+                    //     infoFiltered: '(filtered from _MAX_ total records)',
+                    //     oPaginate: {
+                    //         sNext: '<em class="fa fa-caret-right"></em>',
+                    //         sPrevious: '<em class="fa fa-caret-left"></em>'
+                    //     },
+                    //     sLengthMenu: 'Show <select>'+
+                    //     '<option value="100">100</option>'+
+                    //     '<option value="200">200</option>'+
+                    //     '<option value="500">500</option>'+
+                    //     '<option value="-1">All</option>'+
+                    //     '</select> records per page',
+                    // },
                     
                 },
                 dtOptions2: {
@@ -129,7 +131,7 @@ class ListEmailComponent extends Component {
         }
         this.deleteEmail = this.deleteEmail.bind(this);
         this.editEmail = this.editEmail.bind(this);
-        this.addEmail = this.addEmail.bind(this);
+        // this.addEmail = this.addEmail.bind(this);
         this.reloadEmailList = this.reloadEmailList.bind(this);
     }
     componentDidMount() {
@@ -143,12 +145,13 @@ class ListEmailComponent extends Component {
     }
 
     deleteEmail(emailId) {
-        ApiService.deleteEmail(emailId)
-            .then(res => {
-                this.setState({message : 'Email deleted successfully.'});
-                // this.setState({emails: this.state.emails.filter(email => email.id !== emailId)});
-                window.location.reload(false);
-            })
+        return ApiService.deleteEmail(emailId)
+            // .then(res => {
+            //     // this.setState({message : 'Email deleted successfully.'});
+            //     // this.setState({emails: this.state.emails.filter(email => email.id !== emailId)});
+            //     // window.location.reload(false);
+            //     // console.log(this.state.emails);
+            // })
 
     }
 
@@ -157,19 +160,78 @@ class ListEmailComponent extends Component {
         this.props.history.push('/edit-email');
     }
 
-    addEmail() {
-        window.localStorage.removeItem("emailId");
-        this.props.history.push('/add-email');
+    addEmails = async(e) =>{
+        // window.localStorage.removeItem("emailId");
+        // this.props.history.push('/add-email');
+        
+        var splits,lines,email;
+        var reader = new FileReader();
+
+
+        
+        $("#load_spin").addClass("spinner-border spinner-border-sm text-dark mr-2");
+        $("#loadEmails").prop('disabled',true);
+
+        reader.readAsText(e.target.files[0]);
+        const result = await new Promise((resolve,reject)=> 
+            reader.onload = async function(e) {
+
+                // const sleep = (milliseconds) => {
+                //     return new Promise(resolve => setTimeout(resolve, milliseconds))
+                //   }
+                
+                // Use reader.result
+                lines = reader.result.split('\n');
+
+                // daniel.seely3115@cabinmail.com,yrncpZE%(21,mail.cabinmail.com,995,1,1,0,0,0
+                // jeffrey.pena2598@hight.fun,zgxnmDM%=06,mail.hight.fun,995,1
+
+                
+                for(var i=0;i<lines.length;i++){
+                    splits = lines[i].split(",");
+
+                    if(splits.length >= 5){
+
+                        if(typeof splits[5] === 'undefined') splits[5] = '1';
+                        if(typeof splits[6] === 'undefined') splits[6] = '0';
+                        if(typeof splits[7] === 'undefined') splits[7] = '0';
+                        if(typeof splits[8] === 'undefined') splits[8] = '0';
+
+                        email={
+                            email: splits[0],
+                            password: splits[1],
+                            pop: splits[2],
+                            port: splits[3],
+                            ssl:splits[4],
+                            status: splits[5],
+                            campaignS1: splits[6],
+                            campaignS2: splits[7],
+                            campaignS3: splits[8],
+                            lastAccess: new Date().toISOString(),
+                        }
+                        const res = await ApiService.addEmail(email);
+                    }
+                }
+                resolve(true);
+            }
+        );
+        
+        // this.reloadEmailList();
+        window.location.reload(false);
     }
 
-    deleteEmails() {
+    deleteEmails = async() => {
         var selected_ids = JSON.parse(window.localStorage.getItem("selected_ids"));
         
+        $("#delete_spin").addClass("spinner-border spinner-border-sm text-dark mr-2");
+        $("#delete_selected").prop('disabled',true);
+
+            for(var i =0;i<selected_ids.length;i++){
+
+                await ApiService.deleteEmail(parseInt(selected_ids[i]));
+            }
         
-        for(var i =0;i<selected_ids.length;i++){
-            this.deleteEmail(parseInt(selected_ids[i]));
-            
-        }
+        
 
         window.localStorage.removeItem("selected_ids");
         window.location.reload(false);
@@ -183,8 +245,11 @@ class ListEmailComponent extends Component {
                 ) : (
                     <div >
                 <h2 className="text-center">Email List</h2>
-                <button className="btn btn-primary" onClick={() => this.addEmail()} style={{marginBottom:"20px"}}> Add Email</button>
-                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteEmails()} style={{marginBottom:"20px",marginLeft:"20px"}}> Delete Selected Emails</button>
+                {/* <input type="file" className="fileSelect btn btn-primary" onChange={(e) => this.addEmails(e)} style={{marginBottom:"20px"}} /> */}
+                <input type="file" Style="display:none;" id="file" name="file" accept=".csv,text/csv,.txt" onChange={(e) => this.addEmails(e)}/>
+                <button className="btn btn-primary" id="loadEmails" value="loadEmails" style={{marginBottom:"20px"}} onClick={()=>document.getElementById('file').click()}><div id="load_spin" role="status"/> Import Emails</button>
+                
+                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteEmails()} style={{marginBottom:"20px",marginLeft:"20px"}}><div id="delete_spin" role="status"/> Delete Selected Emails</button>
                 <DataTable options={this.state.dtOptions1}>
                     <table className="table table-striped" id="datatables-reponsive" width="100%" >
                         <thead>

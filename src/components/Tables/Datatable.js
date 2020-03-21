@@ -57,10 +57,10 @@ export default class DataTable extends Component {
 
         $(this.tableElement).on('click', '#select_all', function() {
             if ($('#select_all:checked').val() === 'on') {
-                dtInstance.api().rows().select();
+                dtInstance.api().rows({ page: 'current' }).select();
             }
             else {
-                dtInstance.api().rows().deselect();
+                dtInstance.api().rows({ page: 'current' }).deselect();
             }
               
           }); 

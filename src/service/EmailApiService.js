@@ -23,11 +23,11 @@ class EmailApiService {
         return axios.delete(USER_API_BASE_URL + '/' + emailId);
     }
 
-    addEmail(email) {
+    addEmail(email){
         return axios.post(USER_API_BASE_URL, email);
     }
 
-    editEmail(email) {
+    editEmail (email)  {
         // console.log(email);
         return axios.patch(USER_API_BASE_URL + '/' + email.id, email,{ headers: { 'Content-Type': 'application/json' } })
         //.then(response =>{console.log(response)}).catch(error=>{console.log(error);});

@@ -29,26 +29,27 @@ class ListSettingComponent extends Component {
                     // Text translation options
                     // Note the required keywords between underscores (e.g _MENU_)
                     "pageLength": 100,
+                    "lengthMenu": [[100, 200, 500, -1], [100, 200, 500, "All"]]
 
-                    oLanguage: {
-                        sSearch: '<em className="fa fa-search"></em>',
+                    // oLanguage: {
+                    //     sSearch: '<em className="fa fa-search"></em>',
                         
                         
-                        info: 'Showing page _PAGE_ of _PAGES_',
-                        zeroRecords: 'Nothing found',
-                        infoEmpty: 'No records available',
-                        infoFiltered: '(filtered from _MAX_ total records)',
-                        oPaginate: {
-                            sNext: '<em className="fa fa-caret-right"></em>',
-                            sPrevious: '<em className="fa fa-caret-left"></em>'
-                        },
-                        sLengthMenu: 'Show <select>'+
-                        '<option value="100">100</option>'+
-                        '<option value="200">200</option>'+
-                        '<option value="500">500</option>'+
-                        '<option value="-1">All</option>'+
-                        '</select> records per page',
-                    },
+                    //     info: 'Showing page _PAGE_ of _PAGES_',
+                    //     zeroRecords: 'Nothing found',
+                    //     infoEmpty: 'No records available',
+                    //     infoFiltered: '(filtered from _MAX_ total records)',
+                    //     oPaginate: {
+                    //         sNext: '<em className="fa fa-caret-right"></em>',
+                    //         sPrevious: '<em className="fa fa-caret-left"></em>'
+                    //     },
+                    //     sLengthMenu: 'Show <select>'+
+                    //     '<option value="100">100</option>'+
+                    //     '<option value="200">200</option>'+
+                    //     '<option value="500">500</option>'+
+                    //     '<option value="-1">All</option>'+
+                    //     '</select> records per page',
+                    // },
                     
                 },
                 dtOptions2: {
@@ -135,8 +136,8 @@ class ListSettingComponent extends Component {
         ApiService.deleteSetting(settingId)
             .then(res => {
                 this.setState({message : 'Setting deleted successfully.'});
-                // this.setState({proxies: this.state.proxies.filter(proxy => proxy.id !== proxyId)});
-                window.location.reload(false);
+                this.setState({settings: this.state.settings.filter(setting => setting.id !== settingId)});
+                // window.location.reload(false);
             })
     }
 
@@ -159,7 +160,7 @@ class ListSettingComponent extends Component {
         }
         
         window.localStorage.removeItem("selected_ids");
-        window.location.reload(false);
+        // window.location.reload(false);
     }
 
     onChange = (e) =>{

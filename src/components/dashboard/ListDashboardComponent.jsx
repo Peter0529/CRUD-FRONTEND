@@ -42,26 +42,27 @@ class ListDashboardComponent extends Component {
                     // Text translation options
                     // Note the required keywords between underscores (e.g _MENU_)
                     "pageLength": 100,
+                    "lengthMenu": [[100, 200, 500, -1], [100, 200, 500, "All"]]
 
-                    oLanguage: {
-                        sSearch: '<em class="fa fa-search"></em>',
+                    // oLanguage: {
+                    //     sSearch: '<em class="fa fa-search"></em>',
                         
                         
-                        info: 'Showing page _PAGE_ of _PAGES_',
-                        zeroRecords: 'Nothing found',
-                        infoEmpty: 'No records available',
-                        infoFiltered: '(filtered from _MAX_ total records)',
-                        oPaginate: {
-                            sNext: '<em class="fa fa-caret-right"></em>',
-                            sPrevious: '<em class="fa fa-caret-left"></em>'
-                        },
-                        sLengthMenu: 'Show <select>'+
-                        '<option value="100">100</option>'+
-                        '<option value="200">200</option>'+
-                        '<option value="500">500</option>'+
-                        '<option value="-1">All</option>'+
-                        '</select> records per page',
-                    },
+                    //     info: 'Showing page _PAGE_ of _PAGES_',
+                    //     zeroRecords: 'Nothing found',
+                    //     infoEmpty: 'No records available',
+                    //     infoFiltered: '(filtered from _MAX_ total records)',
+                    //     oPaginate: {
+                    //         sNext: '<em class="fa fa-caret-right"></em>',
+                    //         sPrevious: '<em class="fa fa-caret-left"></em>'
+                    //     },
+                    //     sLengthMenu: 'Show <select>'+
+                    //     '<option value="100">100</option>'+
+                    //     '<option value="200">200</option>'+
+                    //     '<option value="500">500</option>'+
+                    //     '<option value="-1">All</option>'+
+                    //     '</select> records per page',
+                    // },
                     
                 },
                 dtOptions2: {
@@ -147,8 +148,8 @@ class ListDashboardComponent extends Component {
         ApiService.deleteDashboard(dashId)
             .then(res => {
                 this.setState({message : 'Dashboard deleted successfully.'});
-                // this.setState({dashboards: this.state.dashboards.filter(dash => dash.id !== dashId)});
-                window.location.reload(false);
+                this.setState({dashboards: this.state.dashboards.filter(dash => dash.id !== dashId)});
+                // window.location.reload(false);
             })
     }
 
@@ -172,7 +173,7 @@ class ListDashboardComponent extends Component {
         }
 
         window.localStorage.removeItem("selected_ids");
-        window.location.reload(false);
+        // window.location.reload(false);
     }
 
     render() {
