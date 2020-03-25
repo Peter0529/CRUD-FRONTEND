@@ -211,6 +211,7 @@ class ListEmailComponent extends Component {
                             campaignS2: splits[7],
                             campaignS3: splits[8],
                             lastAccess: new Date().toISOString(),
+                            fails:0,
                         })
                     }
                 }

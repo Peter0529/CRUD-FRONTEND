@@ -135,6 +135,10 @@ class ListProxyComponent extends Component {
                 type:'PRIVATE',
                 connection:'HTTP',
                 campaignType:'S1',
+                usageLastHour:0,
+                usageTotal:0,
+                fails:0,
+                standby:0,
             },
             message: null,
             loaded_data:false
@@ -213,6 +217,10 @@ class ListProxyComponent extends Component {
             proxy['country'] = _imports.country;
             proxy['campaignType'] = _imports.campaignType;
             proxy['lastAccess'] = new Date().toISOString();
+            proxy['usageLastHour'] = _imports.usageLastHour;
+            proxy['usageTotal'] = _imports.usageTotal;
+            proxy['fails'] = _imports.fails;
+            proxy['standby'] = _imports.standby;
 
             
             if(i === proxies.length - 1)
