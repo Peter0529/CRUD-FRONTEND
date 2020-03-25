@@ -8,7 +8,8 @@ class ListProxyComponent extends Component {
         super(props)
         this.state = {
                 dtOptions1: {
-                    
+                    "autoWidth": false,
+                    "bAutoWidth": false,
                     'paging': true, // Table pagination
                     'ordering': true, // Column ordering
                     'info': true, // Bottom left status text
@@ -34,7 +35,7 @@ class ListProxyComponent extends Component {
                     ],
                     select: {
                         style:    'multi',
-                        // selector: 'td:first-child'
+                        selector: 'td:not(:nth-child(2),:nth-child(1))'
                     },
                     "search": {
                         "regex": true
@@ -127,6 +128,14 @@ class ListProxyComponent extends Component {
                     keys: true
                 },
             proxies: [],
+            imports:{
+                proxies:'',
+                note:'',
+                country:'US',
+                type:'PRIVATE',
+                connection:'HTTP',
+                campaignType:'S1',
+            },
             message: null,
             loaded_data:false
         }
@@ -149,7 +158,7 @@ class ListProxyComponent extends Component {
         ApiService.deleteProxy(proxyId)
             .then(res => {
                 this.setState({message : 'Proxy deleted successfully.'});
-                this.setState({proxies: this.state.proxies.filter(proxy => proxy.id !== proxyId)});
+                // this.setState({proxies: this.state.proxies.filter(proxy => proxy.id !== proxyId)});
                 // window.location.reload(false);
             })
 
@@ -171,77 +180,62 @@ class ListProxyComponent extends Component {
         $("#delete_spin").addClass("spinner-border spinner-border-sm text-dark mr-2");
         $("#delete_selected").prop('disabled',true);
 
-        for(var i =0;i<selected_ids.length;i++){
-            await ApiService.deleteProxy(parseInt(selected_ids[i]));
-            
+        for(var i =0;i<selected_ids.length - 1;i++){
+            ApiService.deleteProxy(parseInt(selected_ids[i]));
         }
         
+        await ApiService.deleteProxy(parseInt(selected_ids[i]));
+
         window.localStorage.removeItem("selected_ids");
-        window.location.reload(false);
-        
-        
+        $("#delete_spin").removeClass();
+        $("#delete_selected").prop('disabled',false);
+        // window.location.reload(false);
     }
 
-    addProxies = async(e) =>{
-        // window.localStorage.removeItem("emailId");
-        // this.props.history.push('/add-email');
-        
-        var splits,lines,proxy;
-        var reader = new FileReader();
 
+    importProxies = async() =>{
 
-        
         $("#load_spin").addClass("spinner-border spinner-border-sm text-dark mr-2");
         $("#loadProxies").prop('disabled',true);
 
-        reader.readAsText(e.target.files[0]);
-        const result = await new Promise((resolve,reject)=> 
-            reader.onload = async function(e) {
+        var _imports = this.state.imports;
 
-                // const sleep = (milliseconds) => {
-                //     return new Promise(resolve => setTimeout(resolve, milliseconds))
-                //   }
-                
-                // Use reader.result
-                lines = reader.result.split('\n');
+        var proxies = _imports.proxies.split('\n');
 
-                
+        var proxy = {};
+        for(var i=0;i<proxies.length;i++){
+            
+            proxy = {};
+            proxy['note'] = _imports.note;
+            proxy['proxy'] = proxies[i];
+            proxy['connection'] = _imports.connection;
+            proxy['type'] = _imports.type;
+            proxy['country'] = _imports.country;
+            proxy['campaignType'] = _imports.campaignType;
+            proxy['lastAccess'] = new Date().toISOString();
 
-                
-                for(var i=0;i<lines.length;i++){
-                    splits = lines[i].split(",");
-
-                    if(splits.length >= 5){
-
-                        if(typeof splits[5] === 'undefined') splits[5] = '1';
-                        if(typeof splits[6] === 'undefined') splits[6] = '0';
-                        if(typeof splits[7] === 'undefined') splits[7] = '0';
-                        if(typeof splits[8] === 'undefined') splits[8] = '0';
-
-                        proxy={
-                            email: splits[0],
-                            password: splits[1],
-                            pop: splits[2],
-                            port: splits[3],
-                            ssl:splits[4],
-                            status: splits[5],
-                            campaignS1: splits[6],
-                            campaignS2: splits[7],
-                            campaignS3: splits[8],
-                            lastAccess: new Date().toISOString(),
-                        }
-                        const res = await ApiService.addProxy(proxy);
-                    }
-                }
-                resolve(true);
+            
+            if(i === proxies.length - 1)
+            {
+                await ApiService.addProxy(proxy);
             }
-        );
-        
+            else
+            {
+                ApiService.addProxy(proxy);
+            }
+        }
+
+        $("#modalClose").click();
         window.location.reload(false);
+
     }
 
-    showImportModal = () =>{
+    onImportChange = (e) => {
+        e.preventDefault();
 
+        var _imports = this.state.imports;
+        _imports[e.target.id] = e.target.value;
+        this.setState({ imports : _imports});
     }
 
     render() {
@@ -253,41 +247,41 @@ class ListProxyComponent extends Component {
                     <div >
                 <h2 className="text-center">Proxy List</h2>
                 {/* <input type="file" Style="display:none;" id="file" name="file" accept=".csv,text/csv,.txt" onChange={(e) => this.addProxies(e)}/> */}
-                <button className="btn btn-primary" id="loadProxies" value="loadProxies"  data-toggle="modal" data-target="#defaultModalPrimary" style={{marginBottom:"20px"}} onClick={()=>this.showImportModal}><div id="load_spin" role="status"/> Import Proxies</button>
+                <button className="btn btn-primary" data-toggle="modal" data-target="#defaultModalPrimary" style={{marginBottom:"20px"}}> Import Proxies</button>
 
                 {/* <button className="btn btn-primary" onClick={() => this.addProxy()} style={{marginBottom:"20px"}}> Add Proxy</button> */}
                 <button className="btn btn-secondary" id = "delete_selected" onClick={() => this.deleteProxies()} style={{marginBottom:"20px",marginLeft:"20px"}}><div id="delete_spin" role="status"/> Delete Selected Proxies</button>
 
                 {/* Import Proxies Modal */}
-                <div class="modal fade show" id="defaultModalPrimary" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Import Proxies</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <div className="modal fade show" id="defaultModalPrimary" tabIndex="-1" role="dialog" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Import Proxies</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body m-3">
+                            <div className="modal-body m-3">
                                 <label>IP:PORT</label>
-                                <textarea class="form-control" id="textarea_proxies" placeholder="Paste proxies here..." rows="15"></textarea>
+                                <textarea className="form-control" id="proxies" placeholder="Paste proxies here..." rows="15" onChange={(e) => this.onImportChange(e)}></textarea>
 
-                                <div class="form-group">
-                                    <label class="form-label">Note</label>
-                                    <input type="text" id="note" class="form-control" placeholder="Note"/>
+                                <div className="form-group">
+                                    <label className="form-label">Note</label>
+                                    <input type="text" id="note" className="form-control" placeholder="Note" onChange={(e) => this.onImportChange(e)}/>
                                 </div>
 
                                 <div className="form-group row">
-                                    <div class="form-group col-md-6">
-                                        <label for="inputState">Country</label>
-                                        <select id="country" class="form-control">
+                                    <div className="form-group col-md-6">
+                                        <label htmlFor="inputState">Country</label>
+                                        <select id="country" className="form-control" onChange={(e) => this.onImportChange(e)}>
                                             <option value="US">US</option>
                                         </select>
                                     </div>
 
-                                    <div class="form-group col-md-6">
-                                        <label for="inputState">Connection</label>
-                                        <select id="connection" class="form-control">
+                                    <div className="form-group col-md-6">
+                                        <label htmlFor="inputState">Connection</label>
+                                        <select id="connection" className="form-control" onChange={(e) => this.onImportChange(e)}>
                                             <option value="HTTP">HTTP</option>
                                             <option value="SOCK5">SOCK5</option>
                                         </select>
@@ -295,17 +289,17 @@ class ListProxyComponent extends Component {
                                 </div>
 
                                 <div className="form-group row">
-                                    <div class="form-group col-md-6">
-                                        <label for="inputState">Type</label>
-                                        <select id="type" class="form-control">
+                                    <div className="form-group col-md-6">
+                                        <label htmlFor="inputState">Type</label>
+                                        <select id="type" className="form-control" onChange={(e) => this.onImportChange(e)}>
                                             <option value="PRIVATE">PRIVATE</option>
                                             <option value="SHARED">SHARED</option>
                                         </select>
                                     </div>
 
-                                    <div class="form-group col-md-6">
-                                        <label for="inputState">Campaigns</label>
-                                        <select id="campaigns" class="form-control">
+                                    <div className="form-group col-md-6">
+                                        <label htmlFor="inputState">Campaign</label>
+                                        <select id="campaignType" className="form-control" onChange={(e) => this.onImportChange(e)}>
                                             <option value="S1">S1</option>
                                             <option value="S2">S2</option>
                                             <option value="S3">S3</option>
@@ -314,9 +308,9 @@ class ListProxyComponent extends Component {
                                 </div>
 
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                            <div className="modal-footer">
+                                <button type="button" id = "modalClose" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" id = "loadProxies"className="btn btn-primary" onClick={this.importProxies}><div id="load_spin" role="status"/> Import</button>
                             </div>
                         </div>
                     </div>
@@ -352,7 +346,7 @@ class ListProxyComponent extends Component {
                                             <td></td>
                                             <td>
                                                 <button className="btn btn-success" onClick={() => this.editProxy(proxy.id)}><i className="fas fa-edit"></i> </button>
-                                                <button className="btn btn-danger" onClick={() => this.deleteProxy(proxy.id)}><i className="fas fa-eraser"></i> </button>
+                                                <button className="btn btn-danger" id="delete" onClick={() => this.deleteProxy(proxy.id)}><i className="fas fa-eraser"></i> </button>
                                             </td>
                                             <td>{proxy.id}</td>
                                             <td>{proxy.proxy}</td>

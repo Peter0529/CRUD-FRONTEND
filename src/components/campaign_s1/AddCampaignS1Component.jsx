@@ -11,8 +11,8 @@ class AddCampaignS1Component extends Component{
             url:'',
             name:'',
             tracks:'',
-            campaignType:'',
-            country:'',
+            campaignType:'Track2',
+            country:'US',
             totalPlays:'',
             totalFollows:'',
             totalReups:'',
@@ -31,7 +31,7 @@ class AddCampaignS1Component extends Component{
             favorited:'',
             startDate:'',
             endDate:'',
-            status:'on',
+            status:'ON',
             fails:'',
             lastAccess:'',
             message:null,
@@ -82,14 +82,27 @@ class AddCampaignS1Component extends Component{
                 </div>
 
                 <div className="form-row">
+                
+                                        
                     <div className="form-group col-md-3">
-                        <label>Campaign Type:</label>
-                        <input placeholder="Campaign Type" name="campaignType" className="form-control" value={this.state.campaignType} onChange={this.onChange}/>
+                        <label htmlFor="campaignType">Campaign Type:</label>
+                        {/* <input placeholder="Campaign Type" name="campaignType" className="form-control" value={this.state.campaignType} onChange={this.onChange}/> */}
+                        <select name="campaignType" className="form-control" value={this.state.campaignType} onChange={this.onChange}>
+                            <option value="Track2">Track2</option>
+                            <option value="List">List</option>
+                            <option value="Album">Album</option>
+                            <option value="SearchTrack">SearchTrack</option>
+                            <option value="SearchList">SearchList</option>
+                            <option value="SearchAlbum">SearchAlbum</option>
+                        </select>
                     </div>
 
                     <div className="form-group col-md-2">
                         <label>Country:</label>
-                        <input placeholder="Country" name="country" className="form-control" value={this.state.country} onChange={this.onChange}/>
+                        {/* <input placeholder="Country" name="country" className="form-control" value={this.state.country} onChange={this.onChange}/> */}
+                        <select name="country" className="form-control" value={this.state.country} onChange={this.onChange}>
+                            <option value="US">US</option>
+                        </select>
                     </div>
 
                     <div className="form-group col-md-2">
@@ -206,8 +219,8 @@ class AddCampaignS1Component extends Component{
                         <label>Status:</label>
                         {/* <input type="select" name="status" className="form-control" value={this.state.status} onChange={this.onChange}/> */}
                         <select name="status" className="form-control" value = {this.state.status} onChange={this.onChange}>
-                            <option value="on">ON</option>
-                            <option value="off">OFF</option>
+                            <option value="ON">ON</option>
+                            <option value="OFF">OFF</option>
                         </select>
                     </div>
                 </div>

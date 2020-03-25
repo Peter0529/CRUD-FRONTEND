@@ -9,6 +9,8 @@ class ListEmailComponent extends Component {
         super(props)
         this.state = {
                 dtOptions1: {
+                    "autoWidth": false,
+                    "bAutoWidth": false,
                     'paging': true, // Table pagination
                     'ordering': true, // Column ordering
                     'info': true, // Bottom left status text
@@ -34,7 +36,7 @@ class ListEmailComponent extends Component {
                     ],
                     select: {
                         style:    'multi',
-                        // selector: 'td:first-child'
+                        selector: 'td:not(:nth-child(2),:nth-child(1))'
                     },
                     "search": {
                         "regex": true
@@ -146,12 +148,12 @@ class ListEmailComponent extends Component {
 
     deleteEmail(emailId) {
         return ApiService.deleteEmail(emailId)
-            // .then(res => {
-            //     // this.setState({message : 'Email deleted successfully.'});
-            //     // this.setState({emails: this.state.emails.filter(email => email.id !== emailId)});
-            //     // window.location.reload(false);
-            //     // console.log(this.state.emails);
-            // })
+            .then(res => {
+                this.setState({message : 'Email deleted successfully.'});
+                // this.setState({emails: this.state.emails.filter(email => email.id !== emailId)});
+                // window.location.reload(false);
+                // console.log(this.state.emails);
+            })
 
     }
 
@@ -176,6 +178,7 @@ class ListEmailComponent extends Component {
         const result = await new Promise((resolve,reject)=> 
             reader.onload = async function(e) {
 
+                var i;
                 // const sleep = (milliseconds) => {
                 //     return new Promise(resolve => setTimeout(resolve, milliseconds))
                 //   }
@@ -186,8 +189,8 @@ class ListEmailComponent extends Component {
                 // daniel.seely3115@cabinmail.com,yrncpZE%(21,mail.cabinmail.com,995,1,1,0,0,0
                 // jeffrey.pena2598@hight.fun,zgxnmDM%=06,mail.hight.fun,995,1
 
-                
-                for(var i=0;i<lines.length;i++){
+                var emails=[];
+                for(i=0;i<lines.length;i++){
                     splits = lines[i].split(",");
 
                     if(splits.length >= 5){
@@ -197,7 +200,7 @@ class ListEmailComponent extends Component {
                         if(typeof splits[7] === 'undefined') splits[7] = '0';
                         if(typeof splits[8] === 'undefined') splits[8] = '0';
 
-                        email={
+                        emails.push({
                             email: splits[0],
                             password: splits[1],
                             pop: splits[2],
@@ -208,10 +211,17 @@ class ListEmailComponent extends Component {
                             campaignS2: splits[7],
                             campaignS3: splits[8],
                             lastAccess: new Date().toISOString(),
-                        }
-                        const res = await ApiService.addEmail(email);
+                        })
                     }
                 }
+
+                
+                for(i=0;i<emails.length - 1;i++){
+                    ApiService.addEmail(emails[i]);
+                }
+
+                await ApiService.addEmail(emails[i]);
+
                 resolve(true);
             }
         );
@@ -221,20 +231,24 @@ class ListEmailComponent extends Component {
     }
 
     deleteEmails = async() => {
+        var i;
         var selected_ids = JSON.parse(window.localStorage.getItem("selected_ids"));
         
         $("#delete_spin").addClass("spinner-border spinner-border-sm text-dark mr-2");
         $("#delete_selected").prop('disabled',true);
 
-            for(var i =0;i<selected_ids.length;i++){
+            for(i =0;i<selected_ids.length - 1;i++){
 
-                await ApiService.deleteEmail(parseInt(selected_ids[i]));
+                ApiService.deleteEmail(parseInt(selected_ids[i]));
             }
-        
-        
 
+            await ApiService.deleteEmail(parseInt(selected_ids[i]));
+        
         window.localStorage.removeItem("selected_ids");
-        window.location.reload(false);
+        // window.location.reload(false);
+
+        $("#delete_spin").removeClass();
+        $("#delete_selected").prop('disabled',false);
     }
     render() {
         //const isLoaded = this.state.is_loaded;
@@ -262,6 +276,7 @@ class ListEmailComponent extends Component {
                                 <th>POP</th>
                                 <th>POP Port</th>
                                 <th>SSL</th>
+                                <th>Fails</th>
                                 <th>Status</th>
                                 <th>S1</th>
                                 <th>S2</th>
@@ -278,7 +293,7 @@ class ListEmailComponent extends Component {
                                             <td></td>
                                             <td>
                                                 <button className="btn btn-success"  onClick={() => this.editEmail(email.id)}><i className="fas fa-edit"></i> </button>
-                                                <button className="btn btn-danger" onClick={() => this.deleteEmail(email.id)}><i className="fas fa-eraser"></i> </button>
+                                                <button className="btn btn-danger" id="delete" onClick={() => this.deleteEmail(email.id)}><i className="fas fa-eraser"></i> </button>
                                             </td>
                                             <td>{email.id}</td>
                                             <td>{email.email}</td>
@@ -286,6 +301,7 @@ class ListEmailComponent extends Component {
                                             <td>{email.pop}</td>
                                             <td>{email.port}</td>
                                             <td>{email.ssl}</td>
+                                            <td>{email.fails}</td>
                                             <td>{email.status}</td>
                                             <td>{email.campaignS1}</td> 
                                             <td>{email.campaignS2}</td>

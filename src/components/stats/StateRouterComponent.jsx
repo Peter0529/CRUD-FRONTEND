@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import ListStateComponent from "./ListStateComponent.jsx/index.js";
+import ListStateComponent from "./ListStateComponent.jsx";
 import React from "react";
 import SideBar from '../layout/sidebar';
 import Footer from '../layout/footer';

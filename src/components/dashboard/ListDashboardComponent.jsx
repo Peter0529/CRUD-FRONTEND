@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/DashboardApiService";
 import DataTable from "../../components/Tables/Datatable";
+import $ from 'jquery';
 
 class ListDashboardComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
                 dtOptions1: {
+                    "autoWidth": false,
+                    "bAutoWidth": false,
                     'paging': true, // Table pagination
                     'ordering': true, // Column ordering
                     'info': true, // Bottom left status text
@@ -32,7 +35,7 @@ class ListDashboardComponent extends Component {
                     ],
                     select: {
                         style:    'multi',
-                        // selector: 'td:first-child'
+                        selector: 'td:not(:nth-child(2),:nth-child(1))'
                     },
                     "search": {
                         "regex": true
@@ -148,7 +151,7 @@ class ListDashboardComponent extends Component {
         ApiService.deleteDashboard(dashId)
             .then(res => {
                 this.setState({message : 'Dashboard deleted successfully.'});
-                this.setState({dashboards: this.state.dashboards.filter(dash => dash.id !== dashId)});
+                // this.setState({dashboards: this.state.dashboards.filter(dash => dash.id !== dashId)});
                 // window.location.reload(false);
             })
     }
@@ -163,17 +166,25 @@ class ListDashboardComponent extends Component {
         this.props.history.push('/add-dashboard');
     }
 
-    deleteDashboards() {
+    deleteDashboards = async() => {
         var selected_ids = JSON.parse(window.localStorage.getItem("selected_ids"));
         
-        
-        for(var i =0;i<selected_ids.length;i++){
-            this.deleteDashboard(parseInt(selected_ids[i]));
+        $("#delete_spin").addClass("spinner-border spinner-border-sm text-dark mr-2");
+        $("#delete_selected").prop('disabled',true);
+
+        var i;
+        for(i =0;i<selected_ids.length - 1;i++){
+            ApiService.deleteDashboard(parseInt(selected_ids[i]));
             
         }
 
+        await ApiService.deleteDashboard(parseInt(selected_ids[i]));
+
         window.localStorage.removeItem("selected_ids");
         // window.location.reload(false);
+
+        $("#delete_spin").removeClass();
+        $("#delete_selected").prop('disabled',false);
     }
 
     render() {
@@ -185,7 +196,7 @@ class ListDashboardComponent extends Component {
                     <div >
                 <h2 className="text-center">Dashboard List</h2>
                 <button className="btn btn-primary" onClick={() => this.addDashboard()} style={{marginBottom:"20px"}}> Add Dashboard</button>
-                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteDashboards()} style={{marginBottom:"20px",marginLeft:"20px"}}> Delete Selected Dashboards</button>
+                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteDashboards()} style={{marginBottom:"20px",marginLeft:"20px"}}><div id="delete_spin" role="status"/> Delete Selected Dashboards</button>
                 <DataTable options={this.state.dtOptions1}>
                     <table className="table table-striped" id="datatables-reponsive" width="100%" >
                         <thead>
@@ -213,7 +224,7 @@ class ListDashboardComponent extends Component {
                                             <td></td>
                                             <td>
                                                 <button className="btn btn-success" onClick={() => this.editDashboard(dash.id)}><i className="fas fa-edit"></i> </button>
-                                                <button className="btn btn-danger" onClick={() => this.deleteDashboard(dash.id)}><i className="fas fa-eraser"></i> </button>
+                                                <button className="btn btn-danger" id="delete" onClick={() => this.deleteDashboard(dash.id)}><i className="fas fa-eraser"></i> </button>
                                             </td>
                                             <td>{dash.id}</td>
                                             <td>{dash.hwid}</td>

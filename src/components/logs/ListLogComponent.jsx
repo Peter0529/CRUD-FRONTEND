@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/LogApiService";
 import DataTable from "../../components/Tables/Datatable";
+import $ from 'jquery';
 
 class ListLogComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
                 dtOptions1: {
+                    "autoWidth": false,
+                    "bAutoWidth": false,
                     'paging': true, // Table pagination
                     'ordering': true, // Column ordering
                     'info': true, // Bottom left status text
@@ -32,7 +35,7 @@ class ListLogComponent extends Component {
                     ],
                     select: {
                         style:    'multi',
-                        // selector: 'td:first-child'
+                        selector: 'td:not(:nth-child(2),:nth-child(1))'
                     },
                     "search": {
                         "regex": true
@@ -147,7 +150,7 @@ class ListLogComponent extends Component {
         ApiService.deleteLog(logId)
             .then(res => {
                 this.setState({message : 'Log deleted successfully.'});
-                this.setState({logs: this.state.logs.filter(log => log.id !== logId)});
+                // this.setState({logs: this.state.logs.filter(log => log.id !== logId)});
                 // window.location.reload(false);
             })
 
@@ -163,17 +166,25 @@ class ListLogComponent extends Component {
         this.props.history.push('/add-log');
     }
 
-    deleteLogs() {
+    deleteLogs = async() => {
         var selected_ids = JSON.parse(window.localStorage.getItem("selected_ids"));
         
-        
-        for(var i =0;i<selected_ids.length;i++){
-            this.deleteLog(parseInt(selected_ids[i]));
+        $("#delete_spin").addClass("spinner-border spinner-border-sm text-dark mr-2");
+        $("#delete_selected").prop('disabled',true);
+
+        var i;
+        for(i =0;i<selected_ids.length - 1;i++){
+            ApiService.deleteLog(parseInt(selected_ids[i]));
             
         }
 
+        await ApiService.deleteLog(parseInt(selected_ids[i]));
+
         window.localStorage.removeItem("selected_ids");
         // window.location.reload(false);
+
+        $("#delete_spin").removeClass();
+        $("#delete_selected").prop('disabled',false);
     }
 
     render() {
@@ -186,7 +197,7 @@ class ListLogComponent extends Component {
                     <div >
                 <h2 className="text-center">Log List</h2>
                 <button className="btn btn-primary" onClick={() => this.addLog()} style={{marginBottom:"20px"}}> Add Log</button>
-                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteLogs()} style={{marginBottom:"20px",marginLeft:"20px"}}> Delete Selected Logs</button>
+                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteLogs()} style={{marginBottom:"20px",marginLeft:"20px"}}><div id="delete_spin" role="status"/> Delete Selected Logs</button>
                 <DataTable options={this.state.dtOptions1}>
                     <table className="table table-striped" id="datatables-reponsive" width="100%" >
                         <thead>
@@ -212,7 +223,7 @@ class ListLogComponent extends Component {
                                             <td></td>
                                             <td>
                                                 <button className="btn btn-success" onClick={() => this.editLog(log.id)}><i className="fas fa-edit"></i> </button>
-                                                <button className="btn btn-danger" onClick={() => this.deleteLog(log.id)}><i className="fas fa-eraser"></i> </button>
+                                                <button className="btn btn-danger" id="delete" onClick={() => this.deleteLog(log.id)}><i className="fas fa-eraser"></i> </button>
                                             </td>
                                             <td>{log.id}</td>
                                             <td>{log.hwid}</td>

@@ -19,7 +19,7 @@ const UserAgentRouter = () => {
                             <Switch>
                                 {/* <Route path="/" exact component={ListEmailComponent} /> */}
                                 <Route path="/useragents" component={ListUserAgentComponent} />
-                                <Route path="/add-agent" component={AddUserAgentComponent} />
+                                {/* <Route path="/add-agent" component={AddUserAgentComponent} /> */}
                                 <Route path="/edit-agent" component={EditUserAgentComponent} />
                             </Switch>
                         </Router>

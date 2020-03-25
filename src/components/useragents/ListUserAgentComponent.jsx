@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/UserAgentApiService";
 import DataTable from "../Tables/Datatable";
+import $ from 'jquery';
 
 class ListUserAgentComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
                 dtOptions1: {
+                    "autoWidth": false,
+                    "bAutoWidth": false,
                     'paging': true, // Table pagination
                     'ordering': true, // Column ordering
                     'info': true, // Bottom left status text
@@ -32,7 +35,7 @@ class ListUserAgentComponent extends Component {
                     ],
                     select: {
                         style:    'multi',
-                        // selector: 'td:first-child'
+                        selector: 'td:not(:nth-child(2),:nth-child(1))'
                     },
                     "search": {
                         "regex": true
@@ -125,6 +128,9 @@ class ListUserAgentComponent extends Component {
                     keys: true
                 },
             agents: [],
+            imports:{
+                agents:'',
+            },
             message: null,
             loaded_data:false
         }
@@ -137,7 +143,7 @@ class ListUserAgentComponent extends Component {
         this.reloadAgentList();
     }
 
-    reloadAgentList = async() => {
+    reloadAgentList(){
         ApiService.fetchAgents().then(
             res =>{this.setState({agents: res.data, loaded_data: true});}
         )
@@ -147,7 +153,7 @@ class ListUserAgentComponent extends Component {
         ApiService.deleteAgent(agentId)
             .then(res => {
                 this.setState({message : 'Agent deleted successfully.'});
-                this.setState({agents: this.state.agents.filter(agent => agent.id !== agentId)});
+                // this.setState({agents: this.state.agents.filter(agent => agent.id !== agentId)});
                 // window.location.reload(false);
             })
 
@@ -163,18 +169,60 @@ class ListUserAgentComponent extends Component {
         this.props.history.push('/add-agent');
     }
 
-    deleteAgents() {
+    deleteAgents = async() => {
         var selected_ids = JSON.parse(window.localStorage.getItem("selected_ids"));
         
-        console.log(selected_ids);
-        for(var i =0;i<selected_ids.length;i++){
-            this.deleteAgent(parseInt(selected_ids[i]));
-            
+        $("#delete_spin").addClass("spinner-border spinner-border-sm text-dark mr-2");
+        $("#delete_selected").prop('disabled',true);
+
+        var i;
+        // console.log(selected_ids);
+        for(i =0;i<selected_ids.length -1 ;i++){
+            ApiService.deleteAgent(parseInt(selected_ids[i]));
         }
+
+        await ApiService.deleteAgent(parseInt(selected_ids[i]));
 
         window.localStorage.removeItem("selected_ids");
         // window.location.reload(false);
+
+        $("#delete_spin").removeClass();
+        $("#delete_selected").prop('disabled',false);
     }
+
+    onImportChange = (e) => {
+        e.preventDefault();
+
+        var _imports = this.state.imports;
+        _imports[e.target.id] = e.target.value;
+        this.setState({ imports : _imports});
+    }
+
+    importAgents = async() =>{
+
+        $("#load_spin").addClass("spinner-border spinner-border-sm text-dark mr-2");
+        $("#loadAgents").prop('disabled',true);
+
+        var _imports = this.state.imports;
+
+        var agents = _imports.agents.split('\n');
+
+        var agent;
+        for(var i=0;i<agents.length;i++){
+            agent = {};
+            agent['agent'] = agents[i];
+
+            if(i === agents.length - 1)
+                await ApiService.addAgent(agent);
+            else
+                ApiService.addAgent(agent);
+        }
+
+        $("#modalClose").click();
+        window.location.reload(false);
+    }
+
+
     render() {
         return (
             <div >
@@ -183,8 +231,34 @@ class ListUserAgentComponent extends Component {
                 ) : (
                     <div >
                 <h2 className="text-center">Agent List</h2>
-                <button className="btn btn-primary" onClick={() => this.addAgent()} style={{marginBottom:"20px"}}> Add Agent</button>
-                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteAgents()} style={{marginBottom:"20px",marginLeft:"20px"}}> Delete Selected Agents</button>
+                <button className="btn btn-primary"  data-toggle="modal" data-target="#defaultModalPrimary" style={{marginBottom:"20px"}}> Import Agents</button>
+                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteAgents()} style={{marginBottom:"20px",marginLeft:"20px"}}><div id="delete_spin" role="status"/> Delete Selected Agents</button>
+
+                {/* Import Agents Modal */}
+                <div className="modal fade show" id="defaultModalPrimary" tabIndex="-1" role="dialog" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Import Agents</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body m-3">
+                                <label>Agent Lines</label>
+                                <textarea className="form-control" id="agents" placeholder="Paste agents here..." rows="15" onChange={(e) => this.onImportChange(e)}></textarea>
+
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" id = "modalClose" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" id = "loadAgents"className="btn btn-primary" onClick={this.importAgents}><div id="load_spin" role="status"/> Import</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* End Agents Modal */}
+
+
                 <DataTable options={this.state.dtOptions1}>
                     <table className="table table-striped" id="datatables-reponsive" width="100%" >
                         <thead>
@@ -197,13 +271,13 @@ class ListUserAgentComponent extends Component {
                         </thead>
                         <tbody>
                             {
-                                this.state.agents.map(
-                                agent =>
+                                // console.log(this.state.agents)
+                                this.state.agents.map( agent =>
                                         <tr key={agent.id}>
                                             <td></td>
                                             <td>
                                                 <button className="btn btn-success"  onClick={() => this.editAgent(agent.id)}><i className="fas fa-edit"></i> </button>
-                                                <button className="btn btn-danger" onClick={() => this.deleteAgent(agent.id)}><i className="fas fa-eraser"></i> </button>
+                                                <button className="btn btn-danger" id="delete" onClick={() => this.deleteAgent(agent.id)}><i className="fas fa-eraser"></i> </button>
                                             </td>
                                             <td>{agent.id}</td>
                                             <td>{agent.agent}</td>

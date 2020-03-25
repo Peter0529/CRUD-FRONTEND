@@ -10,6 +10,7 @@ import SettingRouter from './components/settings/SettingRouterComponent.jsx';
 import VPNRouter from './components/vpn/VPNRouterComponent.jsx';
 import UserAgentRouter from './components/useragents/UserAgentRouterComponent.jsx';
 import CompletedS1Router from './components/completed_s1/CompletedS1RouterComponent.jsx';
+import StatsRouter from './components/stats/StateRouterComponent.jsx';
 
 import $ from 'jquery';
 
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/vpns" exact component={VPNRouter} />
                 <Route path="/useragents" exact component={UserAgentRouter}/>
                 <Route path="/completed_s1" exact component={CompletedS1Router}/>
+                <Route path="/stats" exact component={StatsRouter}/>
             </Switch>
         </Router>
     </div>

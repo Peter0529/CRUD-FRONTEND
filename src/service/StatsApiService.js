@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const STATS_API_BASE_URL = 'http://localhost:8080/cruddb/stats';
+const STATS_API_BASE_URL = 'http://localhost:8080/cruddb/stats_s1';
 
 class StatsApiService {
 

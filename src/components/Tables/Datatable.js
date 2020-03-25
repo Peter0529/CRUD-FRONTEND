@@ -73,8 +73,12 @@ export default class DataTable extends Component {
                 selected_ids.push(data[i][2])//ids
             }
             localStorage.setItem("selected_ids", JSON.stringify(selected_ids));
+            dtInstance.api().rows('.selected').remove().draw( false );
+        });
 
-            // dtInstance.api().rows('.selected').clear().draw();
+        $(this.tableElement).on('click', '#delete', function(e) {
+            // e.target.parentNode.parentNode;
+            dtInstance.api().rows(e.target.parentNode.parentNode).remove().draw( false );
         });
 
         if(this.props.dtInstance)

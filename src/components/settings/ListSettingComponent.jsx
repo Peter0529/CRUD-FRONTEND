@@ -6,111 +6,6 @@ class ListSettingComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
-                dtOptions1: {
-                    
-                    'paging': true, // Table pagination
-                    'ordering': true, // Column ordering
-                    'info': true, // Bottom left status text
-                    responsive: true,
-                    columnDefs: [ {
-                        orderable: false,
-                        className: 'select-checkbox',
-                        targets:0
-                    } ],
-                    select: {
-                        style:    'multi',
-                        // selector: 'td:first-child'
-                    },
-                    "search": {
-                        "regex": true
-                      },
-                    order: [[ 1, 'asc' ]],
-
-                    // Text translation options
-                    // Note the required keywords between underscores (e.g _MENU_)
-                    "pageLength": 100,
-                    "lengthMenu": [[100, 200, 500, -1], [100, 200, 500, "All"]]
-
-                    // oLanguage: {
-                    //     sSearch: '<em className="fa fa-search"></em>',
-                        
-                        
-                    //     info: 'Showing page _PAGE_ of _PAGES_',
-                    //     zeroRecords: 'Nothing found',
-                    //     infoEmpty: 'No records available',
-                    //     infoFiltered: '(filtered from _MAX_ total records)',
-                    //     oPaginate: {
-                    //         sNext: '<em className="fa fa-caret-right"></em>',
-                    //         sPrevious: '<em className="fa fa-caret-left"></em>'
-                    //     },
-                    //     sLengthMenu: 'Show <select>'+
-                    //     '<option value="100">100</option>'+
-                    //     '<option value="200">200</option>'+
-                    //     '<option value="500">500</option>'+
-                    //     '<option value="-1">All</option>'+
-                    //     '</select> records per page',
-                    // },
-                    
-                },
-                dtOptions2: {
-                    'paging': true, // Table pagination
-                    'ordering': true, // Column ordering
-                    'info': true, // Bottom left status text
-                    responsive: true,
-                    "pageLength": 100,
-                    // Text translation options
-                    // Note the required keywords between underscores (e.g _MENU_)
-                    oLanguage: {
-                        sSearch: '<em className="fa fa-search"></em>',
-                        sLengthMenu: 'Show <select>'+
-                        '<option value="100">100</option>'+
-                        '<option value="200">200</option>'+
-                        '<option value="500">500</option>'+
-                        '<option value="-1">All</option>'+
-                        '</select> records per page',
-                        info: 'Showing page _PAGE_ of _PAGES_',
-                        zeroRecords: 'Nothing found',
-                        infoEmpty: 'No records available',
-                        infoFiltered: '(filtered from _MAX_ total records)',
-                        oPaginate: {
-                            sNext: '<em className="fa fa-caret-right"></em>',
-                            sPrevious: '<em className="fa fa-caret-left"></em>'
-                        },
-                    },
-                    
-                    // Datatable Buttons setup
-                    dom: 'Bfrtip',
-                    buttons: [
-                        { extend: 'copy', className: 'btn-info' },
-                        { extend: 'csv', className: 'btn-info' },
-                        { extend: 'excel', className: 'btn-info', title: 'XLS-File' },
-                        // { extend: 'pdf', className: 'btn-info', title: $('title').text() },
-                        { extend: 'print', className: 'btn-info' }
-                    ]
-                },
-                dtOptions3: {
-                    'paging': true, // Table pagination
-                    'ordering': true, // Column ordering
-                    'info': true, // Bottom left status text
-                    responsive: true,
-                    // Text translation options
-                    // Note the required keywords between underscores (e.g _MENU_)
-                    oLanguage: {
-                        sSearch: '<em className="fa fa-search"></em>',
-                        sLengthMenu: '_MENU_ records per page',
-                        info: 'Showing page _PAGE_ of _PAGES_',
-                        zeroRecords: 'Nothing found - sorry',
-                        infoEmpty: 'No records available',
-                        infoFiltered: '(filtered from _MAX_ total records)',
-                        oPaginate: {
-                            sNext: '<em className="fa fa-caret-right"></em>',
-                            sPrevious: '<em className="fa fa-caret-left"></em>'
-                        },
-                        
-                    },
-                    // Datatable key setup
-                    keys: true
-                },
             setting: {},
             current_setting_id:1,//Campaign S1
             message: null,
@@ -151,12 +46,12 @@ class ListSettingComponent extends Component {
         this.props.history.push('/add-setting');
     }
 
-    deleteSettings(){
+    deleteSettings = async() => {
         var selected_ids = JSON.parse(window.localStorage.getItem("selected_ids"));
         
         
         for(var i =0;i<selected_ids.length;i++){
-            this.deleteSetting(parseInt(selected_ids[i]));
+            ApiService.deleteSetting(parseInt(selected_ids[i]));
         }
         
         window.localStorage.removeItem("selected_ids");

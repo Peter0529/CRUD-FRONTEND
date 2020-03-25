@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/VPNApiService";
 import DataTable from "../../components/Tables/Datatable";
+import $ from 'jquery';
 
 class ListVPNComponent extends Component{
     constructor(props){
         super(props);
         this.state = {
             dtOptions1: {
+                "autoWidth": false,
+                "bAutoWidth": false,
                 'paging': true, // Table pagination
                 'ordering': true, // Column ordering
                 'info': true, // Bottom left status text
@@ -32,7 +35,7 @@ class ListVPNComponent extends Component{
                 ],
                 select: {
                     style:    'multi',
-                    // selector: 'td:first-child'
+                    selector: 'td:not(:nth-child(2),:nth-child(1))'
                 },
                 "search": {
                     "regex": true
@@ -148,7 +151,7 @@ class ListVPNComponent extends Component{
         ApiService.deleteVPN(vpnId)
             .then(res => {
                 this.setState({message : 'VPN deleted successfully.'});
-                this.setState({vpns: this.state.vpns.filter(vpn => vpn.id !== vpnId)});
+                // this.setState({vpns: this.state.vpns.filter(vpn => vpn.id !== vpnId)});
             })
     }
 
@@ -165,13 +168,21 @@ class ListVPNComponent extends Component{
     deleteVPNs = async() => {
         var selected_ids = JSON.parse(window.localStorage.getItem("selected_ids"));
         
-        for(var i =0;i<selected_ids.length;i++){
-            this.deleteVPN(parseInt(selected_ids[i]));
+        $("#delete_spin").addClass("spinner-border spinner-border-sm text-dark mr-2");
+        $("#delete_selected").prop('disabled',true);
+
+        var i;
+        for(i =0;i<selected_ids.length - 1;i++){
+            ApiService.deleteVPN(parseInt(selected_ids[i]));
         }
+
+        await ApiService.deleteVPN(parseInt(selected_ids[i]));
         
         window.localStorage.removeItem("selected_ids");
         // window.location.reload(false);
         
+        $("#delete_spin").removeClass();
+        $("#delete_selected").prop('disabled',false);
     }
 
     render() {
@@ -183,7 +194,7 @@ class ListVPNComponent extends Component{
                     <div >
                 <h2 className="text-center">VPN Lists</h2>
                 <button className="btn btn-primary" onClick={() => this.addVPN()} style={{marginBottom:"20px"}}> Add VPN</button>
-                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteVPNs()} style={{marginBottom:"20px",marginLeft:"20px"}}> Delete Selected VPNs</button>
+                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteVPNs()} style={{marginBottom:"20px",marginLeft:"20px"}}><div id="delete_spin" role="status"/> Delete Selected VPNs</button>
                 <DataTable options={this.state.dtOptions1}>
                     <table className="table table-striped" id="datatables-reponsive" width="100%" >
                         <thead>
@@ -212,7 +223,7 @@ class ListVPNComponent extends Component{
                                             <td></td>
                                             <td>
                                                 <button className="btn btn-success" onClick={() => this.editVPN(vpn.id)}><i className="fas fa-edit"></i> </button>
-                                                <button className="btn btn-danger" onClick={() => this.deleteVPN(vpn.id)}><i className="fas fa-eraser"></i> </button>
+                                                <button className="btn btn-danger" id="delete" onClick={() => this.deleteVPN(vpn.id)}><i className="fas fa-eraser"></i> </button>
                                             </td>
                                             <td>{vpn.id}</td>
                                             <td>{vpn.note}</td>
