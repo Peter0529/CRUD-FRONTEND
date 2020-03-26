@@ -77,27 +77,42 @@ class EditEmailComponent extends Component {
 
                     <div className="form-group">
                         <label>SSL:</label>
-                        <input placeholder="" name="ssl" className="form-control" value={this.state.ssl} onChange={this.onChange}/>
+                        <select name="ssl" className="form-control" value={this.state.ssl} onChange={this.onChange}>
+                            <option value="1">ON</option>
+                            <option value="0">OFF</option>
+                        </select>
                     </div>
 
                     <div className="form-group">
                         <label>Status:</label>
-                        <input placeholder="" name="status" className="form-control" value={this.state.status} onChange={this.onChange}/>
+                        <select name="status" className="form-control" value={this.state.status} onChange={this.onChange}>
+                            <option value="1">Active</option>
+                            <option value="0">Disabled</option>
+                        </select>
                     </div>
 
                     <div className="form-group">
                         <label>Campaign S1:</label>
-                        <input placeholder="" name="campaignS1" className="form-control" value={this.state.campaignS1} onChange={this.onChange}/>
+                        <select name="campaignS1" className="form-control" value={this.state.campaignS1} onChange={this.onChange}>
+                            <option value="0">OFF</option>
+                            <option value="1">ON</option>
+                        </select>
                     </div>
 
                     <div className="form-group">
                         <label>Campaign S2:</label>
-                        <input placeholder="" name="campaignS2" className="form-control" value={this.state.campaignS2} onChange={this.onChange}/>
+                        <select name="campaignS2" className="form-control" value={this.state.campaignS2} onChange={this.onChange}>
+                            <option value="0">OFF</option>
+                            <option value="1">ON</option>
+                        </select>
                     </div>
 
                     <div className="form-group">
                         <label>Campaign S3:</label>
-                        <input placeholder="" name="campaignS3" className="form-control" value={this.state.campaignS3} onChange={this.onChange}/>
+                        <select name="campaignS3" className="form-control" value={this.state.campaignS3} onChange={this.onChange}>
+                            <option value="0">OFF</option>
+                            <option value="1">ON</option>
+                        </select>
                     </div>
 
                     <button className="btn btn-success" onClick={this.saveEmail}>Save</button>

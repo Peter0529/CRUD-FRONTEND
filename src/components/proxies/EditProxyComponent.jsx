@@ -67,12 +67,18 @@ class EditProxyComponent extends Component {
 
                     <div className="form-group">
                         <label>Connection:</label>
-                        <input placeholder="" name="connection" className="form-control" value={this.state.connection} onChange={this.onChange}/>
+                        <select name="connection" className="form-control" value={this.state.connection} onChange={this.onChange}>
+                            <option value="HTTP">HTTP</option>
+                            <option value="SOCK5">SOCK5</option>
+                        </select>
                     </div>
 
                     <div className="form-group">
                         <label>Type:</label>
-                        <input  placeholder="" name="type" className="form-control" value={this.state.type} onChange={this.onChange}/>
+                        <select name="type" className="form-control" value={this.state.type} onChange={this.onChange}>
+                            <option value="PRIVATE">PRIVATE</option>
+                            <option value="SHARED">SHARED</option>
+                        </select>
                     </div>
 
                     <div className="form-group">
@@ -82,7 +88,11 @@ class EditProxyComponent extends Component {
 
                     <div className="form-group">
                         <label>Campaign Type:</label>
-                        <input placeholder="" name="campaignType" className="form-control" value={this.state.campaignType} onChange={this.onChange}/>
+                        <select name="campaignType" className="form-control" value={this.state.campaignType} onChange={this.onChange}>
+                            <option value="S1">S1</option>
+                            <option value="S2">S2</option>
+                            <option value="S3">S3</option>
+                        </select>
                     </div>
 
                     <div className="form-group">
@@ -102,7 +112,10 @@ class EditProxyComponent extends Component {
 
                     <div className="form-group">
                         <label>Stand By:</label>
-                        <input type="number" min="0" step="1" placeholder="integer" name="standby" className="form-control" value={this.state.standby} onChange={this.onChange}/>
+                        <select name="standby" className="form-control" value={this.state.standby} onChange={this.onChange}>
+                            <option value="0">Available</option>
+                            <option value="1">Idle</option>
+                        </select>
                     </div>
 
                     {/* <div className="form-group">

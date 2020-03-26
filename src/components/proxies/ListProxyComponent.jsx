@@ -337,12 +337,12 @@ class ListProxyComponent extends Component {
                                 <th>Connection</th>
                                 <th>Type</th>
                                 <th>Country</th>
-                                <th>Campaign Type</th>
-                                <th>Usage Last Hour</th>
-                                <th>Usage Total</th>
+                                <th>Campaign</th>
+                                <th>UsageLastHour</th>
+                                <th>UsageTotal</th>
                                 <th>Fails</th>
-                                <th>Stand By</th>
-                                <th>Last Access</th>
+                                <th>StandBy</th>
+                                <th>LastAccess</th>
                                 {/* <th>Actions</th> */}
                             </tr>
                         </thead>
@@ -359,14 +359,14 @@ class ListProxyComponent extends Component {
                                             <td>{proxy.id}</td>
                                             <td>{proxy.proxy}</td>
                                             <td>{proxy.note}</td>
-                                            <td>{proxy.connection}</td>
-                                            <td>{proxy.type}</td>
+                                            <td><span class="badge badge-primary">{proxy.connection}</span></td>
+                                            <td><span class="badge badge-secondary">{proxy.type}</span></td>
                                             <td>{proxy.country}</td>
-                                            <td>{proxy.campaignType}</td>
+                                            <td><span class="badge badge-info">{proxy.campaignType}</span></td>
                                             <td>{proxy.usageLastHour}</td>
                                             <td>{proxy.usageTotal}</td>
                                             <td>{proxy.fails}</td>
-                                            <td>{proxy.standby}</td>
+                                            <td>{proxy.standby === '0' ? (<span class="badge badge-success">Available</span>):(<span class="badge badge-danger">Idle</span>)}</td>
                                             <td>{proxy.lastAccess}</td>
                                         </tr>
                                 )

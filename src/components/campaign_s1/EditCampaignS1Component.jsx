@@ -34,6 +34,7 @@ class EditCampaignS1Component extends Component {
             endDate:'',
             status:'',
             fails:'',
+            mixedType:'',
             lastAccess:'',
         }
         this.saveCampaign = this.saveCampaign.bind(this);
@@ -74,145 +75,135 @@ class EditCampaignS1Component extends Component {
             <div>
                 <h2 className="text-center">Edit Campaign</h2>
                 <form>
-
-                    <div className="form-group">
+                <div className="form-row">
+                    <div className="form-group col-md-3">
                         <label>Note:</label>
-                        <input type="text" placeholder="" name="note" className="form-control" value={this.state.note} onChange={this.onChange}/>
+                        <input type="text" placeholder="Note" name="note" className="form-control" value={this.state.note} onChange={this.onChange}/>
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group col-md-3">
                         <label>Note2:</label>
-                        <input placeholder="" name="note2" className="form-control" value={this.state.note2} onChange={this.onChange}/>
+                        <input type="" placeholder="Note2" name="note2" className="form-control" value={this.state.note2} onChange={this.onChange}/>
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group col-md-6">
                         <label>URL:</label>
-                        <input placeholder="" name="url" className="form-control" value={this.state.url} onChange={this.onChange}/>
+                        <input placeholder="URL" name="url" className="form-control" value={this.state.url} onChange={this.onChange}/>
                     </div>
+                    
+                </div>
 
-                    <div className="form-group">
+                <div className="form-row">
+                
+                    <div className="form-group col-md-3">
                         <label>Name:</label>
-                        <input  placeholder="" name="name" className="form-control" value={this.state.name} onChange={this.onChange}/>
-                    </div>
-
-                    <div className="form-group">
-                        <label>Tracks:</label>
-                        <input placeholder="" name="tracks" className="form-control" value={this.state.tracks} onChange={this.onChange}/>
-                    </div>
-
-                    <div className="form-group">
-                        <label>Campaign Type:</label>
-                        <input placeholder="" name="campaignType" className="form-control" value={this.state.campaignType} onChange={this.onChange}/>
-                    </div>
-
-                    <div className="form-group">
+                        <input placeholder="Name" name="name" className="form-control" value={this.state.name} onChange={this.onChange}/>
+                    </div>                                        
+                    <div className="form-group col-md-2">
                         <label>Country:</label>
-                        <input placeholder="" name="country" className="form-control" value={this.state.country} onChange={this.onChange}/>
+                        {/* <input placeholder="Country" name="country" className="form-control" value={this.state.country} onChange={this.onChange}/> */}
+                        <select name="country" className="form-control" value={this.state.country} onChange={this.onChange}>
+                            <option value="US">US</option>
+                        </select>
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group col-md-2">
+                        <label>Tracks:</label>
+                        <input type="number" min="0" step="1" placeholder="integer" name="tracks" className="form-control" value={this.state.tracks} onChange={this.onChange}/>
+                    </div>
+                </div>
+                <div className="form-row">
+                    <div className="form-group col-md-3">
+                        <label htmlFor="campaignType">Campaign Type:</label>
+                        {/* <input placeholder="Campaign Type" name="campaignType" className="form-control" value={this.state.campaignType} onChange={this.onChange}/> */}
+                        <select name="campaignType" className="form-control" value={this.state.campaignType} onChange={this.onChange}>
+                            <option value="Track2">Track2</option>
+                            <option value="List">List</option>
+                            <option value="Album">Album</option>
+                            <option value="SearchTrack">SearchTrack</option>
+                            <option value="SearchList">SearchList</option>
+                            <option value="SearchAlbum">SearchAlbum</option>
+                        </select>
+                    </div>
+                    
+                </div>
+                <div className="row col-md-2">
+                    <label>Limits</label>
+                </div>
+                <div className="form-row border">
+                    <div className="form-group col-md-1">
                         <label>Total Plays:</label>
-                        <input type="number" min="0" step="1" placeholder="integer" name="totalPlays" className="form-control" value={this.state.totalPlays} onChange={this.onChange}/>
+                        <input  type="number" min="0" step="1" placeholder="integer" name="totalPlays" className="form-control" value={this.state.totalPlays} onChange={this.onChange}/>
                     </div>
-
-                    <div className="form-group">
+                    <div className="form-group col-md-1">
                         <label>Total Follows:</label>
                         <input type="number" min="0" step="1" placeholder="integer" name="totalFollows" className="form-control" value={this.state.totalFollows} onChange={this.onChange}/>
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group col-md-1">
                         <label>Total Reups:</label>
-                        <input type="number" min="0" step="1" placeholder="integer" name="totalReups" className="form-control" value={this.state.totalReups} onChange={this.onChange}/>
+                        <input  type="number" min="0" step="1" placeholder="integer" name="totalReups" className="form-control" value={this.state.totalReups} onChange={this.onChange}/>
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group col-md-1">
                         <label>Total Highlights:</label>
-                        <input type="number" min="0" step="1" placeholder="integer" name="totalHighlights" className="form-control" value={this.state.totalHighlights} onChange={this.onChange}/>
+                        <input  type="number" min="0" step="1" placeholder="integer" name="totalHighlights" className="form-control" value={this.state.totalHighlights} onChange={this.onChange}/>
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group col-md-1">
                         <label>Total Favorites:</label>
-                        <input type="number" min="0" step="1" placeholder="integer" name="totalFavorites" className="form-control" value={this.state.totalFavorites} onChange={this.onChange}/>
+                        <input  type="number" min="0" step="1" placeholder="integer" name="totalFavorites" className="form-control" value={this.state.totalFavorites} onChange={this.onChange}/>
                     </div>
 
-                    <div className="form-group">
-                        <label>Per Hour Plays:</label>
-                        <input type="number" min="0" step="1" placeholder="integer" name="perHourPlays" className="form-control" value={this.state.perHourPlays} onChange={this.onChange}/>
+                    <div className="form-group col-md-1">
                     </div>
 
-                    <div className="form-group">
-                        <label>Per Day Plays:</label>
-                        <input type="number" min="0" step="1" placeholder="integer" name="perDayPlays" className="form-control" value={this.state.perDayPlays} onChange={this.onChange}/>
+                    <div className="form-group col-md-1">
+                        <label>PerHourPlays:</label>
+                        <input  type="number" min="0" step="1" placeholder="integer" name="perHourPlays" className="form-control" value={this.state.perHourPlays} onChange={this.onChange}/>
                     </div>
 
-                    <div className="form-group">
-                        <label>Per Hour Mixed:</label>
-                        <input type="number" min="0" step="1" placeholder="integer" name="perHourMixed" className="form-control" value={this.state.perHourMixed} onChange={this.onChange}/>
+                    <div className="form-group col-md-1">
+                        <label>PerDayPlays:</label>
+                        <input  type="number" min="0" step="1" placeholder="integer" name="perDayPlays" className="form-control" value={this.state.perDayPlays} onChange={this.onChange}/>
                     </div>
 
-                    <div className="form-group">
-                        <label>Per Day Mixed:</label>
-                        <input type="number" min="0" step="1" placeholder="integer" name="perDayMixed" className="form-control" value={this.state.perDayMixed} onChange={this.onChange}/>
+                    <div className="form-group col-md-1">
+                        <label>PerHourMixed:</label>
+                        <input  type="number" min="0" step="1" placeholder="integer" name="perHourMixed" className="form-control" value={this.state.perHourMixed} onChange={this.onChange}/>
                     </div>
 
-                    <div className="form-group">
-                        <label>Last Hour:</label>
-                        <input type="number" min="0" step="1" placeholder="integer" name="lastHour" className="form-control" value={this.state.lastHour} onChange={this.onChange}/>
+                    <div className="form-group col-md-1">
+                        <label>PerDayMixed:</label>
+                        <input  type="number" min="0" step="1" placeholder="integer" name="perDayMixed" className="form-control" value={this.state.perDayMixed} onChange={this.onChange}/>
                     </div>
 
-                    <div className="form-group">
-                        <label>Last Day:</label>
-                        <input type="number" min="0" step="1" placeholder="integer" name="lastDay" className="form-control" value={this.state.lastDay} onChange={this.onChange}/>
-                    </div>
+                </div>
 
-                    <div className="form-group">
-                        <label>Played:</label>
-                        <input type="number" min="0" step="1" placeholder="integer" name="played" className="form-control" value={this.state.played} onChange={this.onChange}/>
-                    </div>
-
-                    <div className="form-group">
-                        <label>Followed:</label>
-                        <input type="number" min="0" step="1" placeholder="integer" name="followed" className="form-control" value={this.state.followed} onChange={this.onChange}/>
-                    </div>
-
-                    <div className="form-group">
-                        <label>Reuped:</label>
-                        <input type="number" min="0" step="1" placeholder="integer" name="reuped" className="form-control" value={this.state.reuped} onChange={this.onChange}/>
-                    </div>
-
-                    <div className="form-group">
-                        <label>Highlighted:</label>
-                        <input type="number" min="0" step="1" placeholder="integer" name="highlighted" className="form-control" value={this.state.highlighted} onChange={this.onChange}/>
-                    </div>
-
-                    <div className="form-group">
-                        <label>Favorited:</label>
-                        <input type="number" min="0" step="1" placeholder="integer" name="favorited" className="form-control" value={this.state.favorited} onChange={this.onChange}/>
-                    </div>
-
-                    <div className="form-group">
+                <div className="form-row">
+                    <div className="form-group col-md-2">
                         <label>Start Date:</label>
-                        <input type = "date" name="startDate" className="form-control" value={this.state.startDate} onChange={this.onChange}/>
+                        <input  type="date" name="startDate" className="form-control" value={this.state.startDate} onChange={this.onChange}/>
                     </div>
-
-                    <div className="form-group">
+                    <div className="form-group col-md-2">
                         <label>End Date:</label>
-                        <input type = "date" name="endDate" className="form-control" value={this.state.endDate} onChange={this.onChange}/>
+                        <input  type="date" name="endDate" className="form-control" value={this.state.endDate} onChange={this.onChange}/>
                     </div>
-
-                    <div className="form-group">
-                        <label>Fails:</label>
-                        <input type="number" min="0" step="1" placeholder="integer" name="fails" className="form-control" value={this.state.fails} onChange={this.onChange}/>
-                    </div>
-
-                    <div className="form-group">
+                </div>
+                <div className="form-row">
+                    <div className="form-group col-md-2">
                         <label>Status:</label>
-                        <input placeholder="" name="status" className="form-control" value={this.state.status} onChange={this.onChange}/>
+                        {/* <input type="select" name="status" className="form-control" value={this.state.status} onChange={this.onChange}/> */}
+                        <select name="status" className="form-control" value = {this.state.status} onChange={this.onChange}>
+                            <option value="ON">ON</option>
+                            <option value="OFF">OFF</option>
+                        </select>
                     </div>
+                </div>
 
-                    <button className="btn btn-success" onClick={this.saveCampaign}>Save</button>
-                </form>
-            </div>
+                <button className="btn btn-success" onClick={this.saveCampaign}>Save</button>
+            </form>
+        </div>
         );
     }
 

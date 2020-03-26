@@ -301,12 +301,12 @@ class ListEmailComponent extends Component {
                                             <td>{email.password}</td>
                                             <td>{email.pop}</td>
                                             <td>{email.port}</td>
-                                            <td>{email.ssl}</td>
+                                            <td>{email.ssl === '1' ? (<span class="badge badge-info">SSL</span>):(<span class="badge badge-warning">None</span>)}</td>
                                             <td>{email.fails}</td>
-                                            <td>{email.status}</td>
-                                            <td>{email.campaignS1}</td> 
-                                            <td>{email.campaignS2}</td>
-                                            <td>{email.campaignS3}</td>
+                                            <td>{email.status === '1' ? (<span class="badge badge-success">Active</span>):(<span class="badge badge-danger">Disabled</span>)}</td>
+                                            <td>{email.campaignS1 === '1' ? (<span class="badge badge-success">ON</span>):(<span class="badge badge-danger">OFF</span>)}</td> 
+                                            <td>{email.campaignS2 === '1' ? (<span class="badge badge-success">ON</span>):(<span class="badge badge-danger">OFF</span>)}</td>
+                                            <td>{email.campaignS3 === '1' ? (<span class="badge badge-success">ON</span>):(<span class="badge badge-danger">OFF</span>)}</td>
                                             <td>{email.lastAccess}</td>
                                         </tr>
                                 )

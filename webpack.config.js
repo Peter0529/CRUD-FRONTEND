@@ -45,7 +45,8 @@ var config = {
     contentBase: Path.join(__dirname, "public"),
     compress: true,
     port: 3000,
-    open: true
+    open: true,
+    disableHostCheck: true,
   }
 };
 

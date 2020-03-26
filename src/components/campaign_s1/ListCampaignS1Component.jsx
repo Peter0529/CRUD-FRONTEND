@@ -211,6 +211,7 @@ class ListCampaignS1Component extends Component {
                                 <th>Tracks</th>
                                 <th>Country</th>
                                 <th>Type</th>
+                                <th>M.Type</th>
                                 <th>TP</th>
                                 <th>TFo</th>
                                 <th>TR</th>
@@ -252,7 +253,8 @@ class ListCampaignS1Component extends Component {
                                             <td>{camp.name}</td>
                                             <td>{camp.tracks}</td>
                                             <td>{camp.country}</td>
-                                            <td>{camp.campaignType}</td>
+                                            <td><span class="badge badge-primary">{camp.campaignType}</span></td>
+                                            <td><span class="badge badge-info">{camp.mixedType}</span></td>
                                             <td>{camp.totalPlays}</td>
                                             <td>{camp.totalFollows}</td>
                                             <td>{camp.totalReups}</td>
@@ -272,7 +274,7 @@ class ListCampaignS1Component extends Component {
                                             <td>{camp.fails}</td>
                                             <td>{camp.startDate}</td>
                                             <td>{camp.endDate}</td>
-                                            <td>{camp.status}</td>
+                                            <td>{camp.status === 'ON' ? (<span class="badge badge-success">ON</span>):(<span class="badge badge-danger">OFF</span>)}</td>
                                             <td>{camp.lastAccess}</td>
                                             
                                         </tr>
