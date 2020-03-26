@@ -17,7 +17,7 @@ const EmailRouter = () => {
                         <div className="container-fluid p-0">
                         <Router>
                             <Switch>
-                                <Route path="/" exact component={ListDashboardComponent} />
+                                {/* <Route path="/" exact component={ListDashboardComponent} /> */}
                                 <Route path="/dashboard" component={ListDashboardComponent} />
                                 <Route path="/add-dashboard" component={AddDashboardComponent} />
                                 <Route path="/edit-dashboard" component={EditDashboardComponent} />

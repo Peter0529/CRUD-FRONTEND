@@ -120,51 +120,51 @@ class ListSettingComponent extends Component {
 											<div className="row">
 												<div className="col-md-4">
 													<div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">Campaign Type</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right"  style={{"font-weight": "bold"}}>Campaign Type</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="campaignType" className="form-control" value={this.state.setting.campaignType} onChange={this.onChange} />
+                                                                <input type="text" name="campaignType" className="form-control" value={this.state.setting.campaignType} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">API Key</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right"  style={{"font-weight": "bold"}}>API Key</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="apiKey" className="form-control" value={this.state.setting.apiKey} onChange={this.onChange} />
-                                                            </div>
-                                                    </div>
-
-                                                    <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">Captcha Key</label>
-                                                            <div className="col-sm-8">
-                                                                <input type="text" name="captchaKey" className="form-control" value={this.state.setting.captchaKey} onChange={this.onChange} />
+                                                                <input type="text" name="apiKey" className="form-control" value={this.state.setting.apiKey} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                     </div>
 
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">Captcha Timeout</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right"  style={{"font-weight": "bold"}}>Captcha Key</label>
                                                             <div className="col-sm-8">
-                                                                <input type="number" min="0" name="captchaTimeout" className="form-control" value={this.state.setting.captchaTimeout} onChange={this.onChange} />
+                                                                <input type="text" name="captchaKey" className="form-control" value={this.state.setting.captchaKey} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                     </div>
 
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">Captcha Retries</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right"  style={{"font-weight": "bold"}}>Captcha Timeout</label>
                                                             <div className="col-sm-8">
-                                                                <input type="number" min="0" name="captchaRetries" className="form-control" value={this.state.setting.captchaRetries} onChange={this.onChange} />
+                                                                <input type="number" min="0" name="captchaTimeout" className="form-control" value={this.state.setting.captchaTimeout} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                     </div>
 
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">API Status</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right"  style={{"font-weight": "bold"}}>Captcha Retries</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="apiStatus" className="form-control" value={this.state.setting.apiStatus} onChange={this.onChange} />
+                                                                <input type="number" min="0" name="captchaRetries" className="form-control" value={this.state.setting.captchaRetries} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
+                                                            </div>
+                                                    </div>
+
+                                                    <div className="form-group row">
+                                                        <label className="col-form-label col-sm-4 text-sm-right"  style={{"font-weight": "bold"}}>API Status</label>
+                                                            <div className="col-sm-8">
+                                                                <input type="text" name="apiStatus" className="form-control" value={this.state.setting.apiStatus} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                     </div>
                                                 </div>
                                                 <div className="col-md-8">
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 1 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right" style={{"font-weight": "bold"}}>XPath 1 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath1Desc" className="form-control" value={this.state.setting.xpath1Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath1Desc" className="form-control" value={this.state.setting.xpath1Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 1</label>
                                                             <div className="col-sm-8">
@@ -172,9 +172,9 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 2 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right" style={{"font-weight": "bold"}}>XPath 2 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath2Desc" className="form-control" value={this.state.setting.xpath2Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath2Desc" className="form-control" value={this.state.setting.xpath2Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 2</label>
                                                             <div className="col-sm-8">
@@ -182,9 +182,9 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 3 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right"  style={{"font-weight": "bold"}}>XPath 3 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath3Desc" className="form-control" value={this.state.setting.xpath3Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath3Desc" className="form-control" value={this.state.setting.xpath3Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 3</label>
                                                             <div className="col-sm-8">
@@ -192,9 +192,9 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 4 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right"  style={{"font-weight": "bold"}}>XPath 4 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath4Desc" className="form-control" value={this.state.setting.xpath4Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath4Desc" className="form-control" value={this.state.setting.xpath4Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 4</label>
                                                             <div className="col-sm-8">
@@ -202,9 +202,9 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 5 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right" style={{"font-weight": "bold"}}>XPath 5 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath5Desc" className="form-control" value={this.state.setting.xpath5Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath5Desc" className="form-control" value={this.state.setting.xpath5Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 5</label>
                                                             <div className="col-sm-8">
@@ -212,9 +212,9 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 6 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right" style={{"font-weight": "bold"}}>XPath 6 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath6Desc" className="form-control" value={this.state.setting.xpath6Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath6Desc" className="form-control" value={this.state.setting.xpath6Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 6</label>
                                                             <div className="col-sm-8">
@@ -222,9 +222,9 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 7 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right" style={{"font-weight": "bold"}}>XPath 7 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath7Desc" className="form-control" value={this.state.setting.xpath7Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath7Desc" className="form-control" value={this.state.setting.xpath7Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 7</label>
                                                             <div className="col-sm-8">
@@ -232,9 +232,9 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 8 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right" style={{"font-weight": "bold"}}>XPath 8 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath8Desc" className="form-control" value={this.state.setting.xpath8Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath8Desc" className="form-control" value={this.state.setting.xpath8Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 8</label>
                                                             <div className="col-sm-8">
@@ -242,9 +242,9 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 9 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right" style={{"font-weight": "bold"}}>XPath 9 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath9Desc" className="form-control" value={this.state.setting.xpath9Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath9Desc" className="form-control" value={this.state.setting.xpath9Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 9</label>
                                                             <div className="col-sm-8">
@@ -252,9 +252,9 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 10 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right" style={{"font-weight": "bold"}}>XPath 10 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath10Desc" className="form-control" value={this.state.setting.xpath10Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath10Desc" className="form-control" value={this.state.setting.xpath10Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 10</label>
                                                             <div className="col-sm-8">
@@ -262,9 +262,9 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 11 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right" style={{"font-weight": "bold"}}>XPath 11 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath2Desc" className="form-control" value={this.state.setting.xpath11Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath11Desc" className="form-control" value={this.state.setting.xpath11Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 11</label>
                                                             <div className="col-sm-8">
@@ -272,9 +272,9 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 12 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right" style={{"font-weight": "bold"}}>XPath 12 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath12Desc" className="form-control" value={this.state.setting.xpath12Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath12Desc" className="form-control" value={this.state.setting.xpath12Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 12</label>
                                                             <div className="col-sm-8">
@@ -282,9 +282,9 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 13 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right"  style={{"font-weight": "bold"}}>XPath 13 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath13Desc" className="form-control" value={this.state.setting.xpath13Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath13Desc" className="form-control" value={this.state.setting.xpath13Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 13</label>
                                                             <div className="col-sm-8">
@@ -292,9 +292,9 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 14 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right" style={{"font-weight": "bold"}}>XPath 14 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath14Desc" className="form-control" value={this.state.setting.xpath14Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath14Desc" className="form-control" value={this.state.setting.xpath14Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 14</label>
                                                             <div className="col-sm-8">
@@ -302,9 +302,9 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 15 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right"  style={{"font-weight": "bold"}}>XPath 15 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath15Desc" className="form-control" value={this.state.setting.xpath15Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath15Desc" className="form-control" value={this.state.setting.xpath15Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 15</label>
                                                             <div className="col-sm-8">
@@ -312,9 +312,9 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 16 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right"  style={{"font-weight": "bold"}}>XPath 16 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath16Desc" className="form-control" value={this.state.setting.xpath16Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath16Desc" className="form-control" value={this.state.setting.xpath16Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 16</label>
                                                             <div className="col-sm-8">
@@ -322,9 +322,9 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 17 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right"  style={{"font-weight": "bold"}}>XPath 17 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath17Desc" className="form-control" value={this.state.setting.xpath17Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath17Desc" className="form-control" value={this.state.setting.xpath17Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 17</label>
                                                             <div className="col-sm-8">
@@ -332,9 +332,9 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 18 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right"  style={{"font-weight": "bold"}}>XPath 18 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath18Desc" className="form-control" value={this.state.setting.xpath18Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath18Desc" className="form-control" value={this.state.setting.xpath18Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 18</label>
                                                             <div className="col-sm-8">
@@ -342,9 +342,9 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 19 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right"  style={{"font-weight": "bold"}}>XPath 19 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath19Desc" className="form-control" value={this.state.setting.xpath19Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath19Desc" className="form-control" value={this.state.setting.xpath19Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 19</label>
                                                             <div className="col-sm-8">
@@ -352,16 +352,66 @@ class ListSettingComponent extends Component {
                                                             </div>
                                                     </div>
                                                     <div className="form-group row">
-                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 20 Description</label>
+                                                        <label className="col-form-label col-sm-4 text-sm-right"  style={{"font-weight": "bold"}}>XPath 20 Description</label>
                                                             <div className="col-sm-8">
-                                                                <input type="text" name="xpath20Desc" className="form-control" value={this.state.setting.xpath20Desc} onChange={this.onChange} />
+                                                                <input type="text" name="xpath20Desc" className="form-control" value={this.state.setting.xpath20Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
                                                             </div>
                                                         <label className="col-form-label col-sm-4 text-sm-right">XPath 20</label>
                                                             <div className="col-sm-8">
                                                                 <input type="text" name="xpath20" className="form-control" value={this.state.setting.xpath20} onChange={this.onChange} />
                                                             </div>
-                                                        </div>
                                                     </div>
+                                                    <div className="form-group row">
+                                                        <label className="col-form-label col-sm-4 text-sm-right"  style={{"font-weight": "bold"}}>XPath 21 Description</label>
+                                                            <div className="col-sm-8">
+                                                                <input type="text" name="xpath21Desc" className="form-control" value={this.state.setting.xpath21Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
+                                                            </div>
+                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 21</label>
+                                                            <div className="col-sm-8">
+                                                                <input type="text" name="xpath21" className="form-control" value={this.state.setting.xpath21} onChange={this.onChange} />
+                                                            </div>
+                                                    </div>
+                                                    <div className="form-group row">
+                                                        <label className="col-form-label col-sm-4 text-sm-right" style={{"font-weight": "bold"}}>XPath 22 Description</label>
+                                                            <div className="col-sm-8">
+                                                                <input type="text" name="xpath22Desc" className="form-control" value={this.state.setting.xpath22Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
+                                                            </div>
+                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 22</label>
+                                                            <div className="col-sm-8">
+                                                                <input type="text" name="xpath22" className="form-control" value={this.state.setting.xpath22} onChange={this.onChange} />
+                                                            </div>
+                                                    </div>
+                                                    <div className="form-group row">
+                                                        <label className="col-form-label col-sm-4 text-sm-right" style={{"font-weight": "bold"}}>XPath 23 Description</label>
+                                                            <div className="col-sm-8">
+                                                                <input type="text" name="xpath23Desc" className="form-control" value={this.state.setting.xpath23Desc} onChange={this.onChange}  style={{"font-weight": "bold"}}/>
+                                                            </div>
+                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 23</label>
+                                                            <div className="col-sm-8">
+                                                                <input type="text" name="xpath23" className="form-control" value={this.state.setting.xpath23} onChange={this.onChange} />
+                                                            </div>
+                                                    </div>
+                                                    <div className="form-group row">
+                                                        <label className="col-form-label col-sm-4 text-sm-right" style={{"font-weight": "bold"}}>XPath 24 Description</label>
+                                                            <div className="col-sm-8">
+                                                                <input type="text" name="xpath24Desc" className="form-control" value={this.state.setting.xpath24Desc} onChange={this.onChange} style={{"font-weight": "bold"}}/>
+                                                            </div>
+                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 24</label>
+                                                            <div className="col-sm-8">
+                                                                <input type="text" name="xpath24" className="form-control" value={this.state.setting.xpath24} onChange={this.onChange} />
+                                                            </div>
+                                                    </div>
+                                                    <div className="form-group row">
+                                                        <label className="col-form-label col-sm-4 text-sm-right" style={{"font-weight": "bold"}}>XPath 25 Description</label>
+                                                            <div className="col-sm-8">
+                                                                <input type="text" name="xpath25Desc" className="form-control" value={this.state.setting.xpath25Desc} onChange={this.onChange} style={{"font-weight": "bold"}}/>
+                                                            </div>
+                                                        <label className="col-form-label col-sm-4 text-sm-right">XPath 25</label>
+                                                            <div className="col-sm-8">
+                                                                <input type="text" name="xpath25" className="form-control" value={this.state.setting.xpath25} onChange={this.onChange} />
+                                                            </div>
+                                                    </div>
+                                                </div>
                                                 </div>
                                             </form>
                                         </div>

@@ -19,7 +19,7 @@ class SideBar extends Component{
         return(
             <nav id="sidebar" className="sidebar">
 			<div className="sidebar-content ">
-				<a className="sidebar-brand" href="/">
+				<a className="sidebar-brand" href="/dashboard">
           <i className="align-middle" data-feather="box"></i>
           <span className="align-middle">ADMIN CRUD</span>
         </a>

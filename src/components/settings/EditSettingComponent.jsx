@@ -53,6 +53,16 @@ class EditSettingComponent extends Component {
             xpath19Desc:'',
             xpath20:'',
             xpath20Desc:'',
+            xpath21:'',
+            xpath21Desc:'',
+            xpath22:'',
+            xpath22Desc:'',
+            xpath23:'',
+            xpath23Desc:'',
+            xpath24:'',
+            xpath24Desc:'',
+            xpath25:'',
+            xpath25Desc:'',
         }
         this.saveSetting = this.saveSetting.bind(this);
         this.loadSetting = this.loadSetting.bind(this);
@@ -321,6 +331,55 @@ class EditSettingComponent extends Component {
                         <input placeholder="" name="xpath20Desc" className="form-control" value={this.state.xpath20Desc} onChange={this.onChange}/>
                     </div>
 
+                    <div className="form-group">
+                        <label>XPath 21:</label>
+                        <input placeholder="" name="xpath21" className="form-control" value={this.state.xpath21} onChange={this.onChange}/>
+                    </div>
+
+                    <div className="form-group">
+                        <label>XPath 21 Description:</label>
+                        <input placeholder="" name="xpath21Desc" className="form-control" value={this.state.xpath21Desc} onChange={this.onChange}/>
+                    </div>
+
+                    <div className="form-group">
+                        <label>XPath 22:</label>
+                        <input placeholder="" name="xpath22" className="form-control" value={this.state.xpath22} onChange={this.onChange}/>
+                    </div>
+
+                    <div className="form-group">
+                        <label>XPath 22 Description:</label>
+                        <input placeholder="" name="xpath22Desc" className="form-control" value={this.state.xpath22Desc} onChange={this.onChange}/>
+                    </div>
+
+                    <div className="form-group">
+                        <label>XPath 23:</label>
+                        <input placeholder="" name="xpath23" className="form-control" value={this.state.xpath23} onChange={this.onChange}/>
+                    </div>
+
+                    <div className="form-group">
+                        <label>XPath 23 Description:</label>
+                        <input placeholder="" name="xpath23Desc" className="form-control" value={this.state.xpath23Desc} onChange={this.onChange}/>
+                    </div>
+
+                    <div className="form-group">
+                        <label>XPath 24:</label>
+                        <input placeholder="" name="xpath24" className="form-control" value={this.state.xpath24} onChange={this.onChange}/>
+                    </div>
+
+                    <div className="form-group">
+                        <label>XPath 24 Description:</label>
+                        <input placeholder="" name="xpath24Desc" className="form-control" value={this.state.xpath24Desc} onChange={this.onChange}/>
+                    </div>
+
+                    <div className="form-group">
+                        <label>XPath 25:</label>
+                        <input placeholder="" name="xpath20" className="form-control" value={this.state.xpath25} onChange={this.onChange}/>
+                    </div>
+
+                    <div className="form-group">
+                        <label>XPath 25 Description:</label>
+                        <input placeholder="" name="xpath25Desc" className="form-control" value={this.state.xpath25Desc} onChange={this.onChange}/>
+                    </div>
                     {/* <div className="form-group">
                         <label>Last Access:</label>
                         <input placeholder="" name="lastAccess" className="form-control" value={this.state.lastAccess} onChange={this.onChange}/>

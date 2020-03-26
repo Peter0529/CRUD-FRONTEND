@@ -44,7 +44,7 @@ class NavBar extends Component{
 								<div className="dropdown-divider"></div>
 								<a className="dropdown-item" href="pages-settings.html">Settings &amp; Privacy</a>
 								<a className="dropdown-item" href="#">Help</a>
-								<a className="dropdown-item" href="#">Sign out</a>
+								<a className="dropdown-item" href="/" onClick={()=>sessionStorage.removeItem('isAuthenticated')}>Sign out</a>
 							</div>
 						</li>
 					</ul>
