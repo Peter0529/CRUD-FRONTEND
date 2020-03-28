@@ -53,8 +53,10 @@ class EditCampaignS1Component extends Component {
                 })
    }
 
-    onChange = (e) =>
+    onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
+        if (e.target.value == 'List') this.setState({mixedType:''});
+    }
 
     saveCampaign = (e) => {
         e.preventDefault();
@@ -125,7 +127,16 @@ class EditCampaignS1Component extends Component {
                             <option value="SearchAlbum">SearchAlbum</option>
                         </select>
                     </div>
-                    
+                    <div className="form-group col-md-3">
+                        <label htmlFor="mixedType">Mixed Type:</label>
+                        <select name="mixedType" className="form-control" value={this.state.mixedType} onChange={this.onChange}>
+                            <option value=""></option>
+                            {this.state.campaignType === "Track2" ? (<option value="Reup">Reup</option>):(<></>)}
+                            {this.state.campaignType === "Track2" ? (<option value="Highlight">Highlight</option>):(<></>)}
+                            {this.state.campaignType === "Track2" ? (<option value="Favorite">Favorite</option>):(<></>)}
+                            {this.state.campaignType === "Track2" ? (<option value="Follow">Follow</option>):(<></>)}
+                        </select>
+                    </div>
                 </div>
                 <div className="row col-md-2">
                     <label>Limits</label>
@@ -202,6 +213,7 @@ class EditCampaignS1Component extends Component {
                 </div>
 
                 <button className="btn btn-success" onClick={this.saveCampaign}>Save</button>
+                <button className="btn btn-danger" style={{marginLeft:"10px"}} onClick={() => this.props.history.push('/campaign_s1')}>Cancel</button>
             </form>
         </div>
         );

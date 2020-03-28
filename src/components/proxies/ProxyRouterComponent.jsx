@@ -6,6 +6,8 @@ import React from "react";
 import SideBar from '../layout/sidebar';
 import Footer from '../layout/footer';
 import NavBar from '../layout/navbar';
+import { Redirect} from 'react-router-dom';
+
 const ProxyRouter = () => {
     return(
         <div  className="wrapper">
@@ -14,6 +16,7 @@ const ProxyRouter = () => {
                 <NavBar/>
                     <main className="content">
                         <div className="container-fluid p-0">
+                        {sessionStorage.getItem('isAuthenticated') ? (
                         <Router>
                             <Switch>
                                 {/* <Route path="/" exact component={ListProxyComponent} /> */}
@@ -21,7 +24,7 @@ const ProxyRouter = () => {
                                 <Route path="/add-proxy" component={AddProxyComponent} />
                                 <Route path="/edit-proxy" component={EditProxyComponent} />
                             </Switch>
-                        </Router>
+                        </Router>):(<Redirect to="/"/>)}
                         </div>
                     </main>
                 <Footer />

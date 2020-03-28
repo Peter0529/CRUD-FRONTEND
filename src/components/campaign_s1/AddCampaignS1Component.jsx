@@ -10,7 +10,7 @@ class AddCampaignS1Component extends Component{
             note2:'',
             url:'',
             name:'',
-            tracks:'',
+            tracks:0,
             campaignType:'Track2',
             country:'US',
             totalPlays:'0',
@@ -116,10 +116,10 @@ class AddCampaignS1Component extends Component{
                         <label htmlFor="mixedType">Mixed Type:</label>
                         <select name="mixedType" className="form-control" value={this.state.mixedType} onChange={this.onChange}>
                             <option value=""></option>
-                            <option value="Reup">Reup</option>
-                            <option value="Highlight">Highlight</option>
-                            <option value="Favorite">Favorite</option>
-                            <option value="Follow">Follow</option>
+                            {this.state.campaignType === "Track2" ? (<option value="Reup">Reup</option>):(<></>)}
+                            {this.state.campaignType === "Track2" ? (<option value="Highlight">Highlight</option>):(<></>)}
+                            {this.state.campaignType === "Track2" ? (<option value="Favorite">Favorite</option>):(<></>)}
+                            {this.state.campaignType === "Track2" ? (<option value="Follow">Follow</option>):(<></>)}
                         </select>
                     </div>
                 </div>
@@ -242,7 +242,10 @@ class AddCampaignS1Component extends Component{
                     <input  placeholder="" name="last_access" className="form-control" value={this.state.lastAccess} onChange={this.onChange}/>
                 </div> */}
 
-                <button className="btn btn-success" onClick={this.saveCampaign}>Save</button>
+                
+                    <button className="btn btn-success" onClick={this.saveCampaign}>Save</button>
+                    <button className="btn btn-danger" style={{marginLeft:"10px"}} onClick={() => this.props.history.push('/campaign_s1')}>Cancel</button>
+                
             </form>
         </div>
         );

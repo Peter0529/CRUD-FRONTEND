@@ -25,16 +25,16 @@ function App() {
                 
                 <Route path="/" exact component={Login} />
                 {/* <Route path="/" exact component={DashboardRouter} /> */}
-                  {sessionStorage.getItem('isAuthenticated') ? <Route path="/dashboard" exact component={DashboardRouter}/> : <Redirect to="/"/>}
-                  {sessionStorage.getItem('isAuthenticated') ? <Route path="/emails" exact component={EmailRouter} /> : <Redirect to="/"/>}
-                  {sessionStorage.getItem('isAuthenticated') ? <Route path="/campaign_s1" exact component={CampaignS1Router} />: <Redirect to="/"/>}
-                  {sessionStorage.getItem('isAuthenticated') ? <Route path="/logs" exact component={LogRouter} />: <Redirect to="/"/>}
-                  {sessionStorage.getItem('isAuthenticated') ? <Route path="/proxies" exact component={ProxyRouter} />: <Redirect to="/"/>}
-                  {sessionStorage.getItem('isAuthenticated') ? <Route path="/setting" exact component={SettingRouter} />: <Redirect to="/"/>}
-                  {sessionStorage.getItem('isAuthenticated') ? <Route path="/vpns" exact component={VPNRouter} />: <Redirect to="/"/>}
-                  {sessionStorage.getItem('isAuthenticated') ? <Route path="/useragents" exact component={UserAgentRouter}/>: <Redirect to="/"/>}
-                  {sessionStorage.getItem('isAuthenticated') ? <Route path="/completed_s1" exact component={CompletedS1Router}/>: <Redirect to="/"/>}
-                  {sessionStorage.getItem('isAuthenticated') ? <Route path="/stats" exact component={StatsRouter}/>: <Redirect to="/"/>}
+                  <Route path="/dashboard" exact component={DashboardRouter}/> 
+                  <Route path="/emails" exact component={EmailRouter} /> 
+                  <Route path="/campaign_s1" exact component={CampaignS1Router} />
+                  <Route path="/logs" exact component={LogRouter} />
+                  <Route path="/proxies" exact component={ProxyRouter} />
+                  <Route path="/setting" exact component={SettingRouter} />
+                  <Route path="/vpns" exact component={VPNRouter} />
+                  <Route path="/useragents" exact component={UserAgentRouter}/>
+                  <Route path="/completed_s1" exact component={CompletedS1Router}/>
+                  <Route path="/stats" exact component={StatsRouter}/>
                 <Route component={NotFound} />
             </Switch>
         </Router>

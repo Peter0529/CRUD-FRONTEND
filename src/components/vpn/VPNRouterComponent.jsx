@@ -7,6 +7,7 @@ import React from "react";
 import SideBar from '../layout/sidebar';
 import Footer from '../layout/footer';
 import NavBar from '../layout/navbar';
+import { Redirect} from 'react-router-dom';
 
 const VPNRouter = () => {
     return(
@@ -16,6 +17,7 @@ const VPNRouter = () => {
                 <NavBar/>
                     <main className="content">
                         <div className="container-fluid p-0">
+                        {sessionStorage.getItem('isAuthenticated') ? (
                         <Router>
                                 <Switch>
                                     {/* <Route path="/" exact component={ListVPNComponent} /> */}
@@ -24,7 +26,7 @@ const VPNRouter = () => {
                                     <Route path="/edit-vpn" component={EditVPNComponent} />
                                 </Switch>
                             
-                        </Router>
+                        </Router>):(<Redirect to="/"/>)}
                         </div>
                     </main>
                 <Footer />

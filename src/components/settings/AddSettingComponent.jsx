@@ -373,6 +373,7 @@ class AddSettingComponent extends Component{
                     <input placeholder="" name="xpath25Desc" className="form-control" value={this.state.xpath25Desc} onChange={this.onChange}/>
                 </div>                
                 <button className="btn btn-success" onClick={this.saveSetting}>Save</button>
+                <button className="btn btn-danger" style={{marginLeft:"10px"}} onClick={() => this.props.history.push('/setting')}>Cancel</button>
             </form>
     </div>
         );

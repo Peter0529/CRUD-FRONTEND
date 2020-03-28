@@ -92,6 +92,7 @@ class AddProxyComponent extends Component{
                 </div>
 
                 <button className="btn btn-success" onClick={this.saveProxy}>Save</button>
+                <button className="btn btn-danger" style={{marginLeft:"10px"}} onClick={() => this.props.history.push('/proxies')}>Cancel</button>
             </form>
     </div>
         );

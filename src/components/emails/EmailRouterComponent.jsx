@@ -6,6 +6,8 @@ import React from "react";
 import SideBar from '../layout/sidebar';
 import Footer from '../layout/footer';
 import NavBar from '../layout/navbar';
+import { Redirect} from 'react-router-dom';
+
 const EmailRouter = () => {
     return(
         <div  className="wrapper">
@@ -14,6 +16,8 @@ const EmailRouter = () => {
                 <NavBar/>
                     <main className="content">
                         <div className="container-fluid p-0">
+                        {sessionStorage.getItem('isAuthenticated') ? (
+                            
                         <Router>
                             <Switch>
                                 {/* <Route path="/" exact component={ListEmailComponent} /> */}
@@ -21,7 +25,7 @@ const EmailRouter = () => {
                                 <Route path="/add-email" component={AddEmailComponent} />
                                 <Route path="/edit-email" component={EditEmailComponent} />
                             </Switch>
-                        </Router>
+                        </Router>):(<Redirect to="/"/>)}
                         </div>
                     </main>
                 <Footer />

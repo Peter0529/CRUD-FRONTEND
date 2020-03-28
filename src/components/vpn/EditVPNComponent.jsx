@@ -113,6 +113,7 @@ class EditVPNComponent extends Component{
                     </div>
 
                     <button className="btn btn-success" onClick={this.saveVPN}>Save</button>
+                    <button className="btn btn-danger" style={{marginLeft:"10px"}} onClick={() => this.props.history.push('/vpns')}>Cancel</button>
                 </form>
             </div>
         );

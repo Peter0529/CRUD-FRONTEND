@@ -92,6 +92,7 @@ class AddDashboardComponent extends Component{
                 </div> */}
 
                 <button className="btn btn-success" onClick={this.saveDashboard}>Save</button>
+                <button className="btn btn-danger" style={{marginLeft:"10px"}} onClick={() => this.props.history.push('/dashboard')}>Cancel</button>
             </form>
     </div>
         );

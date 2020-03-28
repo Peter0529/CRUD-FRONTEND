@@ -51,6 +51,7 @@ class EditUserAgentComponent extends Component {
                     </div>
 
                     <button className="btn btn-success" onClick={this.saveAgent}>Save</button>
+                    <button className="btn btn-danger" style={{marginLeft:"10px"}} onClick={() => this.props.history.push('/useragents')}>Cancel</button>
                 </form>
             </div>
         );

@@ -386,6 +386,7 @@ class EditSettingComponent extends Component {
                     </div> */}
 
                     <button className="btn btn-success" onClick={this.saveSetting}>Save</button>
+                    <button className="btn btn-danger" style={{marginLeft:"10px"}} onClick={() => this.props.history.push('/setting')}>Cancel</button>
                 </form>
             </div>
         );

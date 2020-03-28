@@ -6,6 +6,7 @@ import React from "react";
 import SideBar from '../layout/sidebar';
 import Footer from '../layout/footer';
 import NavBar from '../layout/navbar';
+import { Redirect} from 'react-router-dom';
 
 const CampaignS1Router = () => {
     return(
@@ -15,6 +16,7 @@ const CampaignS1Router = () => {
                 <NavBar/>
                     <main className="content">
                         <div className="container-fluid p-0">
+                        {sessionStorage.getItem('isAuthenticated') ? (
                         <Router>
                             <Switch>
                                 {/* <Route path="/" exact component={ListEmailComponent} /> */}
@@ -22,7 +24,7 @@ const CampaignS1Router = () => {
                                 <Route path="/add-camps1" component={AddCampaignS1Component} />
                                 <Route path="/edit-camps1" component={EditCampaignS1Component} />
                             </Switch>
-                        </Router>
+                        </Router>):(<Redirect to="/"/>)}
                         </div>
                     </main>
                 <Footer />

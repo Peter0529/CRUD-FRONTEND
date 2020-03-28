@@ -6,6 +6,7 @@ import React from "react";
 import SideBar from '../layout/sidebar';
 import Footer from '../layout/footer';
 import NavBar from '../layout/navbar';
+import { Redirect} from 'react-router-dom';
 
 const EmailRouter = () => {
     return(
@@ -15,6 +16,7 @@ const EmailRouter = () => {
                 <NavBar/>
                     <main className="content">
                         <div className="container-fluid p-0">
+                        {sessionStorage.getItem('isAuthenticated') ? (
                         <Router>
                             <Switch>
                                 {/* <Route path="/" exact component={ListDashboardComponent} /> */}
@@ -23,6 +25,7 @@ const EmailRouter = () => {
                                 <Route path="/edit-dashboard" component={EditDashboardComponent} />
                             </Switch>
                         </Router>
+                        ):(<Redirect to="/"/>)}
                         </div>
                     </main>
                 <Footer />

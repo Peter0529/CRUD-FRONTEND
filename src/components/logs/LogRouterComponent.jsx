@@ -6,6 +6,8 @@ import React from "react";
 import SideBar from '../layout/sidebar';
 import Footer from '../layout/footer';
 import NavBar from '../layout/navbar';
+import { Redirect} from 'react-router-dom';
+
 const LogRouter = () => {
     return(
         <div  className="wrapper">
@@ -14,6 +16,7 @@ const LogRouter = () => {
                 <NavBar/>
                     <main className="content">
                         <div className="container-fluid p-0">
+                        {sessionStorage.getItem('isAuthenticated') ? (
                         <Router>
                             <Switch>
                                 {/* <Route path="/" exact component={ListLogComponent} /> */}
@@ -21,7 +24,7 @@ const LogRouter = () => {
                                 <Route path="/add-log" component={AddLogComponent} />
                                 <Route path="/edit-log" component={EditLogComponent} />
                             </Switch>
-                        </Router>
+                        </Router>):(<Redirect to="/"/>)}
                         </div>
                     </main>
                 <Footer />
