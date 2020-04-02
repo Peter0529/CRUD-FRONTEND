@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ApiService from "../../service/EmailApiService";
 import DataTable from "../Tables/Datatable";
 import $ from 'jquery';
-
+import dateFormat from "dateformat";
 
 class ListEmailComponent extends Component {
     constructor(props) {
@@ -17,7 +17,7 @@ class ListEmailComponent extends Component {
                     responsive: {details: {
                         type: 'column'
                     }},
-                    columnDefs: [ 
+                    columnDefs: [
                         {
                             className: 'control',
                             orderable: false,
@@ -79,10 +79,10 @@ class ListEmailComponent extends Component {
                     oLanguage: {
                         sSearch: '<em class="fa fa-search"></em>',
                         sLengthMenu: 'Show <select>'+
-                        '<option value="100">100</option>'+
-                        '<option value="200">200</option>'+
-                        '<option value="500">500</option>'+
-                        '<option value="-1">All</option>'+
+                        '<option value="100">100</option>' + 
+                        '<option value="200">200</option>' + 
+                        '<option value="500">500</option>' + 
+                        '<option value="-1">All</option>' + 
                         '</select> records per page',
                         info: 'Showing page _PAGE_ of _PAGES_',
                         zeroRecords: 'Nothing found',
@@ -210,7 +210,7 @@ class ListEmailComponent extends Component {
                             campaignS1: splits[6],
                             campaignS2: splits[7],
                             campaignS3: splits[8],
-                            lastAccess: new Date().toISOString(),
+                            lastAccess: new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString(),
                             fails:0,
                         })
                     }

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ApiService from "../../service/CompletedS1ApiService";
 import DataTable from "../../components/Tables/Datatable";
 import $ from 'jquery';
+import dateFormat from "dateformat";
 class ListCompletedS1Component extends Component {
     constructor(props) {
         super(props)
@@ -40,7 +41,7 @@ class ListCompletedS1Component extends Component {
                     "search": {
                         "regex": true
                       },
-                    order: [[ 2, 'asc' ]],
+                    order: [[ 30, 'asc' ]], // order by based on last access
                     
                     // Text translation options
                     // Note the required keywords between underscores (e.g _MENU_)
@@ -128,6 +129,8 @@ class ListCompletedS1Component extends Component {
                     keys: true
                 },
             campaigns: [],
+            unread_count:0,
+            read_count:0,
             message: null,
             loaded_data:false
         }
@@ -142,7 +145,15 @@ class ListCompletedS1Component extends Component {
 
     reloadCampaignList = async() => {
         ApiService.fetchCampaigns().then(
-            res =>{this.setState({campaigns: res.data, loaded_data: true});}
+            res =>{
+                let count = 0,count1 = 0;
+                this.setState({campaigns: res.data, loaded_data: true});
+                for(var i = 0;i < res.data.length;i++)
+                    if(res.data[i].checked === '0') count += 1;
+                    else count1 +=1;
+                this.setState({unread_count:count,read_count:count1});
+
+            }
         )
     }
 
@@ -187,6 +198,18 @@ class ListCompletedS1Component extends Component {
         $("#delete_selected").prop('disabled',false);
     }
 
+    checkCampaign = async(e,id) => {
+        var camp;
+        camp = this.state.campaigns.filter(camp => camp.id === id)[0];
+        camp.checked= "1";
+        camp.lastAccess = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString();
+        e.preventDefault();
+        $(e.target.parentNode.parentNode).removeClass();
+        await ApiService.editCampaign(camp);
+        let count = this.state.unread_count;
+        this.setState({unread_count:count - 1})
+    }
+
     render() {
         //const isLoaded = this.state.is_loaded;
         return (
@@ -195,9 +218,10 @@ class ListCompletedS1Component extends Component {
                     <div>Loading...</div>
                 ) : (
                     <div >
-                <h2 className="text-center">Completed Campaign S1 List</h2>
+                <h2 className="text-center">Completed Campaign S1 List <span class="badge badge-info">{this.state.unread_count} unchecked campaigns</span></h2> 
+                
                 {/* <button className="btn btn-primary" onClick={() => this.addCampaign()} style={{marginBottom:"20px"}}> Add Campaign</button> */}
-                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteCampaigns()} style={{marginBottom:"20px",marginLeft:"20px"}}><div id="delete_spin" role="status"/> Delete Selected Campaigns</button>
+                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteCampaigns()} style={{marginBottom:"20px"}}><div id="delete_spin" role="status"/> Delete Selected Campaigns</button>
                 <DataTable options={this.state.dtOptions1}>
                     <table className="table table-striped" id="datatables-reponsive" width="100%" >
                         <thead>
@@ -233,18 +257,17 @@ class ListCompletedS1Component extends Component {
                                 <th>EDate</th>
                                 <th>Status</th>
                                 <th>lastAccess</th>
-                                {/* <th>Actions</th> */}
                             </tr>
                         </thead>
                         <tbody>
                             {
                                 this.state.campaigns.map(
                                 camp =>
-                                        <tr key={camp.id}>
+                                        <tr key={camp.id}className= { camp.checked === '0' ? "table-primary" : ""}>
                                             <td></td>
                                             <td>
-                                                {/* <button className="btn btn-success" onClick={() => this.editCampaign(camp.id)}><i className="fas fa-edit"></i> </button> */}
-                                                <button className="btn btn-danger" id="delete" onClick={() => this.deleteCampaign(camp.id)}><i className="fas fa-eraser"></i> </button>
+                                                <button className="btn btn-info" onClick={(e) => this.checkCampaign(e,camp.id)}><i className="fas fa-check"></i> </button>
+                                                <button className="btn btn-danger" id="delete" onClick={(e) => this.deleteCampaign(camp.id)}><i className="fas fa-eraser"></i> </button>
                                             </td>
                                             <td>{camp.id}</td>
                                             <td>{camp.note}</td>
@@ -275,7 +298,6 @@ class ListCompletedS1Component extends Component {
                                             <td>{camp.endDate}</td>
                                             <td>{camp.status}</td>
                                             <td>{camp.lastAccess}</td>
-                                            
                                         </tr>
                                 )
                             }

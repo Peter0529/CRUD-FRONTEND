@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/DashboardApiService";
-
+import dateFormat from "dateformat";
 class EditDashboardComponent extends Component {
 
     constructor(props){
@@ -52,7 +52,7 @@ class EditDashboardComponent extends Component {
     saveDashboard = (e) => {
         e.preventDefault();
         let dash = {id: this.state.id, hwid: this.state.hwid, note: this.state.note, ip: this.state.ip, campaignType: this.state.campaignType, lifetimeActivity: this.state.lifetimeActivity,dailyActivity:this.state.dailyActivity
-            , lastHourActivity: this.state.lastHourActivity, status: this.state.status, owner: this.state.owner,lastAccess:new Date().toISOString()};
+            , lastHourActivity: this.state.lastHourActivity, status: this.state.status, owner: this.state.owner,lastAccess:new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString()};
         ApiService.editDashboard(dash)
             .then(res => {
                 this.setState({message : 'Dashboard updated successfully.'});

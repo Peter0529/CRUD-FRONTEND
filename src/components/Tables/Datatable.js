@@ -76,6 +76,15 @@ export default class DataTable extends Component {
             dtInstance.api().rows('.selected').remove().draw( false );
         });
 
+        // Selection for campaign check
+        // dtInstance.api().rows('.unchecked_camp').select().draw(false);
+        
+        // $('.unchecked_camp').on('click',function(){
+            
+        //     const rowData = dtInstance.api().row($(this)).data();
+        //     alert(rowData.id);
+        // })
+
         $(this.tableElement).on('click', '#delete', function(e) {
             // e.target.parentNode.parentNode;
             dtInstance.api().rows(e.target.parentNode.parentNode).remove().draw( false );

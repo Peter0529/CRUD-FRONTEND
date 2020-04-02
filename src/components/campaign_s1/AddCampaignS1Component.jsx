@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/CampaignS1ApiService";
-
+import dateFormat from "dateformat";
 class AddCampaignS1Component extends Component{
 
     constructor(props){
@@ -29,12 +29,13 @@ class AddCampaignS1Component extends Component{
             reuped:'0',
             highlighted:'0',
             favorited:'0',
-            startDate:'',
-            endDate:'',
+            startDate:dateFormat(new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})), "yyyy-mm-dd"),
+            endDate:dateFormat(new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toLocaleString('en-US', { timeZone: 'Europe/Paris'}), "yyyy-mm-dd"),
             status:'ON',
             fails:'0',
             lastAccess:'',
             mixedType:'',
+            checked:'0',
             message:null,
         }
         this.saveCampaign = this.saveCampaign.bind(this);
@@ -43,7 +44,7 @@ class AddCampaignS1Component extends Component{
     saveCampaign = (e) => {
         e.preventDefault();
         let camp = this.state;
-        camp.lastAccess = new Date().toISOString();
+        camp.lastAccess = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString();
         console.log(camp);
         ApiService.addCampaign(camp)
             .then(res => {

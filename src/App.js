@@ -23,8 +23,8 @@ function App() {
         <Router>
             <Switch>
                 
-                <Route path="/" exact component={Login} />
-                {/* <Route path="/" exact component={DashboardRouter} /> */}
+                <Route path="/login" exact component={Login} />
+                <Route path="/" exact component={DashboardRouter} />
                   <Route path="/dashboard" exact component={DashboardRouter}/> 
                   <Route path="/emails" exact component={EmailRouter} /> 
                   <Route path="/campaign_s1" exact component={CampaignS1Router} />

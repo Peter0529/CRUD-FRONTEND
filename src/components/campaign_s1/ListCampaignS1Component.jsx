@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/CampaignS1ApiService";
 import DataTable from "../../components/Tables/Datatable";
+import dateFormat from "dateformat"
 import $ from 'jquery';
 class ListCampaignS1Component extends Component {
     constructor(props) {
@@ -137,6 +138,8 @@ class ListCampaignS1Component extends Component {
         this.reloadCampaignList = this.reloadCampaignList.bind(this);
     }
     componentDidMount() {
+        // var day=new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString();
+        // alert(day);
         this.reloadCampaignList();
     }
 

@@ -19,7 +19,7 @@ class SideBar extends Component{
         return(
             <nav id="sidebar" className="sidebar">
 			<div className="sidebar-content ">
-				<a className="sidebar-brand" href="/dashboard">
+				<a className="sidebar-brand" href="/">
           <i className="align-middle" data-feather="box"></i>
           <span className="align-middle">ADMIN CRUD</span>
         </a>
@@ -29,7 +29,7 @@ class SideBar extends Component{
 						Features
 					</li>
 					<li className={"sidebar-item " + this.state.dashboard}>
-						<a href="/dashboard" className="sidebar-link" >
+						<a href="/" className="sidebar-link" >
               				<i className="align-middle" data-feather="layout"></i> 
 							  <span className="align-middle">Dashboards</span>
 							  <span className="sidebar-badge badge badge-secondary">Home</span>

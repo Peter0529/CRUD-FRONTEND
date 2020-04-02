@@ -19,13 +19,13 @@ const EmailRouter = () => {
                         {sessionStorage.getItem('isAuthenticated') ? (
                         <Router>
                             <Switch>
-                                {/* <Route path="/" exact component={ListDashboardComponent} /> */}
+                                <Route path="/" exact component={ListDashboardComponent} />
                                 <Route path="/dashboard" component={ListDashboardComponent} />
                                 <Route path="/add-dashboard" component={AddDashboardComponent} />
                                 <Route path="/edit-dashboard" component={EditDashboardComponent} />
                             </Switch>
                         </Router>
-                        ):(<Redirect to="/"/>)}
+                        ):(<Redirect to="/login"/>)}
                         </div>
                     </main>
                 <Footer />

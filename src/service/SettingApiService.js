@@ -1,6 +1,7 @@
 import axios from 'axios';
-
-const SETTING_API_BASE_URL = 'http://localhost:8080/cruddb/settings';
+import * as BASE  from './Base.js';
+// const SETTING_API_BASE_URL = 'http://localhost:8080/cruddb/settings';
+const SETTING_API_BASE_URL = BASE.URL + '/settings';
 
 class EmailApiService {
 

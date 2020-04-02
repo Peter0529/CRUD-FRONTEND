@@ -144,6 +144,7 @@ class ListUserAgentComponent extends Component {
     }
 
     reloadAgentList(){
+        
         ApiService.fetchAgents().then(
             res =>{this.setState({agents: res.data, loaded_data: true});}
         )

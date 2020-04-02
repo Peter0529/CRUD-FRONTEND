@@ -1,6 +1,7 @@
 import axios from 'axios';
-
-const PROXY_API_BASE_URL = 'http://localhost:8080/cruddb/proxies';
+import * as BASE  from './Base.js';
+const PROXY_API_BASE_URL = BASE.URL + '/proxies';
+// const PROXY_API_BASE_URL = 'http://www.dashon.net:8080/cruddb/proxies';
 
 class ProxyApiService {
 

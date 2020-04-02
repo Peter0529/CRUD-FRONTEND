@@ -1,12 +1,13 @@
 import axios from 'axios';
-
-const COMPLETED_S1_API_BASE_URL = 'http://localhost:8080/cruddb/campaign_s1';
+import * as BASE  from './Base.js';
+const COMPLETED_S1_API_BASE_URL = BASE.URL + '/campaign_s1';
+// const COMPLETED_S1_API_BASE_URL = 'http://www.dashon.net:8080/cruddb/campaign_s1';
 
 class CampaignS1ApiService {
 
     fetchCampaigns = async() => {
         var params = new URLSearchParams();
-        params.append("filter",'{"property":"status","operator":"eq","value":"off"}')
+        params.append("filter",'{"property":"status","operator":"eq","value":"OFF"}')
         var request = {
             params:params
         }

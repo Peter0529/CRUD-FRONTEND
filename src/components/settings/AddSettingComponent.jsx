@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/SettingApiService";
-
+import dateFormat from "dateformat";
 class AddSettingComponent extends Component{
 
     constructor(props){
@@ -77,7 +77,7 @@ class AddSettingComponent extends Component{
         //     xpath15Desc:this.state.xpath15Desc,xpath16Desc:this.state.xpath16Desc,xpath17Desc:this.state.xpath17Desc,xpath18Desc:this.state.xpath18Desc,xpath19Desc:this.state.xpath19Desc,xpath20Desc:this.state.xpath20Desc};
 
         let setting = this.state;
-        setting.lastAccess = new Date().toISOString();
+        setting.lastAccess = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString();
         ApiService.addSetting(setting)
             .then(res => {
                 this.setState({message : 'Setting added successfully.'});

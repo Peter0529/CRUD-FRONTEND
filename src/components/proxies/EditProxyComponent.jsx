@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/ProxyApiService";
-
+import dateFormat from "dateformat";
 class EditProxyComponent extends Component {
 
     constructor(props){
@@ -41,7 +41,7 @@ class EditProxyComponent extends Component {
     saveProxy = (e) => {
         e.preventDefault();
         let proxy=this.state;
-        proxy.lastAccess = new Date().toISOString();
+        proxy.lastAccess = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString();
         ApiService.editProxy(proxy)
             .then(res => {
                 this.setState({message : 'Proxy updated successfully.'});

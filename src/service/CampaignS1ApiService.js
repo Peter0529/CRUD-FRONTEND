@@ -1,6 +1,7 @@
 import axios from 'axios';
-
-const CAMPAIGN_S1_API_BASE_URL = 'http://localhost:8080/cruddb/campaign_s1';
+import * as BASE  from './Base.js';
+const CAMPAIGN_S1_API_BASE_URL = BASE.URL + '/campaign_s1';
+// const CAMPAIGN_S1_API_BASE_URL = 'http://www.dashon.net:8080/cruddb/campaign_s1';
 
 class CampaignS1ApiService {
 

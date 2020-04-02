@@ -1,21 +1,34 @@
 import React, { useState } from "react";
+import { Component } from 'react'
 
-export default function Login(props) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+export default class Login extends Component {
+    constructor(props){
+        super(props);
+        this.state ={
+            username : "",
+            password :""
+        }
+    }
+    setUsername(name){
+        this.setState({username:name});
+    }
+    setPassword(pass){
+        this.setState({password:pass});
+    }
+    validateForm() {
+        return this.state.username.length > 0 && this.state.password.length > 0;
+    }
 
-  function validateForm() {
-    return username.length > 0 && password.length > 0;
-  }
-
-  function handleSubmit(event) {
+  handleSubmit(event) {
     event.preventDefault();
-    if((username === "admin") && (password === "crud123")){
+    if((this.state.username === "admin") && (this.state.password === "crud123")){
         sessionStorage.setItem('isAuthenticated',true);
-        props.history.push('/dashboard');
+        // this.props.history.push('/');
+        window.location.href = "/";
     }
   }
-  return (
+  render (){
+      return (
       <div>
         <main className="main d-flex justify-content-center w-100">
             <div className="container d-flex flex-column">
@@ -39,11 +52,11 @@ export default function Login(props) {
                                         <form>
                                             <div className="form-group">
                                                 <label>UserName</label>
-                                                <input className="form-control form-control-lg" type="username" name="username" value={username} onChange = {e=>setUsername(e.target.value)} placeholder="Enter your username"/>
+                                                <input className="form-control form-control-lg" type="username" name="username" value={this.state.username} onChange = {e=>this.setUsername(e.target.value)} placeholder="Enter your username"/>
                                             </div>
                                             <div className="form-group">
                                                 <label>Password</label>
-                                                <input className="form-control form-control-lg" type="password" name="password" value={password} onChange = {e=>setPassword(e.target.value)}  placeholder="Enter your password"/>
+                                                <input className="form-control form-control-lg" type="password" name="password" value={this.state.password} onChange = {e=>this.setPassword(e.target.value)}  placeholder="Enter your password"/>
                                                 {/* <small>
                                                     <a href="pages-reset-password.html">Forgot password?</a>
                                                 </small> */}
@@ -55,7 +68,7 @@ export default function Login(props) {
                                                 </div>
                                             </div>
                                             <div className="text-center mt-3">
-                                                <button type="submit" className="btn btn-lg btn-primary" disabled={!validateForm()} onClick={e => handleSubmit(e)}>Sign in</button>
+                                                <button type="submit" className="btn btn-lg btn-primary" disabled={!this.validateForm()} onClick={e => this.handleSubmit(e)}>Sign in</button>
                                             </div>
                                         </form>
                                     </div>
@@ -68,5 +81,5 @@ export default function Login(props) {
             </div>
         </main>
     </div>
-  );
+      )}
 }

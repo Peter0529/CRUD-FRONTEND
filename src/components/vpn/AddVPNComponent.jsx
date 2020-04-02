@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/VPNApiService";
-
+import dateFormat from "dateformat";
 class AddVPNComponent extends Component{
 
     constructor(props){
@@ -22,7 +22,7 @@ class AddVPNComponent extends Component{
     }
     saveVPN = (e) => {
         e.preventDefault();
-        let vpn = {note: this.state.note, host: this.state.host, protocol: this.state.protocol, vpnSite: this.state.vpnSite, country: this.state.country, usageLastHour: this.state.usageLastHour,usageLifetime:this.state.usageLifetime,fails:this.state.fails,currentStatus:this.state.currentStatus,lastAccess:new Date().toISOString()};
+        let vpn = {note: this.state.note, host: this.state.host, protocol: this.state.protocol, vpnSite: this.state.vpnSite, country: this.state.country, usageLastHour: this.state.usageLastHour,usageLifetime:this.state.usageLifetime,fails:this.state.fails,currentStatus:this.state.currentStatus,lastAccess:new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString()};
         ApiService.addVPN(vpn)
             .then(res => {
                 this.setState({message : 'VPN added successfully.'});
@@ -89,7 +89,7 @@ class AddVPNComponent extends Component{
                 </div> */}
 
                 <button className="btn btn-success" onClick={this.saveVPN}>Save</button>
-                <button className="btn btn-danger" style={{marginLeft:"10px"}} onClick={() => this.props.history.push('/vpn')}>Cancel</button>
+                <button className="btn btn-danger" style={{marginLeft:"10px"}} onClick={() => this.props.history.push('/vpns')}>Cancel</button>
             </form>
     </div>
         );

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/CampaignS1ApiService";
-
+import dateFormat from "dateformat";
 class EditCampaignS1Component extends Component {
 
     constructor(props){
@@ -64,7 +64,9 @@ class EditCampaignS1Component extends Component {
         
         let camp = this.state;
 
-        camp.lastAccess = new Date().toISOString();
+        // camp.lastAccess = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString();
+        camp.lastAccess = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString();
+        console.log(camp);
         ApiService.editCampaign(camp)
             .then(res => {
                 this.setState({message : 'Campaign updated successfully.'});

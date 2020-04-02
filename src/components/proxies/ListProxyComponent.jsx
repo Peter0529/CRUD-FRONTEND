@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ApiService from "../../service/ProxyApiService";
 import DataTable from "../Tables/Datatable";
 import $ from 'jquery';
-
+import dateFormat from "dateformat";
 class ListProxyComponent extends Component {
     constructor(props) {
         super(props)
@@ -216,7 +216,7 @@ class ListProxyComponent extends Component {
             proxy['type'] = _imports.type;
             proxy['country'] = _imports.country;
             proxy['campaignType'] = _imports.campaignType;
-            proxy['lastAccess'] = new Date().toISOString();
+            proxy['lastAccess'] = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString();
             proxy['usageLastHour'] = _imports.usageLastHour;
             proxy['usageTotal'] = _imports.usageTotal;
             proxy['fails'] = _imports.fails;

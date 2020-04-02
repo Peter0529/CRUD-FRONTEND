@@ -1,6 +1,7 @@
 import axios from 'axios';
-
-const DASHBOARD_API_BASE_URL = 'http://localhost:8080/cruddb/dashboard';
+import * as BASE  from './Base.js';
+const DASHBOARD_API_BASE_URL = BASE.URL + '/dashboard';
+// const DASHBOARD_API_BASE_URL = 'http://www.dashon.net:8080/cruddb/dashboard';
 
 class DashboardApiService {
 

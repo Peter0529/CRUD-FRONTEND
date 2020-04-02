@@ -1,6 +1,7 @@
 import axios from 'axios';
-
-const LOG_API_BASE_URL = 'http://localhost:8080/cruddb/logs';
+import * as BASE  from './Base.js';
+const LOG_API_BASE_URL = BASE.URL + '/logs';
+// const LOG_API_BASE_URL = 'http://www.dashon.net:8080/cruddb/logs';
 
 class LogApiService {
 

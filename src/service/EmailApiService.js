@@ -1,11 +1,12 @@
 import axios from 'axios';
-
-const USER_API_BASE_URL = 'http://localhost:8080/cruddb/emails';
+import * as BASE  from './Base.js';
+const EMAIL_API_BASE_URL = BASE.URL + '/emails';
+// const USER_API_BASE_URL = 'http://www.dashon.net:8080/cruddb/emails';
 
 class EmailApiService {
 
     fetchEmails = async() => {
-        let res = await axios.get(USER_API_BASE_URL);
+        let res = await axios.get(EMAIL_API_BASE_URL);
         return res;
     }
 
@@ -16,20 +17,20 @@ class EmailApiService {
         var request = {
             params:params
         }
-        return axios.get(USER_API_BASE_URL,request);
+        return axios.get(EMAIL_API_BASE_URL,request);
     }
 
     deleteEmail(emailId) {
-        return axios.delete(USER_API_BASE_URL + '/' + emailId);
+        return axios.delete(EMAIL_API_BASE_URL + '/' + emailId);
     }
 
     addEmail(email){
-        return axios.post(USER_API_BASE_URL, email);
+        return axios.post(EMAIL_API_BASE_URL, email);
     }
 
     editEmail (email)  {
         // console.log(email);
-        return axios.patch(USER_API_BASE_URL + '/' + email.id, email,{ headers: { 'Content-Type': 'application/json' } })
+        return axios.patch(EMAIL_API_BASE_URL + '/' + email.id, email,{ headers: { 'Content-Type': 'application/json' } })
         //.then(response =>{console.log(response)}).catch(error=>{console.log(error);});
     }
 
