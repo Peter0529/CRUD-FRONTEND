@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import ListSettingComponent from "./ListSettingComponent.jsx";
-import AddSettingComponent from "./AddSettingComponent.jsx";
-import EditSettingComponent from "./EditSettingComponent.jsx";
+
 import React from "react";
 import SideBar from '../layout/sidebar';
 import Footer from '../layout/footer';

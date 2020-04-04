@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as BASE  from './Base.js';
-// const STATS_API_BASE_URL = 'http://localhost:8080/cruddb/stats_s1';
 const STATS_API_BASE_URL = BASE.URL + '/stats_s1';
+axios.defaults.headers.common['authorization'] = `Basic ${BASE.token}`;
 
 class StatsApiService {
 

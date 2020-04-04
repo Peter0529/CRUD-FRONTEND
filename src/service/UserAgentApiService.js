@@ -1,8 +1,7 @@
 import axios from 'axios';
 import * as BASE  from './Base.js';
 const USER_AGENT_API_BASE_URL = BASE.URL + '/useragents';
-// const USER_AGENT_API_BASE_URL = 'http://localhost:8080/cruddb/useragents';
-
+axios.defaults.headers.common['authorization'] = `Basic ${BASE.token}`;
 
 class UserAgentApiService {
 

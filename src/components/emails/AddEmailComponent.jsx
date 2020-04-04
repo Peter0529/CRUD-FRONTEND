@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/EmailApiService";
-import dateFormat from "dateformat";
+import date_format from "../../service/DateFormat";
 class AddEmailComponent extends Component{
 
     constructor(props){
@@ -24,7 +24,7 @@ class AddEmailComponent extends Component{
     saveEmail = (e) => {
         e.preventDefault();
         let email = this.state;
-        email.lastAccess = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString();
+        email.lastAccess = date_format();
         ApiService.addEmail(email)
             .then(res => {
                 this.setState({message : 'Email added successfully.'});

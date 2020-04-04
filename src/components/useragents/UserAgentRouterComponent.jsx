@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import ListUserAgentComponent from "./ListUserAgentComponent.jsx";
-import AddUserAgentComponent from "./AddUserAgentComponent.jsx";
+
 import EditUserAgentComponent from "./EditUserAgentComponent.jsx";
 import React from "react";
 import SideBar from '../layout/sidebar';

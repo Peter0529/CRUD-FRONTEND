@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/SettingApiService";
-import DataTable from "../Tables/Datatable";
+
 
 class ListSettingComponent extends Component {
     constructor(props) {

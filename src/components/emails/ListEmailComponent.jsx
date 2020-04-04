@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ApiService from "../../service/EmailApiService";
 import DataTable from "../Tables/Datatable";
 import $ from 'jquery';
-import dateFormat from "dateformat";
+import date_format from "../../service/DateFormat";
 
 class ListEmailComponent extends Component {
     constructor(props) {
@@ -210,7 +210,7 @@ class ListEmailComponent extends Component {
                             campaignS1: splits[6],
                             campaignS2: splits[7],
                             campaignS3: splits[8],
-                            lastAccess: new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString(),
+                            lastAccess: date_format(),
                             fails:0,
                         })
                     }
@@ -238,12 +238,14 @@ class ListEmailComponent extends Component {
         $("#delete_spin").addClass("spinner-border spinner-border-sm text-dark mr-2");
         $("#delete_selected").prop('disabled',true);
 
+        if(selected_ids.length > 0){
             for(i =0;i<selected_ids.length - 1;i++){
 
                 ApiService.deleteEmail(parseInt(selected_ids[i]));
             }
 
             await ApiService.deleteEmail(parseInt(selected_ids[i]));
+        }
         
         window.localStorage.removeItem("selected_ids");
         // window.location.reload(false);

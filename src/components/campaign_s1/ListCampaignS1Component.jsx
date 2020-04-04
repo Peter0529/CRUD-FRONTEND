@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/CampaignS1ApiService";
 import DataTable from "../../components/Tables/Datatable";
-import dateFormat from "dateformat"
+
 import $ from 'jquery';
 class ListCampaignS1Component extends Component {
     constructor(props) {
@@ -138,7 +138,7 @@ class ListCampaignS1Component extends Component {
         this.reloadCampaignList = this.reloadCampaignList.bind(this);
     }
     componentDidMount() {
-        // var day=new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString();
+        // var day=date_format();
         // alert(day);
         this.reloadCampaignList();
     }
@@ -175,12 +175,13 @@ class ListCampaignS1Component extends Component {
         $("#delete_spin").addClass("spinner-border spinner-border-sm text-dark mr-2");
         $("#delete_selected").prop('disabled',true);
         
-        var i;
-        for(i =0;i<selected_ids.length - 1;i++){
-            ApiService.deleteCampaign(parseInt(selected_ids[i]));
+        if(selected_ids.length > 0){
+            var i;
+            for(i =0;i<selected_ids.length - 1;i++){
+                ApiService.deleteCampaign(parseInt(selected_ids[i]));
+            }
+            await ApiService.deleteCampaign(parseInt(selected_ids[i]));
         }
-
-        await ApiService.deleteCampaign(parseInt(selected_ids[i]));
 
         window.localStorage.removeItem("selected_ids");
         // window.location.reload(false);

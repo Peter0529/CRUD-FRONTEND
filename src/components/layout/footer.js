@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router,Route,Switch} from 'react-router-dom';
-import { waitForElementToBeRemoved } from '@testing-library/react';
 
 class Footer extends Component{
     render(){

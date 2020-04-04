@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { BrowserRouter as Router,Route,Switch} from 'react-router-dom';
-import { Redirect} from 'react-router-dom';
-import { Fragment } from 'react';
+
 import EmailRouter from './components/emails/EmailRouterComponent.jsx';
 import ProxyRouter from './components/proxies/ProxyRouterComponent.jsx';
 import DashboardRouter from './components/dashboard/DashboardRouterComponent.jsx';
@@ -15,7 +14,7 @@ import CompletedS1Router from './components/completed_s1/CompletedS1RouterCompon
 import StatsRouter from './components/stats/StateRouterComponent.jsx';
 import Login from './pages/Login.js';
 import NotFound from './pages/404';
-import $ from 'jquery';
+
 
 function App() {
   return (

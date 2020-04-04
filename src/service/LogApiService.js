@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as BASE  from './Base.js';
 const LOG_API_BASE_URL = BASE.URL + '/logs';
-// const LOG_API_BASE_URL = 'http://www.dashon.net:8080/cruddb/logs';
+axios.defaults.headers.common['authorization'] = `Basic ${BASE.token}`;
 
 class LogApiService {
 

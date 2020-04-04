@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as BASE  from './Base.js';
-// const VPN_API_BASE_URL = 'http://localhost:8080/cruddb/vpn';
 const VPN_API_BASE_URL = BASE.URL + '/vpn';
+axios.defaults.headers.common['authorization'] = `Basic ${BASE.token}`;
 
 class VPNApiService {
 

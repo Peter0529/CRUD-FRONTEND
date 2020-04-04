@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as BASE  from './Base.js';
 const COMPLETED_S1_API_BASE_URL = BASE.URL + '/campaign_s1';
-// const COMPLETED_S1_API_BASE_URL = 'http://www.dashon.net:8080/cruddb/campaign_s1';
+axios.defaults.headers.common['authorization'] = `Basic ${BASE.token}`;
 
 class CampaignS1ApiService {
 

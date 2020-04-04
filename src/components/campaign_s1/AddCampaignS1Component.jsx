@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/CampaignS1ApiService";
+import date_format from "../../service/DateFormat";
 import dateFormat from "dateformat";
 class AddCampaignS1Component extends Component{
 
@@ -44,7 +45,7 @@ class AddCampaignS1Component extends Component{
     saveCampaign = (e) => {
         e.preventDefault();
         let camp = this.state;
-        camp.lastAccess = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString();
+        camp.lastAccess = date_format();
         console.log(camp);
         ApiService.addCampaign(camp)
             .then(res => {
@@ -53,9 +54,11 @@ class AddCampaignS1Component extends Component{
             });
     }
 
-    onChange = (e) =>
+    onChange = (e) =>{
         this.setState({ [e.target.name]: e.target.value });
-
+        if (e.target.name === 'perDayPlays') this.setState({perDayMixed:e.target.value});
+        if (e.target.name === 'perHourPlays') this.setState({perHourMixed:e.target.value});
+    }
     render() {
         return(
             <div>
@@ -167,12 +170,12 @@ class AddCampaignS1Component extends Component{
 
                     <div className="form-group col-md-1">
                         <label>PerHourMixed:</label>
-                        <input  type="number" min="0" step="1" default="0" name="perHourMixed" className="form-control" value={this.state.perHourMixed} onChange={this.onChange}/>
+                        <input  disabled type="number" min="0" step="1" default="0" name="perHourMixed" className="form-control" value={this.state.perHourMixed} onChange={this.onChange}/>
                     </div>
 
                     <div className="form-group col-md-1">
                         <label>PerDayMixed:</label>
-                        <input  type="number" min="0" step="1" default="0" name="perDayMixed" className="form-control" value={this.state.perDayMixed} onChange={this.onChange}/>
+                        <input  disabled type="number" min="0" step="1" default="0" name="perDayMixed" className="form-control" value={this.state.perDayMixed} onChange={this.onChange}/>
                     </div>
 
                 </div>

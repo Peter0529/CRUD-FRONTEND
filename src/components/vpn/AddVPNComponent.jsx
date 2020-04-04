@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/VPNApiService";
-import dateFormat from "dateformat";
+import date_format from "../../service/DateFormat";
 class AddVPNComponent extends Component{
 
     constructor(props){
@@ -22,7 +22,7 @@ class AddVPNComponent extends Component{
     }
     saveVPN = (e) => {
         e.preventDefault();
-        let vpn = {note: this.state.note, host: this.state.host, protocol: this.state.protocol, vpnSite: this.state.vpnSite, country: this.state.country, usageLastHour: this.state.usageLastHour,usageLifetime:this.state.usageLifetime,fails:this.state.fails,currentStatus:this.state.currentStatus,lastAccess:new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString()};
+        let vpn = {note: this.state.note, host: this.state.host, protocol: this.state.protocol, vpnSite: this.state.vpnSite, country: this.state.country, usageLastHour: this.state.usageLastHour,usageLifetime:this.state.usageLifetime,fails:this.state.fails,currentStatus:this.state.currentStatus,lastAccess:date_format()};
         ApiService.addVPN(vpn)
             .then(res => {
                 this.setState({message : 'VPN added successfully.'});

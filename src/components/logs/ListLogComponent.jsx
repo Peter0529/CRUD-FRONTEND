@@ -40,7 +40,7 @@ class ListLogComponent extends Component {
                     "search": {
                         "regex": true
                       },
-                    order: [[ 2, 'asc' ]],
+                    order: [[ 2, 'desc' ]],
                     
                     // Text translation options
                     // Note the required keywords between underscores (e.g _MENU_)
@@ -172,13 +172,15 @@ class ListLogComponent extends Component {
         $("#delete_spin").addClass("spinner-border spinner-border-sm text-dark mr-2");
         $("#delete_selected").prop('disabled',true);
 
-        var i;
-        for(i =0;i<selected_ids.length - 1;i++){
-            ApiService.deleteLog(parseInt(selected_ids[i]));
-            
-        }
+        if(selected_ids.length > 0){
+            var i;
+            for(i =0;i<selected_ids.length - 1;i++){
+                ApiService.deleteLog(parseInt(selected_ids[i]));
+                
+            }
 
-        await ApiService.deleteLog(parseInt(selected_ids[i]));
+            await ApiService.deleteLog(parseInt(selected_ids[i]));
+        }
 
         window.localStorage.removeItem("selected_ids");
         // window.location.reload(false);

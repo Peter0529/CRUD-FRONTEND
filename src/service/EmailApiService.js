@@ -1,8 +1,7 @@
 import axios from 'axios';
 import * as BASE  from './Base.js';
 const EMAIL_API_BASE_URL = BASE.URL + '/emails';
-// const USER_API_BASE_URL = 'http://www.dashon.net:8080/cruddb/emails';
-
+axios.defaults.headers.common['authorization'] = `Basic ${BASE.token}`;
 class EmailApiService {
 
     fetchEmails = async() => {

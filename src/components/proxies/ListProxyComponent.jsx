@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ApiService from "../../service/ProxyApiService";
 import DataTable from "../Tables/Datatable";
 import $ from 'jquery';
-import dateFormat from "dateformat";
+import date_format from "../../service/DateFormat";
 class ListProxyComponent extends Component {
     constructor(props) {
         super(props)
@@ -184,11 +184,13 @@ class ListProxyComponent extends Component {
         $("#delete_spin").addClass("spinner-border spinner-border-sm text-dark mr-2");
         $("#delete_selected").prop('disabled',true);
 
-        for(var i =0;i<selected_ids.length - 1;i++){
-            ApiService.deleteProxy(parseInt(selected_ids[i]));
+        if(selected_ids.length > 0){
+            for(var i =0;i<selected_ids.length - 1;i++){
+                ApiService.deleteProxy(parseInt(selected_ids[i]));
+            }
+            
+            await ApiService.deleteProxy(parseInt(selected_ids[i]));
         }
-        
-        await ApiService.deleteProxy(parseInt(selected_ids[i]));
 
         window.localStorage.removeItem("selected_ids");
         $("#delete_spin").removeClass();
@@ -216,7 +218,7 @@ class ListProxyComponent extends Component {
             proxy['type'] = _imports.type;
             proxy['country'] = _imports.country;
             proxy['campaignType'] = _imports.campaignType;
-            proxy['lastAccess'] = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString();
+            proxy['lastAccess'] = date_format();
             proxy['usageLastHour'] = _imports.usageLastHour;
             proxy['usageTotal'] = _imports.usageTotal;
             proxy['fails'] = _imports.fails;

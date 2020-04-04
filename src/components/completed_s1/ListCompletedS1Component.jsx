@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ApiService from "../../service/CompletedS1ApiService";
 import DataTable from "../../components/Tables/Datatable";
 import $ from 'jquery';
-import dateFormat from "dateformat";
+import date_format from "../../service/DateFormat";
 class ListCompletedS1Component extends Component {
     constructor(props) {
         super(props)
@@ -41,7 +41,7 @@ class ListCompletedS1Component extends Component {
                     "search": {
                         "regex": true
                       },
-                    order: [[ 30, 'asc' ]], // order by based on last access
+                    order: [[ 30, 'desc' ]], // order by based on last access
                     
                     // Text translation options
                     // Note the required keywords between underscores (e.g _MENU_)
@@ -183,13 +183,15 @@ class ListCompletedS1Component extends Component {
         $("#delete_spin").addClass("spinner-border spinner-border-sm text-dark mr-2");
         $("#delete_selected").prop('disabled',true);
         
-        var i;
-        for(i =0;i<selected_ids.length - 1;i++){
-            ApiService.deleteCampaign(parseInt(selected_ids[i]));
-            
-        }
+        if(selected_ids.length > 0){
+            var i;
+            for(i =0;i<selected_ids.length - 1;i++){
+                ApiService.deleteCampaign(parseInt(selected_ids[i]));
+                
+            }
 
-        await ApiService.deleteCampaign(parseInt(selected_ids[i]));
+            await ApiService.deleteCampaign(parseInt(selected_ids[i]));
+        }
 
         window.localStorage.removeItem("selected_ids");
         // window.location.reload(false);
@@ -202,7 +204,7 @@ class ListCompletedS1Component extends Component {
         var camp;
         camp = this.state.campaigns.filter(camp => camp.id === id)[0];
         camp.checked= "1";
-        camp.lastAccess = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString();
+        camp.lastAccess = date_format();
         e.preventDefault();
         $(e.target.parentNode.parentNode).removeClass();
         await ApiService.editCampaign(camp);
@@ -266,7 +268,7 @@ class ListCompletedS1Component extends Component {
                                         <tr key={camp.id}className= { camp.checked === '0' ? "table-primary" : ""}>
                                             <td></td>
                                             <td>
-                                                <button className="btn btn-info" onClick={(e) => this.checkCampaign(e,camp.id)}><i className="fas fa-check"></i> </button>
+                                                { camp.checked === '0' ? <button className="btn btn-info" onClick={(e) => this.checkCampaign(e,camp.id)}><i className="fas fa-check"></i> </button> : ""}
                                                 <button className="btn btn-danger" id="delete" onClick={(e) => this.deleteCampaign(camp.id)}><i className="fas fa-eraser"></i> </button>
                                             </td>
                                             <td>{camp.id}</td>

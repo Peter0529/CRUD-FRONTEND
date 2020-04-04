@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/CampaignS1ApiService";
-import dateFormat from "dateformat";
+import date_format from "../../service/DateFormat";
 class EditCampaignS1Component extends Component {
 
     constructor(props){
@@ -55,7 +55,9 @@ class EditCampaignS1Component extends Component {
 
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
-        if (e.target.value == 'List') this.setState({mixedType:''});
+        if (e.target.value === 'List') this.setState({mixedType:''});
+        if (e.target.name === 'perDayPlays') this.setState({perDayMixed:e.target.value});
+        if (e.target.name === 'perHourPlays') this.setState({perHourMixed:e.target.value});
     }
 
     saveCampaign = (e) => {
@@ -64,8 +66,8 @@ class EditCampaignS1Component extends Component {
         
         let camp = this.state;
 
-        // camp.lastAccess = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString();
-        camp.lastAccess = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString();
+        // camp.lastAccess = date_format();
+        camp.lastAccess = date_format();
         console.log(camp);
         ApiService.editCampaign(camp)
             .then(res => {
@@ -183,12 +185,12 @@ class EditCampaignS1Component extends Component {
 
                     <div className="form-group col-md-1">
                         <label>PerHourMixed:</label>
-                        <input  type="number" min="0" step="1" placeholder="integer" name="perHourMixed" className="form-control" value={this.state.perHourMixed} onChange={this.onChange}/>
+                        <input  disabled type="number" min="0" step="1" placeholder="integer" name="perHourMixed" className="form-control" value={this.state.perHourMixed} onChange={this.onChange}/>
                     </div>
 
                     <div className="form-group col-md-1">
                         <label>PerDayMixed:</label>
-                        <input  type="number" min="0" step="1" placeholder="integer" name="perDayMixed" className="form-control" value={this.state.perDayMixed} onChange={this.onChange}/>
+                        <input  disabled type="number" min="0" step="1" placeholder="integer" name="perDayMixed" className="form-control" value={this.state.perDayMixed} onChange={this.onChange}/>
                     </div>
 
                 </div>

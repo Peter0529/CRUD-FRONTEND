@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/SettingApiService";
-import dateFormat from "dateformat";
+import date_format from "../../service/DateFormat";
 class EditSettingComponent extends Component {
 
     constructor(props){
@@ -87,7 +87,7 @@ class EditSettingComponent extends Component {
         e.preventDefault();
         
         let setting = this.state;
-        setting.lastAccess = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString();
+        setting.lastAccess = date_format();
         ApiService.editSetting(setting)
             .then(res => {
                 this.setState({message : 'Setting updated successfully.'});

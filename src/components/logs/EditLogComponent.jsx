@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ApiService from "../../service/LogApiService";
-import dateFormat from "dateformat";
+import date_format from "../../service/DateFormat";
 class EditLogComponent extends Component {
 
     constructor(props){
@@ -38,7 +38,7 @@ class EditLogComponent extends Component {
     saveLog = (e) => {
         e.preventDefault();
         let log = this.state;
-        log.lastAccess = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris'})).toISOString();
+        log.lastAccess = date_format();
         ApiService.editLog(log)
             .then(res => {
                 this.setState({message : 'Log updated successfully.'});

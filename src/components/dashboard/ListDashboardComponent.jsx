@@ -172,13 +172,15 @@ class ListDashboardComponent extends Component {
         $("#delete_spin").addClass("spinner-border spinner-border-sm text-dark mr-2");
         $("#delete_selected").prop('disabled',true);
 
-        var i;
-        for(i =0;i<selected_ids.length - 1;i++){
-            ApiService.deleteDashboard(parseInt(selected_ids[i]));
-            
-        }
+        if(selected_ids.length > 0){
+            var i;
+            for(i =0;i<selected_ids.length - 1;i++){
+                ApiService.deleteDashboard(parseInt(selected_ids[i]));
+                
+            }
 
-        await ApiService.deleteDashboard(parseInt(selected_ids[i]));
+            await ApiService.deleteDashboard(parseInt(selected_ids[i]));
+        }
 
         window.localStorage.removeItem("selected_ids");
         // window.location.reload(false);
