@@ -56,7 +56,7 @@ class AddCampaignS1Component extends Component{
 
     onChange = (e) =>{
         this.setState({ [e.target.name]: e.target.value });
-        if (e.target.name === 'perDayPlays') this.setState({perDayMixed:e.target.value});
+        if (e.target.name === 'perDayPlays')  this.setState({perDayMixed:e.target.value});
         if (e.target.name === 'perHourPlays') this.setState({perHourMixed:e.target.value});
     }
     render() {

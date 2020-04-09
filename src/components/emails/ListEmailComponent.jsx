@@ -166,7 +166,7 @@ class ListEmailComponent extends Component {
         // window.localStorage.removeItem("emailId");
         // this.props.history.push('/add-email');
         
-        var splits,lines,email;
+        var splits,lines;
         var reader = new FileReader();
 
 
@@ -175,7 +175,7 @@ class ListEmailComponent extends Component {
         $("#loadEmails").prop('disabled',true);
 
         reader.readAsText(e.target.files[0]);
-        const result = await new Promise((resolve,reject)=> 
+        await new Promise((resolve,reject)=> 
             reader.onload = async function(e) {
 
                 var i;

@@ -2,6 +2,7 @@ import axios from 'axios';
 import * as BASE  from './Base.js';
 const EMAIL_API_BASE_URL = BASE.URL + '/emails';
 axios.defaults.headers.common['authorization'] = `Basic ${BASE.token}`;
+
 class EmailApiService {
 
     fetchEmails = async() => {
