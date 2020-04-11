@@ -27,7 +27,7 @@ class EmailApiService {
     addEmail(email){
         return axios.post(EMAIL_API_BASE_URL, email);
     }
-
+    
     editEmail (email)  {
         // console.log(email);
         return axios.patch(EMAIL_API_BASE_URL + '/' + email.id, email,{ headers: { 'Content-Type': 'application/json' } })

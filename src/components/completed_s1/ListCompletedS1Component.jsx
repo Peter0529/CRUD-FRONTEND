@@ -220,7 +220,7 @@ class ListCompletedS1Component extends Component {
                     <div>Loading...</div>
                 ) : (
                     <div >
-                <h2 className="text-center">Completed Campaign S1 List <span class="badge badge-info">{this.state.unread_count} unchecked campaigns</span></h2> 
+                <h2 className="text-center">Completed Campaign S1 List <span class="badge badge-info">{this.state.unread_count} unchecked campaigns</span></h2>
                 
                 {/* <button className="btn btn-primary" onClick={() => this.addCampaign()} style={{marginBottom:"20px"}}> Add Campaign</button> */}
                 <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteCampaigns()} style={{marginBottom:"20px"}}><div id="delete_spin" role="status"/> Delete Selected Campaigns</button>

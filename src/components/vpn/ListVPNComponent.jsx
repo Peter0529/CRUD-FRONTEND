@@ -196,7 +196,7 @@ class ListVPNComponent extends Component{
                 <button className="btn btn-primary" onClick={() => this.addVPN()} style={{marginBottom:"20px"}}> Add VPN</button>
                 <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteVPNs()} style={{marginBottom:"20px",marginLeft:"20px"}}><div id="delete_spin" role="status"/> Delete Selected VPNs</button>
                 <DataTable options={this.state.dtOptions1}>
-                    <table className="table table-striped" id="datatables-reponsive" width="100%" >
+                    <table className="table table-striped" id="datatables-reponsive" width="100%">
                         <thead>
                             <tr>
                                 <th></th>
@@ -218,7 +218,7 @@ class ListVPNComponent extends Component{
                         <tbody>
                             {
                                 this.state.vpns.map(
-                            vpn =>
+                                    vpn =>
                                         <tr key={vpn.id}>
                                             <td></td>
                                             <td>

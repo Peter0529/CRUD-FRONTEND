@@ -4,7 +4,7 @@ class NavBar extends Component{
     render(){
         return(
             <nav className="navbar navbar-expand navbar-light bg-white">
-				<a className="sidebar-toggle d-flex mr-2" href=" ">
+				<a className="sidebar-toggle d-flex mr-2">
           			<i className="hamburger align-self-center"></i>
         		</a>
 

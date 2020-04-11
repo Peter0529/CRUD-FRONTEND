@@ -176,7 +176,6 @@ class ListLogComponent extends Component {
             var i;
             for(i =0;i<selected_ids.length - 1;i++){
                 ApiService.deleteLog(parseInt(selected_ids[i]));
-                
             }
 
             await ApiService.deleteLog(parseInt(selected_ids[i]));
