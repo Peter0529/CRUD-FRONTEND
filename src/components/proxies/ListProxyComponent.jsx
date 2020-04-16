@@ -3,6 +3,10 @@ import ApiService from "../../service/ProxyApiService";
 import DataTable from "../Tables/Datatable";
 import $ from 'jquery';
 import date_format from "../../service/DateFormat";
+
+import * as BASE  from '../../service/Base.js';
+const PROXY_API_BASE_URL = BASE.URL + '/datatable/proxies';
+
 class ListProxyComponent extends Component {
     constructor(props) {
         super(props)
@@ -13,25 +17,140 @@ class ListProxyComponent extends Component {
                     'paging': true, // Table pagination
                     'ordering': true, // Column ordering
                     'info': true, // Bottom left status text
+                    "processing": true,
+                    "serverSide": true,
+                    "deferRender":true, 
+                    'scrollCollapse': true,
+                    'searching': {"regex":true},
+                    "ajax": {
+                        "url": PROXY_API_BASE_URL,
+                        'contentType': 'application/json',
+                        'type': 'POST',
+                        'data': function(d) {
+                        return JSON.stringify(d);
+                        },
+                        "dataSrc": "data",
+                        "dataType": 'json',
+                        // "type": "GET",
+                        "beforeSend": function(xhr){
+                           xhr.setRequestHeader("Authorization",
+                              "Basic " + BASE.token);
+                        },
+                    },
+                    "columns": [
+                        {},
+                        {},
+                        {"data":'id',"orderable": "false"},
+                        {"data":'note',"orderable": "false"},
+                        {"data":'proxy',"orderable": "false"},
+                        {"data":'connection',"orderable": "false"},
+                        {"data":'type',"orderable": "false"},
+                        {"data":'country',"orderable": "false"},
+                        {"data":'campaignType',"orderable": "false"},
+                        {"data":'usageLastHour',"orderable": "false"},
+                        {"data":'usageTotal',"orderable": "false"},
+                        {"data":'fails',"orderable": "false"},
+                        {"data":'standby',"orderable": "false"},
+                        {"data":'lastAccess',"orderable": "false"},
+                    ],
+                    
                     responsive: {details: {
                         type: 'column'
                     }},
-                    columnDefs: [ 
+                    columnDefs: [
                         {
+                            data:null,
+                            defaultContent:'',
                             className: 'control',
                             orderable: false,
                             targets:   0
                         },
-                        // {
-                        //     orderable: false,
-                        //     className: 'select-checkbox',
-                        //     type:'checkbox',
-                        //     targets:2
-                        // },
+
+                        //Action button
                         {
+                            data:null,
+                            defaultContent:'',
                             orderable: false,
-                            targets:1
-                        }
+                            targets:1,
+                            createdCell: (td, cellData, rowData, row, col) => {
+                                $(td).find("#bt_proxy_edit").click(e => {
+                                   
+                                   this.editProxy($(td).find("#bt_proxy_edit").data("id"));
+                                });
+                                $(td).find("#bt_proxy_delete").click(e => {
+                                    this.deleteProxy($(td).find("#bt_proxy_delete").data("id"));
+                                 });
+                              },
+                            render: function ( data, type, row ) {
+                                return '<button class="btn btn-success" id="bt_proxy_edit" data-id="' + data.id + '"><i class="fas fa-edit"></i></button>' + 
+                                '<button class="btn btn-danger" id="bt_proxy_delete" data-id="' + data.id + '"><i class="fas fa-eraser"></i></button>';
+                            }
+                        },
+
+                        //SSL column
+                        {
+                            data:null,
+                            defaultContent:'',
+                            orderable: false,
+                            targets:5,
+                            render: function ( data, type, row ) {
+                                return '<span class="badge badge-primary">' + data +'</span>';
+                            }
+                        },
+
+                        // Status column
+
+                        {
+                            data:null,
+                            defaultContent:'',
+                            orderable: false,
+                            targets:6,
+                            render: function ( data, type, row ) {
+                                return '<span class="badge badge-secondary">' + data +'</span>';
+                            }
+                        },
+
+                        // CampaignS1 column
+                        
+                        {
+                            data:null,
+                            defaultContent:'',
+                            orderable: false,
+                            targets:8,
+                            render: function ( data, type, row ) {
+                                return '<span class="badge badge-info">' + data +'</span>';
+                            }
+                        },
+
+                        // CampaignS2 column
+                        {
+                            data:null,
+                            defaultContent:'',
+                            orderable: false,
+                            targets:12,
+                            render: function ( data, type, row ) {
+                                if(data === '0')
+                                    return '<span class="badge badge-success">Available</span>';
+                                else
+                                    return '<span class="badge badge-danger">Idle</span>';
+                            }
+                        },
+
+                        // CampaignS3 column
+                        {
+                            data:null,
+                            defaultContent:'',
+                            orderable: false,
+                            targets:12,
+                            render: function ( data, type, row ) {
+                                if(data === '1')
+                                    return '<span class="badge badge-success">ON</span>';
+                                else
+                                    return '<span class="badge badge-danger">OFF</span>';
+                            }
+                        },
+
+
                     ],
                     select: {
                         style:    'multi',
@@ -41,11 +160,12 @@ class ListProxyComponent extends Component {
                         "regex": true
                       },
                     order: [[ 2, 'asc' ]],
-
+                    
                     // Text translation options
                     // Note the required keywords between underscores (e.g _MENU_)
                     "pageLength": 100,
-                    "lengthMenu": [[100, 200, 500, -1], [100, 200, 500, "All"]]
+                    "lengthMenu": [[100, 200, 500, -1], [100, 200, 500, "All"]],
+                    oLanguage: {sProcessing: '<div class="spinner-border text-primary mr-2" role="status"></div>',}
 
                     // oLanguage: {
                     //     sSearch: '<em class="fa fa-search"></em>',
@@ -153,9 +273,10 @@ class ListProxyComponent extends Component {
     }
 
     reloadProxyList = async() => {
-        ApiService.fetchProxies().then(
-            res =>{this.setState({proxies: res.data, loaded_data: true})}
-        )
+        // ApiService.fetchProxies().then(
+        //     res =>{this.setState({proxies: res.data, loaded_data: true})}
+        // )
+        this.setState({loaded_data: true});
     }
 
     deleteProxy(proxyId) {
@@ -163,7 +284,7 @@ class ListProxyComponent extends Component {
             .then(res => {
                 this.setState({message : 'Proxy deleted successfully.'});
                 // this.setState({proxies: this.state.proxies.filter(proxy => proxy.id !== proxyId)});
-                // window.location.reload(false);
+                window.location.reload(false);
             })
 
     }
@@ -179,23 +300,31 @@ class ListProxyComponent extends Component {
     }
 
     deleteProxies = async() =>{
+        var counted = 0;
         var selected_ids = JSON.parse(window.localStorage.getItem("selected_ids"));
         
         $("#delete_spin").addClass("spinner-border spinner-border-sm text-dark mr-2");
         $("#delete_selected").prop('disabled',true);
 
         if(selected_ids.length > 0){
-            for(var i =0;i<selected_ids.length - 1;i++){
-                ApiService.deleteProxy(parseInt(selected_ids[i]));
+            for(var i =0;i<selected_ids.length;i++){
+                if(i % 1000 == 0 || i ==  selected_ids.length - 1)
+                    await ApiService.deleteProxy(parseInt(selected_ids[i])).then(res =>{
+                        counted++;
+                        $("#delete_selected").html(counted + "/" + selected_ids.length);
+                    });
+                else
+                    ApiService.deleteProxy(parseInt(selected_ids[i])).then(res =>{
+                        counted++;
+                        $("#delete_selected").html(counted + "/" + selected_ids.length);
+                    });
             }
-            
-            await ApiService.deleteProxy(parseInt(selected_ids[i]));
         }
 
         window.localStorage.removeItem("selected_ids");
         $("#delete_spin").removeClass();
         $("#delete_selected").prop('disabled',false);
-        // window.location.reload(false);
+        window.location.reload(false);
     }
 
 
@@ -205,7 +334,7 @@ class ListProxyComponent extends Component {
         $("#loadProxies").prop('disabled',true);
 
         var _imports = this.state.imports;
-
+        var counted = 0;
         var proxies = _imports.proxies.split('\n');
 
         var proxy = {};
@@ -225,14 +354,16 @@ class ListProxyComponent extends Component {
             proxy['standby'] = _imports.standby;
 
             
-            if(i === proxies.length - 1)
-            {
-                await ApiService.addProxy(proxy);
-            }
+            if(i % 1000 == 0 || i ==  proxies.length - 1)
+                await ApiService.addProxy(proxy).then(res =>{
+                    counted++;
+                    $("#loadProxies").html(counted + "/" + proxies.length);
+                });
             else
-            {
-                ApiService.addProxy(proxy);
-            }
+                ApiService.addProxy(proxy).then(res =>{
+                    counted++;
+                    $("#loadProxies").html(counted + "/" + proxies.length);
+                });
         }
 
         $("#modalClose").click();
@@ -349,7 +480,7 @@ class ListProxyComponent extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {
+                            {/* {
                                 this.state.proxies.map(
                                 proxy =>
                                         <tr key={proxy.id}>
@@ -372,7 +503,7 @@ class ListProxyComponent extends Component {
                                             <td>{proxy.lastAccess}</td>
                                         </tr>
                                 )
-                            }
+                            } */}
                         </tbody>
                     </table>
                 </DataTable>

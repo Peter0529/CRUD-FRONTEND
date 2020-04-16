@@ -40,7 +40,7 @@ class ListStateComponent extends Component {
                     "search": {
                         "regex": true
                       },
-                    order: [[ 2, 'asc' ]],
+                    order: [[ 2, 'desc' ]],
                     
                     // Text translation options
                     // Note the required keywords between underscores (e.g _MENU_)
@@ -185,7 +185,7 @@ class ListStateComponent extends Component {
                     <div >
                 <h2 className="text-center">State List</h2>
                 {/* <button className="btn btn-primary" onClick={() => this.addAgent()} style={{marginBottom:"20px"}}> Add Agent</button> */}
-                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteStats()} style={{marginBottom:"20px",marginLeft:"20px"}}><div id="delete_spin" role="status"/> Delete Selected Stats</button>
+                <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteStats()} style={{marginBottom:"20px"}}><div id="delete_spin" role="status"/> Delete Selected Stats</button>
                 <DataTable options={this.state.dtOptions1}>
                     <table className="table table-striped" id="datatables-reponsive" width="100%" >
                         <thead>

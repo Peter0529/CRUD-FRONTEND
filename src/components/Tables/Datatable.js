@@ -62,7 +62,6 @@ export default class DataTable extends Component {
             else {
                 dtInstance.api().rows({ page: 'current' }).deselect();
             }
-              
           }); 
         
         // Click Delete Selected Rows Function
@@ -70,20 +69,31 @@ export default class DataTable extends Component {
             var data = dtInstance.api().rows('.selected').data();
             var selected_ids=[]; 
             for(var i = 0; i< data.length;i++){
-                selected_ids.push(data[i][2])//ids
+                
+                selected_ids.push(data[i]['id']);//ids
             }
             localStorage.setItem("selected_ids", JSON.stringify(selected_ids));
             dtInstance.api().rows('.selected').remove().draw( false );
         });
 
-        // Selection for campaign check
+        // $(this.tableElement).on('click', '#bt_email_edit', function(){
+        //     var id = $(this).data('id');
+        //     editEmail(id);
+        //   });
+        // filter for campaign on emails page
         // dtInstance.api().rows('.unchecked_camp').select().draw(false);
         
-        // $('.unchecked_camp').on('click',function(){
-            
-        //     const rowData = dtInstance.api().row($(this)).data();
-        //     alert(rowData.id);
-        // })
+        $('#filter_campaign').on('change',function(){
+            // dtInstance.api().filter().clear();
+            if(this.value === "all")
+                dtInstance.api().columns().search('').draw();
+            if(this.value === "s1")        
+                dtInstance.api().columns("#dt_s1").search("1").columns("#dt_s2").search("").columns("#dt_s3").search("").draw();
+            else if(this.value === "s2")
+                dtInstance.api().columns("#dt_s1").search("").columns("#dt_s2").search("1").columns("#dt_s3").search("").draw();
+            else if(this.value === "s3")
+                dtInstance.api().columns("#dt_s1").search("").columns("#dt_s2").search("").columns("#dt_s3").search("1").draw();
+        })
 
         $(this.tableElement).on('click', '#delete', function(e) {
             // e.target.parentNode.parentNode;
@@ -107,4 +117,5 @@ export default class DataTable extends Component {
             })
         )
     }
+    
 }

@@ -13,9 +13,25 @@ class ListCompletedS1Component extends Component {
                     'paging': true, // Table pagination
                     'ordering': true, // Column ordering
                     'info': true, // Bottom left status text
-                    responsive: {details: {
-                        type: 'column'
-                    }},
+                    responsive: {
+                        details: {
+                            renderer: function ( api, rowIdx, columns ) {
+                                var data = $.map( columns, function ( col, i ) {
+                                    var col_header = api.column(i + 1).header();
+                                    return col.hidden ?
+                                        '<tr data-dt-row="'+col.rowIndex+'" data-dt-column="'+col.columnIndex+'" title="'+col_header.getAttribute("title")+'">'+
+                                            '<td>'+col.title+':'+'</td> '+
+                                            '<td>'+col.data+'</td>'+
+                                        '</tr>' :
+                                        '';
+                                } ).join('');
+                                
+                                return data ?
+                                    $('<table/>').append( data ) :
+                                    false;
+                            }
+                        }
+                    },
 
                     columnDefs: [ 
                         {
@@ -220,45 +236,47 @@ class ListCompletedS1Component extends Component {
                     <div>Loading...</div>
                 ) : (
                     <div >
-                <h2 className="text-center">Completed Campaign S1 List <span class="badge badge-info">{this.state.unread_count} unchecked campaigns</span></h2>
+                <h2 className="text-center">Completed Campaign S1 List <span class="badge badge-info">{this.state.unread_count} unchecked campaigns</span></h2> 
                 
                 {/* <button className="btn btn-primary" onClick={() => this.addCampaign()} style={{marginBottom:"20px"}}> Add Campaign</button> */}
                 <button className="btn btn-secondary" id = "delete_selected" name="delete_selected" onClick={() => this.deleteCampaigns()} style={{marginBottom:"20px"}}><div id="delete_spin" role="status"/> Delete Selected Campaigns</button>
+                
                 <DataTable options={this.state.dtOptions1}>
                     <table className="table table-striped" id="datatables-reponsive" width="100%" >
                         <thead>
                             <tr>
-                                <th></th>
-                                <th><input type="checkbox" id="select_all" name="select_all" /></th>
-                                <th className="hidden">Id</th>
-                                <th>Note</th>
-                                <th>Note2</th>
-                                <th>URL</th>
-                                <th>Name</th>
-                                <th>Tracks</th>
-                                <th>Country</th>
-                                <th>Type</th>
-                                <th>TP</th>
-                                <th>TFo</th>
-                                <th>TR</th>
-                                <th>TH</th>
-                                <th>TFa</th>
-                                <th>PHP</th>
-                                <th>PDP</th>
-                                <th>PHM</th>
-                                <th>PDM</th>
-                                <th>LH</th>
-                                <th>LD</th>
-                                <th>Pl</th>
-                                <th>Fo</th>
-                                <th>Re</th>
-                                <th>Hi</th>
-                                <th>Fa</th>
-                                <th>Fails</th>
-                                <th>SDate</th>
-                                <th>EDate</th>
-                                <th>Status</th>
-                                <th>lastAccess</th>
+                            <th title=""></th>
+                                <th title=""><input type="checkbox" id="select_all" name="select_all" /></th>
+                                <th title="" className="hidden">Id</th>
+                                <th title="Note">Note</th>
+                                <th title="Note2">Note2</th>
+                                <th title="URL">URL</th>
+                                <th title="Name">Name</th>
+                                <th title="Tracks">Tracks</th>
+                                <th title="Country">Country</th>
+                                <th title="Type">Type</th>
+                                <th title="Mixed Type">M.Type</th>
+                                <th title="Total Plays">TP</th>
+                                <th title="Total Follows">TFo</th>
+                                <th title="Total Reups">TR</th>
+                                <th title="Total Highlights">TH</th>
+                                <th title="Total Favorites">TFa</th>
+                                <th title="Per Hour Plays">PHP</th>
+                                <th title="Per Day Plays">PDP</th>
+                                <th title="Per Hour Mixed">PHM</th>
+                                <th title="Per Day Mixed">PDM</th>
+                                <th title="Last Hour">LH</th>
+                                <th title="Last Day">LD</th>
+                                <th title="Played">Pl</th>
+                                <th title="Followed">Fo</th>
+                                <th title="Reuped">Re</th>
+                                <th title="Highlighted">Hi</th>
+                                <th title="Favorited">Fa</th>
+                                <th title="Fails">Fails</th>
+                                <th title="Start Date">SDate</th>
+                                <th title="End Date">EDate</th>
+                                <th title="Status">Status</th>
+                                <th title="Last Access Time">lastAccess</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -277,8 +295,9 @@ class ListCompletedS1Component extends Component {
                                             <td>{camp.url}</td>
                                             <td>{camp.name}</td>
                                             <td>{camp.tracks}</td>
-                                            <td>{camp.campaignType}</td>
                                             <td>{camp.country}</td>
+                                            <td><span class="badge badge-primary">{camp.campaignType}</span></td>
+                                            <td><span class="badge badge-info">{camp.mixedType}</span></td>
                                             <td>{camp.totalPlays}</td>
                                             <td>{camp.totalFollows}</td>
                                             <td>{camp.totalReups}</td>
@@ -298,7 +317,7 @@ class ListCompletedS1Component extends Component {
                                             <td>{camp.fails}</td>
                                             <td>{camp.startDate}</td>
                                             <td>{camp.endDate}</td>
-                                            <td>{camp.status}</td>
+                                            <td>{camp.status === 'ON' ? (<span class="badge badge-success">ON</span>):(<span class="badge badge-danger">OFF</span>)}</td>
                                             <td>{camp.lastAccess}</td>
                                         </tr>
                                 )
